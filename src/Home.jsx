@@ -4,11 +4,11 @@ import {
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
-import "./App.css";
-import app from "./firebase";
-import { useState } from "react";
 
-function App() {
+import { useState } from "react";
+import app from "../utils/firebase";
+
+function Home() {
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState("");
   const auth = getAuth(app);
@@ -53,4 +53,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
