@@ -1,7 +1,26 @@
+import { useEffect, useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "fantasy",
+  );
+
+  const handleTheme = (e) => {
+    if (e.target.checked) {
+      setTheme("fantasy");
+    } else {
+      setTheme("sunset");
+    }
+  };
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    const localTheme = localStorage.getItem("theme");
+    document.querySelector("html").setAttribute("data-theme", localTheme);
+  }, [theme]);
+
   const navLinks = (
     <>
       <li>
@@ -56,7 +75,11 @@ const Header = () => {
         <div className="nav-content-end flex items-center gap-4">
           <label className="swap swap-rotate">
             {/* this hidden checkbox controls the state */}
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              onChange={handleTheme}
+              checked={theme === "fantasy"}
+            />
 
             {/* sun icon */}
             <svg
