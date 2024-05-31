@@ -1,4 +1,7 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import auth from "../../utils/firebase";
@@ -35,11 +38,18 @@ const SignUp = () => {
       setIsSigningUp(true);
       console.log(email, password);
       createUserWithEmailAndPassword(auth, email, password)
-        .then((data) => {
+        .then((result) => {
           setIsSigningUp(false);
-          console.log(data.user);
-          data.user.displayName = name;
+          console.log(result.user);
+          result.user.displayName = name;
           setSuccessMessage("SignUp Successfull");
+          sendEmailVerification(result.user)
+            .then(() => {
+              alert("Go to you inbox and verify your email.");
+            })
+            .catch((error) => {
+              console.log(error.message);
+            });
         })
         .catch((error) => {
           setIsSigningUp(false);
@@ -50,8 +60,8 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100 lg:min-h-screen">
-      <div className="w-full max-w-md space-y-3 rounded-xl bg-white p-8 shadow-lg">
+    <div className="flex items-center justify-center lg:min-h-screen">
+      <div className="w-full max-w-md space-y-3 rounded-xl p-8 shadow-lg">
         <h1 className="text-center text-2xl font-bold text-gray-900">
           Sign Up
         </h1>
@@ -96,7 +106,7 @@ const SignUp = () => {
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 flex items-center px-3 text-2xl text-gray-600"
+                className="absolute inset-y-0 right-0 flex items-center px-3 text-2xl "
                 onClick={togglePasswordVisibility}
               >
                 {!passwordVisible ? (

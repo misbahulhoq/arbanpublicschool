@@ -35,6 +35,9 @@ const Header = () => {
       <li>
         <NavLink to="/results">Results</NavLink>
       </li>
+      <li>
+        <NavLink to="/login">Log In</NavLink>
+      </li>
     </>
   );
   return (
@@ -45,7 +48,7 @@ const Header = () => {
           {navLinks}
         </div>
         {/* Menu // Only visible on small devices, hidden for large devices*/}
-        <div className="drawer w-5/12 lg:hidden">
+        <div className="drawer relative z-50 w-5/12 lg:hidden">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
             {/* Page content here */}
@@ -59,6 +62,7 @@ const Header = () => {
               </span>
             </label>
           </div>
+
           <div className="drawer-side  lg:w-auto">
             <label
               htmlFor="my-drawer"
@@ -100,9 +104,12 @@ const Header = () => {
             </svg>
           </label>
 
-          <button className="btn btn-outline border border-white text-lg text-primary-content">
-            <NavLink to="/signup">Sign Up</NavLink>
-          </button>
+          <NavLink
+            to="/signup"
+            className="btn btn-outline border border-white text-lg text-primary-content hover:btn-secondary"
+          >
+            Sign Up
+          </NavLink>
         </div>
       </div>
     </nav>
