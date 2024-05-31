@@ -44,7 +44,7 @@ const Header = () => {
     <nav className="bg-primary py-2 text-primary-content">
       <div className="nav-content container-center flex items-center justify-between gap-5">
         {/* Only visible on large devices. hidden for small devices */}
-        <div className="hidden list-none items-center gap-8 lg:flex">
+        <div className="navLinksLarge hidden list-none items-center gap-8 lg:flex">
           {navLinks}
         </div>
         {/* Menu // Only visible on small devices, hidden for large devices*/}
@@ -69,7 +69,7 @@ const Header = () => {
               aria-label="close sidebar"
               className="drawer-overlay"
             ></label>
-            <ul className="menu min-h-full w-80 bg-base-200 p-4 text-base-content">
+            <ul className="menu-mobile menu min-h-full w-80 gap-4 bg-base-200 p-4 pt-8 text-base-content">
               {/* Sidebar content here */}
               {navLinks}
             </ul>

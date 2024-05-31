@@ -6,12 +6,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB97Fw0zi2pMJ0xm_LKb2DPgPiN9rNNsSI",
-  authDomain: "fir-caaac.firebaseapp.com",
-  projectId: "fir-caaac",
-  storageBucket: "fir-caaac.appspot.com",
-  messagingSenderId: "817216405766",
-  appId: "1:817216405766:web:fbbb2573e8d7e3a0569e87",
+  apiKey: "AIzaSyAAgg-UUaYGkIrBKF8zSu4-x68uucVsQwE",
+  authDomain: "arban-public-school.firebaseapp.com",
+  projectId: "arban-public-school",
+  storageBucket: "arban-public-school.appspot.com",
+  messagingSenderId: "438255228914",
+  appId: "1:438255228914:web:97352b295e7ecd8980bd6b",
 };
 
 // Initialize Firebase
