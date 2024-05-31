@@ -1,11 +1,8 @@
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} from "firebase/auth";
-import { useState } from "react";
+import { sendEmailVerification } from "firebase/auth";
+import { useContext, useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import auth from "../../utils/firebase";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 
 const SignUp = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -16,9 +13,13 @@ const SignUp = () => {
 
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const { user, createUser } = useContext(AuthContext);
+
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
+  console.log(user, createUser);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,8 +37,8 @@ const SignUp = () => {
       return;
     } else {
       setIsSigningUp(true);
-      console.log(email, password);
-      createUserWithEmailAndPassword(auth, email, password)
+
+      createUser(email, password)
         .then((result) => {
           setIsSigningUp(false);
           console.log(result.user);

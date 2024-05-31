@@ -1,9 +1,10 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import auth from "../../utils/firebase";
+import { AuthContext } from "../provider/AuthProvider";
 
 const LogIn = () => {
+  const { signInUser } = useContext(AuthContext);
+
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const [successMessage, setSuccessMessage] = useState(null);
@@ -25,7 +26,7 @@ const LogIn = () => {
 
     setErrorMessage("");
 
-    signInWithEmailAndPassword(auth, email, password)
+    signInUser(email, password)
       .then((data) => {
         console.log(data.user);
         if (!data.user.emailVerified) {
