@@ -48,6 +48,9 @@ const Header = () => {
           Log Out
         </li>
       )}
+      <li>
+        <NavLink to="/careers">Careers</NavLink>
+      </li>
     </>
   );
 
