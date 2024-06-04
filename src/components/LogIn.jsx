@@ -1,8 +1,11 @@
 import { useContext, useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { AuthContext } from "../provider/AuthProvider";
+import { useLocation } from "react-router-dom";
 
 const LogIn = () => {
+  const router = useLocation();
+  console.log(router);
   const { signInUser } = useContext(AuthContext);
 
   const [passwordVisible, setPasswordVisible] = useState(false);

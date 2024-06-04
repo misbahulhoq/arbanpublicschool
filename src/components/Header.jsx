@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 
 const Header = () => {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "fantasy",
   );
+
+  const { user, logOut } = useContext(AuthContext);
 
   const handleTheme = (e) => {
     if (e.target.checked) {
@@ -35,11 +38,19 @@ const Header = () => {
       <li>
         <NavLink to="/results">Results</NavLink>
       </li>
-      <li>
-        <NavLink to="/login">Log In</NavLink>
-      </li>
+      {!user && (
+        <li>
+          <NavLink to="/login">Log In</NavLink>
+        </li>
+      )}
+      {user && (
+        <li className="cursor-pointer select-none" onClick={logOut}>
+          Log Out
+        </li>
+      )}
     </>
   );
+
   return (
     <nav className="bg-primary py-2 text-primary-content">
       <div className="nav-content container-center flex items-center justify-between gap-5">
@@ -104,12 +115,14 @@ const Header = () => {
             </svg>
           </label>
 
-          <NavLink
-            to="/signup"
-            className="btn btn-outline border border-white text-lg text-primary-content hover:btn-secondary"
-          >
-            Sign Up
-          </NavLink>
+          {!user && (
+            <NavLink
+              to="/signup"
+              className="btn btn-outline border border-white text-lg text-primary-content hover:btn-secondary"
+            >
+              Sign Up
+            </NavLink>
+          )}
         </div>
       </div>
     </nav>
