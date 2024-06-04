@@ -24,10 +24,14 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (currenUser) => {
+    const unSubscribe = onAuthStateChanged(auth, (currenUser) => {
       setUser(currenUser);
-      console.log(currenUser);
     });
+
+    // effect clean up function
+    return () => {
+      unSubscribe();
+    };
   }, []);
 
   const authInfo = { user, createUser, signInUser, logOut };

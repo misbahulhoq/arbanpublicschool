@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { Link } from "react-router-dom";
-
+import PropTypes from "prop-types";
 const Results = ({ children }) => {
   const { user } = useContext(AuthContext);
   return user ? (
@@ -19,3 +19,7 @@ const Results = ({ children }) => {
 };
 
 export default Results;
+
+Results.propTypes = {
+  children: PropTypes.node.isRequired,
+};

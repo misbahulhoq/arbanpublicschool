@@ -5,6 +5,7 @@ import SignUp from "./components/SignUp.jsx";
 import LogIn from "./components/LogIn.jsx";
 import Results from "./components/Results.jsx";
 import ResultsContent from "./components/ResultsContent.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
