@@ -4,7 +4,8 @@ import Home from "./Home.jsx";
 import SignUp from "./components/SignUp.jsx";
 import LogIn from "./components/LogIn.jsx";
 import Results from "./components/Results.jsx";
-import ResultsContent from "./components/ResultsContent.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
+import ForgotPassword from "./components/ForgotPassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,11 +25,15 @@ const router = createBrowserRouter([
         element: <LogIn />,
       },
       {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
         path: "/results",
         element: (
-          <Results>
-            <ResultsContent />
-          </Results>
+          <PrivateRoute>
+            <Results />
+          </PrivateRoute>
         ),
       },
     ],

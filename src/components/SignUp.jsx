@@ -43,10 +43,10 @@ const SignUp = () => {
           setIsSigningUp(false);
           console.log(result.user);
           result.user.displayName = name;
-          setSuccessMessage("SignUp Successfull");
+          setSuccessMessage("SignUp Successfull, Please verify your email");
           sendEmailVerification(result.user)
             .then(() => {
-              alert("Go to you inbox and verify your email.");
+              // alert("Go to you inbox and verify your email.");
             })
             .catch((error) => {
               console.log(error.message);

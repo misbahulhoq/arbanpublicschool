@@ -1,11 +1,15 @@
 import { useContext, useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { AuthContext } from "../provider/AuthProvider";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const LogIn = () => {
-  const router = useLocation();
-  console.log(router);
+  const location = useLocation();
+
+  const navigate = useNavigate();
+
+  console.log(location);
+
   const { signInUser } = useContext(AuthContext);
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -37,6 +41,8 @@ const LogIn = () => {
           return;
         }
         setSuccessMessage("Login Successfull");
+
+        navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {
         console.log(error.message);
@@ -47,7 +53,13 @@ const LogIn = () => {
   return (
     <div className="my-4 flex items-center justify-center lg:my-0 lg:min-h-screen">
       <div className="w-full max-w-md space-y-3 rounded-xl p-8 shadow-lg">
-        <h1 className="text-center text-2xl font-bold ">Login</h1>
+        <h1 className="text-center text-2xl font-bold ">
+          {location.state === "/results"
+            ? "In order to view results you must"
+            : ""}{" "}
+          Login
+        </h1>
+        {/* <h1 className="text-center text-2xl font-bold ">Login</h1> */}
 
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="form-control">
@@ -74,9 +86,14 @@ const LogIn = () => {
                 className="input input-bordered w-full pr-10"
                 required
               />
+
+              <Link className="block pt-3 text-info" to="/forgot-password">
+                Forgot Password?
+              </Link>
+
               <button
                 type="button"
-                className="text-gray- absolute inset-y-0 right-0 flex items-center px-3 text-2xl"
+                className="absolute inset-y-0 -top-9 right-0 flex items-center px-3 text-2xl"
                 onClick={togglePasswordVisibility}
               >
                 {passwordVisible ? <IoMdEye /> : <IoMdEyeOff />}
@@ -89,6 +106,13 @@ const LogIn = () => {
               Login
             </button>
           </div>
+
+          <p>
+            Dont have an accout ?{" "}
+            <Link className="p-1 text-secondary" to="/signup">
+              Sign Up
+            </Link>
+          </p>
 
           <p className="text-success">{successMessage && successMessage}</p>
           <p className="text-error">{errorMessage && errorMessage}</p>

@@ -7,18 +7,18 @@ export default {
   plugins: [require("daisyui")],
   daisyui: {
     themes: [
-      "fantasy",
-      "sunset",
-      // {
-      //   light: {
-      //     ...require("daisyui/src/theming/themes")["light"],
-      //     primary: "#813588",
-      //   },
-      //   dark: {
-      //     ...require("daisyui/src/theming/themes")["dark"],
-      //     primary: "#813588",
-      //   },
-      // },
+      // "fantasy",
+      // "sunset",
+      {
+        fantasy: {
+          ...require("daisyui/src/theming/themes")["fantasy"],
+          "primary-content": "#fff",
+        },
+        sunset: {
+          ...require("daisyui/src/theming/themes")["sunset"],
+          primary: "#813588",
+        },
+      },
     ],
   },
 };
