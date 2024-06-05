@@ -12,7 +12,7 @@ dist
 dist-ssr
 *.local
 *.production
-
+.env
 # /utils/firebase.js
 
 # Editor directories and files
