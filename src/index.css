@@ -13,4 +13,9 @@
   .menu-mobile a {
     @apply block py-4 text-center;
   }
+  @layer base {
+    body {
+      min-height: 100vh;
+    }
+  }
 }

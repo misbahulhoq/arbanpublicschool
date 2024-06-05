@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      minHeight: {
+        "form-lg": "calc(100vh - 160px)",
+        "form-sm": "calc(100vh - 235px)",
+      },
+    },
   },
   plugins: [require("daisyui")],
   daisyui: {
