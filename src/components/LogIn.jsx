@@ -51,7 +51,7 @@ const LogIn = () => {
   };
 
   return (
-    <div className="lg:min-h-form-lg min-h-form-sm flex items-center justify-center">
+    <div className="my-4 flex items-center justify-center lg:my-0 lg:min-h-screen">
       <div className="w-full max-w-md space-y-3 rounded-xl p-8 shadow-lg">
         <h1 className="text-center text-2xl font-bold ">
           {location.state === "/results"
