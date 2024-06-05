@@ -6,13 +6,14 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_APIKEY,
-  authDomain: import.meta.env.VITE_AUTHDOMAIN,
-  projectId: import.meta.env.VITE_PROJECTID,
-  storageBucket: import.meta.env.VITE_STORAGEBUCKET,
-  messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID,
-  appId: import.meta.env.VITE_APPID,
+  apiKey: "AIzaSyDsQ6T_GodD9zdY1Z-JK0kX8HfOLkMEc30",
+  authDomain: "arbanpublicschool.firebaseapp.com",
+  projectId: "arbanpublicschool",
+  storageBucket: "arbanpublicschool.appspot.com",
+  messagingSenderId: "1051498801878",
+  appId: "1:1051498801878:web:1299753faf3b89bbfa3777",
 };
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
