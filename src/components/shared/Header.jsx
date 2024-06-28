@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { NavLink } from "react-router-dom";
-import { AuthContext } from "../provider/AuthProvider";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const Header = () => {
   const [theme, setTheme] = useState(

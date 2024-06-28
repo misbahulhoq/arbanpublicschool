@@ -12,11 +12,13 @@ export default {
       {
         fantasy: {
           ...require("daisyui/src/theming/themes")["fantasy"],
+          primary: "#813588",
           "primary-content": "#fff",
         },
         sunset: {
           ...require("daisyui/src/theming/themes")["sunset"],
           primary: "#813588",
+          "primary-content": "#fff",
         },
       },
     ],
