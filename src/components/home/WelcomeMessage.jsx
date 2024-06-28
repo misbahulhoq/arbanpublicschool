@@ -12,7 +12,10 @@ const WelcomeMessage = () => {
       {/* Dark overlay */}
       <div className="animate__animated animate__backInUp relative z-10 flex h-full flex-col items-center justify-center text-center">
         <h1 className="mb-4 text-5xl font-bold">
-          Welcome to Arban Public School!
+          Welcome to{" "}
+          <span className="text-accent dark:text-primary">
+            Arban Public School!
+          </span>
         </h1>
         <p className="mb-6 text-2xl">
           A place where learning is fun and every child is special.
