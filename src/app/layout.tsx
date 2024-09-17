@@ -16,6 +16,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Arban Public School",
   description: "A place where learning is fun and every child is special",
+  keywords: ["Arban Public School", "Arban School", "Urban Public School", "Arban", "Arban Public"],
 };
 
 export default function RootLayout({
