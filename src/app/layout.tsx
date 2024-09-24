@@ -16,7 +16,10 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Arban Public School",
+  title: {
+    template: "%s | Arban Public School",
+    default: "Arban Public School",
+  },
   description: "A place where learning is fun and every child is special",
   keywords: [
     "Arban Public School",
