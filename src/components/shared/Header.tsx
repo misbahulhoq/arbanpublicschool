@@ -1,15 +1,18 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import NavLink from "./NavLink";
 import Link from "next/link";
 import Image from "next/image";
 
 const Header = () => {
   const [theme, setTheme] = useState(
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+    typeof window !== "undefined" && localStorage.getItem("theme")
+      ? localStorage.getItem("theme")
+      : "light"
   );
 
-  const handleTheme = (e) => {
+  const handleTheme = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setTheme("light");
     } else {
@@ -20,6 +23,7 @@ const Header = () => {
   useEffect(() => {
     localStorage.setItem("theme", theme as string);
     const localTheme = localStorage.getItem("theme");
+    //@ts-expect-error
     document?.querySelector("html").setAttribute("data-theme", localTheme);
   }, [theme]);
 
@@ -82,9 +86,8 @@ const Header = () => {
             height={25}
             width={40}
             alt="Arban Public School Logo"
-            className="rounded hidden lg:block"
+            className="rounded lg:h-auto lg:w-auto h-9"
           />
-          <h2 className="italic">Arban</h2>
         </Link>
       </div>
 
