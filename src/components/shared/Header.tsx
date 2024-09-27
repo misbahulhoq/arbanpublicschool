@@ -53,7 +53,7 @@ const Header = () => {
   );
 
   return (
-    <div className="navbar bg-primary text-primary-content">
+    <div className="navbar bg-primary text-primary-content sticky top-0 z-10">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -80,7 +80,7 @@ const Header = () => {
           </ul>
         </div>
         {/* <a className="btn btn-ghost text-xl">daisyUI</a> */}
-        <Link href="/" className="">
+        <Link href="/" className="block ml-auto lg:ml-1">
           <Image
             src="/arban-public-school-logo.jpg"
             height={25}
