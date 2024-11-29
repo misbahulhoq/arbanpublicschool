@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
-  const [signUpUserData] = useSignUpUserMutation();
+  const [signUpUserData, { isLoading }] = useSignUpUserMutation();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,9 +19,9 @@ const SignupForm = () => {
       email: form.get("email"),
       uid: form.get("uid"),
       password: form.get("password"),
+      // this is default role //other roles can only be added from the backend
+      role: "student",
     };
-
-    console.log(formValues);
 
     if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password as string)) {
       Swal.fire({
@@ -33,9 +33,16 @@ const SignupForm = () => {
     }
 
     try {
-      await signUpUserData(formValues);
+      await signUpUserData(formValues).unwrap();
     } catch (err: unknown) {
-      console.log("Something went wrong ");
+      console.log(err);
+      Swal.fire({
+        icon: "error",
+        title: "Ooops..",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        text: err.data.code === "uid-exists" ? err?.data?.message : err.data,
+      });
     }
   };
   return (
@@ -183,8 +190,13 @@ const SignupForm = () => {
               </span>
             </div>
 
-            <button type="submit" className="btn btn-primary btn-block">
-              Create account
+            <button
+              className={`btn btn-primary btn-block ${
+                isLoading && "btn-disabled"
+              }`}
+            >
+              {isLoading && <span className="loading loading-spinner"></span>}
+              {isLoading ? "Loading.." : "Create Account"}
             </button>
           </form>
 
