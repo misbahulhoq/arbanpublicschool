@@ -5,6 +5,6 @@ const baseUrl = "http://localhost:8000";
 
 export const baseApi = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({ baseUrl, credentials: "include" }),
   endpoints: () => ({}),
 });
