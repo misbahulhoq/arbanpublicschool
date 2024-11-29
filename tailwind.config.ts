@@ -9,8 +9,6 @@ const config: Config = {
   plugins: [require("daisyui")],
   daisyui: {
     themes: [
-      // "fantasy",
-      // "sunset",
       {
         light: {
           ...require("daisyui/src/theming/themes")["light"],
