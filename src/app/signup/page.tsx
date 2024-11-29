@@ -1,25 +1,41 @@
 "use client";
+import { useSignUpUserMutation } from "@/redux/features/auth/authApi";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Swal from "sweetalert2";
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
-  const handleSubmit = (e) => {
+  const [signUpUserData] = useSignUpUserMutation();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = new FormData(e.target);
-    const name = form.get("name");
-    const email = form.get("email");
-    const password = form.get("password");
-    if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
+    const form = new FormData(e.currentTarget);
+
+    const formValues = {
+      name: form.get("name"),
+      email: form.get("email"),
+      uid: form.get("uid"),
+      password: form.get("password"),
+    };
+
+    console.log(formValues);
+
+    if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password as string)) {
       Swal.fire({
         icon: "warning",
         title: "Oops...",
         text: "Please fillup the password criteria!",
       });
       return;
+    }
+
+    try {
+      await signUpUserData(formValues);
+    } catch (err: unknown) {
+      console.log("Something went wrong ");
     }
   };
   return (
