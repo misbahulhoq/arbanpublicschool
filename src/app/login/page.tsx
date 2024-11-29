@@ -1,10 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
   return (
     <div
       className="hero bg-cover bg-no-repeat"
@@ -18,7 +22,7 @@ const LoginForm = () => {
           className="card w-full max-w-[280px] mx-auto shadow-2xl border border-base-100"
           style={{ backdropFilter: "blur(30px)" }}
         >
-          <form className="card-body pb-0 px-3">
+          <form className="card-body pb-0 px-3" onSubmit={handleLogin}>
             {/* Email */}
             <div className="form-control">
               <label className="label pb-1">

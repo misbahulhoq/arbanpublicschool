@@ -2,13 +2,14 @@
 import { useSignUpUserMutation } from "@/redux/features/auth/authApi";
 import Image from "next/image";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import Swal from "sweetalert2";
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [signUpUserData, { isLoading }] = useSignUpUserMutation();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,7 +34,18 @@ const SignupForm = () => {
     }
 
     try {
-      await signUpUserData(formValues).unwrap();
+      const response = await signUpUserData(formValues).unwrap();
+
+      console.log(response);
+
+      if (formRef.current) {
+        Swal.fire({
+          icon: "success",
+          title: `Signup Successfull!`,
+          text: `Congratulations, ${response.name} ! You have signed up successfully.`,
+        });
+        formRef.current.reset();
+      }
     } catch (err: unknown) {
       console.log(err);
       Swal.fire({
@@ -63,7 +75,7 @@ const SignupForm = () => {
             Create an account
           </h2>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4" ref={formRef} onSubmit={handleSubmit}>
             {/* name field */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium mb-1">
