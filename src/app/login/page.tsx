@@ -1,13 +1,45 @@
 "use client";
+import { useLogInUserMutation } from "@/redux/features/auth/authApi";
 import Image from "next/image";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useRef, useState } from "react";
+import Swal from "sweetalert2";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [addLoginUserData, { isLoading }] = useLogInUserMutation();
+  const router = useRouter();
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const formValues = {
+      email: form.get("email"),
+      uid: form.get("uid"),
+      password: form.get("password"),
+    };
+    try {
+      await addLoginUserData(formValues).unwrap();
+      if (formRef.current) {
+        Swal.fire({
+          icon: "success",
+          title: "Login successfull!",
+        });
+        formRef.current.reset();
+        router.push("/");
+      }
+    } catch (ex) {
+      console.log(ex);
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        text: ex.data,
+      });
+    }
   };
   return (
     <div
@@ -22,7 +54,11 @@ const LoginForm = () => {
           className="card w-full max-w-[280px] mx-auto shadow-2xl border border-base-100"
           style={{ backdropFilter: "blur(30px)" }}
         >
-          <form className="card-body pb-0 px-3" onSubmit={handleLogin}>
+          <form
+            className="card-body pb-0 px-3"
+            ref={formRef}
+            onSubmit={handleLogin}
+          >
             {/* Email */}
             <div className="form-control">
               <label className="label pb-1">
@@ -30,7 +66,9 @@ const LoginForm = () => {
               </label>
               <input
                 type="email"
-                placeholder="email"
+                placeholder="Enter your email"
+                name="email"
+                id="email"
                 className="input input-bordered"
                 required
               />
@@ -43,7 +81,8 @@ const LoginForm = () => {
               </label>
               <input
                 type="text"
-                placeholder="user id"
+                placeholder="Enter your user id"
+                name="uid"
                 className="input input-bordered"
                 required
               />
@@ -56,8 +95,9 @@ const LoginForm = () => {
               </label>
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="password"
+                placeholder="Enter your password"
                 className="input input-bordered"
+                name="password"
                 required
               />
               <Image
@@ -73,9 +113,13 @@ const LoginForm = () => {
                 }}
               />
             </div>
-            <div className="form-control mt-4">
-              <button className="btn btn-primary">Login</button>
-            </div>
+
+            <button
+              className={`btn btn-primary mt-3 ${isLoading && "btn-disabled"}`}
+            >
+              {isLoading && <span className="loading loading-spinner"></span>}
+              {isLoading ? "Loading..." : "Login"}
+            </button>
           </form>
           <div className="pt-4 text-center pb-6 text-black">
             Dont have an account ?{" "}
