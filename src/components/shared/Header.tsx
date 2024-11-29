@@ -4,6 +4,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import NavLink from "./NavLink";
 import Link from "next/link";
 import Image from "next/image";
+import { useCheckLoginQuery } from "@/redux/features/auth/authApi";
 
 const Header = () => {
   const [theme, setTheme] = useState(
@@ -11,6 +12,7 @@ const Header = () => {
       ? localStorage.getItem("theme")
       : "light"
   );
+  const { data, isLoading } = useCheckLoginQuery();
 
   const handleTheme = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -39,7 +41,7 @@ const Header = () => {
           About
         </NavLink>
       </li>
-      <li>
+      <li className={`${isLoading && "hidden"} ${data && "hidden"}`}>
         <NavLink href="/login" className="py-3 lg:py-2">
           Login
         </NavLink>

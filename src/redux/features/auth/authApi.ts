@@ -20,8 +20,15 @@ export const authApi = baseApi.injectEndpoints({
         };
       },
     }),
+    checkLogin: build.query<unknown, void>({
+      query: () => `/auth/me`,
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useSignUpUserMutation, useLogInUserMutation } = authApi;
+export const {
+  useSignUpUserMutation,
+  useLogInUserMutation,
+  useCheckLoginQuery,
+} = authApi;
