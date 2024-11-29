@@ -11,3 +11,9 @@
 p {
   opacity: 0.75;
 }
+
+.container-center {
+  width: 93%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
