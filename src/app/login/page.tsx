@@ -21,12 +21,14 @@ const LoginForm = () => {
       password: form.get("password"),
     };
     try {
-      await addLoginUserData(formValues).unwrap();
-      if (formRef.current) {
+      const response = await addLoginUserData(formValues).unwrap();
+      const authToken = response.authToken;
+      if (formRef.current && response.data) {
         Swal.fire({
           icon: "success",
           title: "Login successfull!",
         });
+        localStorage.setItem("authToken", authToken as string);
         formRef.current.reset();
         router.push("/");
       }

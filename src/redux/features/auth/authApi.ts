@@ -19,9 +19,30 @@ export const authApi = baseApi.injectEndpoints({
           body,
         };
       },
+      transformResponse: (response, meta) => {
+        const headers = meta?.response?.headers;
+        const authToken = headers?.get("authToken");
+        console.log(headers);
+        return { data: response, authToken };
+      },
     }),
-    checkLogin: build.query<unknown, void>({
-      query: () => `/auth/me`,
+    getUserInfo: build.query<unknown, void>({
+      query: () => ({
+        url: "/auth/me",
+        method: "GET",
+      }),
+      transformResponse: (response, meta) => {
+        return { data: response, status: meta?.response?.statusText };
+      },
+    }),
+    logOutUser: build.mutation({
+      query(body) {
+        return {
+          url: "/auth/logout",
+          method: "POST",
+          body,
+        };
+      },
     }),
   }),
   overrideExisting: false,
@@ -30,5 +51,6 @@ export const authApi = baseApi.injectEndpoints({
 export const {
   useSignUpUserMutation,
   useLogInUserMutation,
-  useCheckLoginQuery,
+  useGetUserInfoQuery,
+  useLogOutUserMutation,
 } = authApi;

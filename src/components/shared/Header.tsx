@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import NavLink from "./NavLink";
 import Link from "next/link";
 import Image from "next/image";
-import { useCheckLoginQuery } from "@/redux/features/auth/authApi";
+import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
+import Swal from "sweetalert2";
 
 const Header = () => {
   const [theme, setTheme] = useState(
@@ -12,7 +13,9 @@ const Header = () => {
       ? localStorage.getItem("theme")
       : "light"
   );
-  const { data, isLoading } = useCheckLoginQuery();
+  const [showUserMenu, setUserMenu] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const { data: userInfo, isLoading, status } = useGetUserInfoQuery();
 
   const handleTheme = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -22,11 +25,35 @@ const Header = () => {
     }
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (imageRef.current && !imageRef.current.contains(event.target as Node)) {
+      setUserMenu(false); // Handle outside click
+    }
+  };
+
+  const handleLogOut = () => {
+    Swal.fire({
+      title: "Are you sure to logout?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+      }
+    });
+  };
+
   useEffect(() => {
     localStorage.setItem("theme", theme as string);
     const localTheme = localStorage.getItem("theme");
     //@ts-expect-error
     document?.querySelector("html").setAttribute("data-theme", localTheme);
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, [theme]);
 
   const navLinks = (
@@ -41,7 +68,7 @@ const Header = () => {
           About
         </NavLink>
       </li>
-      <li className={`${isLoading && "hidden"} ${data && "hidden"}`}>
+      <li className={`${isLoading && "hidden"} ${userInfo && "hidden"}`}>
         <NavLink href="/login" className="py-3 lg:py-2">
           Login
         </NavLink>
@@ -125,6 +152,40 @@ const Header = () => {
               <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
             </svg>
           </label>
+
+          <div
+            className={`user-menu-wrapper relative ${
+              userInfo && !isLoading ? "block" : "hidden"
+            }`}
+          >
+            <Image
+              src={`/icons/user.svg`}
+              alt="Clickable"
+              height={30}
+              width={30}
+              className="cursor-pointer"
+              onClick={() => {
+                setUserMenu(!showUserMenu);
+              }}
+              ref={imageRef}
+            />
+
+            <ul
+              className={`menu ${
+                showUserMenu ? "block" : "hidden"
+              } absolute right-0 top-9 bg-base-200 rounded-box w-56 text-base-content`}
+            >
+              <li>
+                <Link href={`/dashboard`}>Dashboard</Link>
+              </li>
+              <li>
+                <Link href={`/me`}>Profile</Link>
+              </li>
+              <li className={`${userInfo && !isLoading ? "block" : "hidden"}`}>
+                <a onClick={handleLogOut}>Logout</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

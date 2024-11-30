@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./api/api";
 
 const rootReducer = combineReducers({
+  authToken: "",
   [baseApi.reducerPath]: baseApi.reducer,
 });
 export const store = configureStore({
