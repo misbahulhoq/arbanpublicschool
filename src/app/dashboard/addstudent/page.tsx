@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import { useAddStudentMutation } from "@/redux/features/students/studentsApi";
 import React from "react";
@@ -33,6 +34,7 @@ const StudentForm: React.FC = () => {
     if (response.error) {
       Swal.fire({
         icon: "error",
+        // @ts-ignore
         title: `${response.error?.data}`,
       });
       return;
@@ -48,7 +50,7 @@ const StudentForm: React.FC = () => {
   };
 
   return (
-    <div className="flex py-5 min-h-screen">
+    <div className="flex min-h-screen">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="rounded-lg w-full max-w-md"

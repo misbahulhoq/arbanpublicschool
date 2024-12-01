@@ -7,12 +7,15 @@ const SideBar = () => {
       <ul className="menu h-screen bg-base-200 w-56">
         <li>
           <DashboardLink
-            props={{ href: "/dashboard/addstudent", children: "Add Student" }}
+            props={{ href: "/dashboard/allstudents", children: "All Students" }}
           ></DashboardLink>
         </li>
         <li>
-          <a>Item 2</a>
+          <DashboardLink
+            props={{ href: "/dashboard/addstudent", children: "Add Student" }}
+          ></DashboardLink>
         </li>
+
         <li>
           <a>Item 3</a>
         </li>
