@@ -16,7 +16,7 @@ const SignupForm = () => {
     const form = new FormData(e.currentTarget);
 
     const formValues = {
-      name: form.get("name"),
+      // name: form.get("name"),
       email: form.get("email"),
       uid: form.get("uid"),
       password: form.get("password"),
@@ -77,7 +77,7 @@ const SignupForm = () => {
 
           <form className="space-y-4" ref={formRef} onSubmit={handleSubmit}>
             {/* name field */}
-            <div>
+            {/* <div>
               <label htmlFor="name" className="block text-sm font-medium mb-1">
                 Name
               </label>
@@ -86,6 +86,21 @@ const SignupForm = () => {
                 id="name"
                 name="name"
                 placeholder="What should we call you?"
+                className="input input-bordered w-full "
+                required
+              />
+            </div> */}
+
+            {/* uid field */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium mb-1">
+                UID
+              </label>
+              <input
+                type="text"
+                id="uid"
+                name="uid"
+                placeholder="Enter your uid"
                 className="input input-bordered w-full "
                 required
               />
@@ -102,21 +117,6 @@ const SignupForm = () => {
                 name="email"
                 placeholder="Enter your email"
                 className="input input-bordered w-full"
-                required
-              />
-            </div>
-
-            {/* uid field */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1">
-                UID
-              </label>
-              <input
-                type="text"
-                id="uid"
-                name="uid"
-                placeholder="Enter your uid"
-                className="input input-bordered w-full "
                 required
               />
             </div>
