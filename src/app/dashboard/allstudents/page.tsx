@@ -136,7 +136,7 @@ const AllStudentsPage = () => {
         </table>
 
         {/* single student info modal*/}
-        <dialog id="my_modal_1" className="modal modal-open">
+        <dialog id="my_modal_1" className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">{studentInfo?.name}</h3>
             <p className="py-2">Class: {studentInfo?.class}</p>
