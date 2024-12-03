@@ -1,6 +1,8 @@
 "use client";
 import { useGetStudentQuery } from "@/redux/features/students/studentsApi";
 import React, { useState } from "react";
+import { FaInfoCircle } from "react-icons/fa";
+import { FiEdit } from "react-icons/fi";
 
 const classes = [
   {
@@ -50,11 +52,24 @@ const classes = [
   },
 ];
 
+type StudentType = {
+  _id: string;
+  name: string;
+  uid: string;
+  class: string;
+  phone: string;
+  fathersName: string;
+  mothersName: string;
+};
+
 const AllStudentsPage = () => {
   //   const [classQuery, setClassQuery] = useState("all");
   const [selectedClass, setClass] = useState(classes[0]);
-  const { data } = useGetStudentQuery({ className: selectedClass.value });
-  console.log(data);
+  const [studentInfo, setStudentInfo] = useState<StudentType | null>(null);
+  const { data: students } = useGetStudentQuery({
+    className: selectedClass.value,
+  });
+  console.log(studentInfo);
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     const selectedOption = classes.find((item) => item.value === selectedValue);
@@ -85,36 +100,67 @@ const AllStudentsPage = () => {
           {/* head */}
           <thead>
             <tr>
-              <th></th>
               <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
+              <th>Class</th>
+              <th>Uid</th>
+              <th>Phone</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {/* row 1 */}
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Blue</td>
-            </tr>
-            {/* row 2 */}
-            <tr>
-              <th>2</th>
-              <td>Hart Hagerty</td>
-              <td>Desktop Support Technician</td>
-              <td>Purple</td>
-            </tr>
-            {/* row 3 */}
-            <tr>
-              <th>3</th>
-              <td>Brice Swyre</td>
-              <td>Tax Accountant</td>
-              <td>Red</td>
-            </tr>
+            {students?.map((student: StudentType) => {
+              const { _id, name, uid, class: cls, phone } = student;
+              return (
+                <tr key={_id}>
+                  <th>{name}</th>
+                  <th>{cls}</th>
+                  <th>{uid}</th>
+                  <td>{phone}</td>
+                  <td className="flex gap-3">
+                    <FaInfoCircle
+                      className="text-primary text-lg inline-block cursor-pointer"
+                      onClick={() => {
+                        setStudentInfo(student);
+                        document
+                          .querySelector("#my_modal_1")
+                          ?.classList.add("modal-open");
+                      }}
+                    />
+                    <FiEdit className="text-primary text-lg cursor-pointer" />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
+
+        {/* single student info modal*/}
+        <dialog id="my_modal_1" className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">{studentInfo?.name}</h3>
+            <p className="py-2">Class: {studentInfo?.class}</p>
+            <p className="py-2">Father: {studentInfo?.fathersName}</p>{" "}
+            <p className="py-2">Mother: {studentInfo?.mothersName}</p>{" "}
+            <p className="py-2">UID: {studentInfo?.uid}</p>
+            <p className="py-2">Phone: {studentInfo?.phone}</p>
+            <div className="modal-action">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button
+                  className="btn"
+                  onClick={() => {
+                    document
+                      .querySelector("#my_modal_1")
+                      ?.classList.remove("modal-open");
+                  }}
+                >
+                  Close
+                </button>
+              </form>
+            </div>
+          </div>
+        </dialog>
       </div>
     </div>
   );

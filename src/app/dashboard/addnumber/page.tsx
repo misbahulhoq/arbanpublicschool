@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import { useAddNumberMutation } from "@/redux/features/numbers/numberApi";
 import React from "react";
@@ -59,6 +60,7 @@ const ExamForm: React.FC = () => {
           Swal.fire({
             icon: "error",
             title: "Oops!",
+            // @ts-ignore
             titleText: `${res.error.data}`,
           });
         }
