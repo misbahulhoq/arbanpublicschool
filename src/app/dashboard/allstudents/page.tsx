@@ -58,7 +58,7 @@ const AllStudentsPage = () => {
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     const selectedOption = classes.find((item) => item.value === selectedValue);
-    setClass(selectedOption);
+    setClass(selectedOption as { className: string; value: string });
   };
   return (
     <div className="">

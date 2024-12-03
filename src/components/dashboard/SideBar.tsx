@@ -15,9 +15,15 @@ const SideBar = () => {
             props={{ href: "/dashboard/addstudent", children: "Add Student" }}
           ></DashboardLink>
         </li>
-
         <li>
-          <a>Item 3</a>
+          <DashboardLink
+            props={{ href: "/dashboard/addnumber", children: "Add Number" }}
+          ></DashboardLink>
+        </li>
+        <li>
+          <DashboardLink
+            props={{ href: "/dashboard/allnumbers", children: "All Numbers" }}
+          ></DashboardLink>
         </li>
       </ul>
     </div>
