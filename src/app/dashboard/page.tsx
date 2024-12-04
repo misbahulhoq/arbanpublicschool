@@ -1,7 +1,15 @@
+"use client";
+import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
 import React from "react";
-
-const page = () => {
-  return <div>page</div>;
+let isAuthenticated = false;
+const DashboardPage = () => {
+  const { data, isLoading } = useGetUserInfoQuery();
+  if (!isLoading && data) {
+    isAuthenticated = true;
+  }
+  return <div>DashboardPage</div>;
 };
 
-export default page;
+export { isAuthenticated };
+
+export default DashboardPage;
