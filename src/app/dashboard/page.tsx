@@ -1,15 +1,19 @@
 "use client";
-import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
-import React from "react";
-let isAuthenticated = false;
-const DashboardPage = () => {
-  const { data, isLoading } = useGetUserInfoQuery();
-  if (!isLoading && data) {
-    isAuthenticated = true;
-  }
-  return <div>DashboardPage</div>;
-};
 
-export { isAuthenticated };
+import SideBar from "@/components/dashboard/SideBar";
+import React from "react";
+import PrivateRoute from "../routes/PrivateRoute";
+
+const DashboardPage = () => {
+  return (
+    <PrivateRoute>
+      <div>
+        <div className="sidebar-wrapper lg:col-span-3 xl:col-span-2 pr-5">
+          <SideBar />
+        </div>
+      </div>
+    </PrivateRoute>
+  );
+};
 
 export default DashboardPage;

@@ -12,7 +12,7 @@ const PrivateRoute = ({ children }: { children: ReactNode }) => {
     redirect("/login");
   }
   if (!isLoading && data) return children;
-  return null;
+  return <span className="loading loading-spinner"></span>;
 };
 
 export default PrivateRoute;
