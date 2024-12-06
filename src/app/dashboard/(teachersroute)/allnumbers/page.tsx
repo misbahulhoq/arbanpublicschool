@@ -70,8 +70,6 @@ const AllNumbers = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchStudentUid, setSearchStudentUid] = useState<string | null>(null);
-  const { data: singleNumber, isLoading } =
-    useGetNumberByUidQuery(searchStudentUid);
 
   const { register, handleSubmit } = useForm<Inputs>();
   useEffect(() => {
@@ -95,7 +93,7 @@ const AllNumbers = () => {
     }
   };
 
-  if (isLoading || allNumbersLoading)
+  if (allNumbersLoading)
     return <span className="loading loading-spinner"></span>;
   return (
     <>

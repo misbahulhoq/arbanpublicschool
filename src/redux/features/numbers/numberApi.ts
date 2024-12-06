@@ -12,7 +12,6 @@ const numbersApiSlice = baseApi.injectEndpoints({
     }),
     getNumberByUid: build.query({
       query: (uid: string | null) => {
-        console.log(uid);
         return { url: `/numbers/${uid}` };
       },
     }),
