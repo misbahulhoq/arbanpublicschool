@@ -40,7 +40,7 @@ export default function RootLayout({
     <html lang="en" data-theme="light">
       <link rel="icon" href="/icon.jpg" type="image/jpg" sizes="28x28" />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} overflow-hidden antialiased`}
       >
         <RootLayoutClient>{children}</RootLayoutClient>
       </body>
