@@ -76,8 +76,8 @@ const AllStudentsPage = () => {
   };
   return (
     <div className="">
-      <div className="top-part-wrapper flex justify-between items-center gap-5">
-        <h2 className="text-2xl lg:text-4xl font-bold">
+      <div className="top-part-wrapper flex items-center justify-between gap-5">
+        <h2 className="text-2xl font-bold lg:text-4xl">
           {selectedClass.className}
         </h2>
 
@@ -118,7 +118,7 @@ const AllStudentsPage = () => {
                   <td>{phone}</td>
                   <td className="flex gap-3">
                     <FaInfoCircle
-                      className="text-primary text-lg inline-block cursor-pointer"
+                      className="inline-block cursor-pointer text-lg text-primary"
                       onClick={() => {
                         setStudentInfo(student);
                         document
@@ -126,7 +126,7 @@ const AllStudentsPage = () => {
                           ?.classList.add("modal-open");
                       }}
                     />
-                    <FiEdit className="text-primary text-lg cursor-pointer" />
+                    <FiEdit className="cursor-pointer text-lg text-primary" />
                   </td>
                 </tr>
               );
@@ -137,7 +137,7 @@ const AllStudentsPage = () => {
         {/* single student info modal*/}
         <dialog id="my_modal_1" className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">{studentInfo?.name}</h3>
+            <h3 className="text-lg font-bold">{studentInfo?.name}</h3>
             <p className="py-2">Class: {studentInfo?.class}</p>
             <p className="py-2">Father: {studentInfo?.fathersName}</p>{" "}
             <p className="py-2">Mother: {studentInfo?.mothersName}</p>{" "}

@@ -88,7 +88,7 @@ const AllNumbers = () => {
     } else {
       setNumbers(
         //@ts-ignore
-        allNumbers?.filter((number) => number.uid.slice(3, 4) == selectedValue)
+        allNumbers?.filter((number) => number.uid.slice(3, 4) == selectedValue),
       );
     }
   };
@@ -97,7 +97,7 @@ const AllNumbers = () => {
     return <span className="loading loading-spinner"></span>;
   return (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold">{}</h2>
         <select
           className="select select-primary w-full max-w-xs"
@@ -113,14 +113,14 @@ const AllNumbers = () => {
         </select>
         <form className="join" onSubmit={handleSubmit(handleSearch)}>
           <input
-            className="input input-bordered join-item"
+            className="input join-item input-bordered"
             placeholder="Enter Uid"
             {...register("uid")}
           />
           <button className="btn btn-primary join-item">Search</button>
         </form>
       </div>
-      <div className="overflow-x-auto mt-5">
+      <div className="mt-5 overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
           <thead>
@@ -132,30 +132,28 @@ const AllNumbers = () => {
             </tr>
           </thead>
           <tbody>
-            {
-              //@ts-ignore
-              numbers?.map((number) => {
-                return (
-                  <tr key={number.uid}>
-                    <td>{number.uid}</td>
-                    <td>{number.uid.slice(3, 4)}</td>
-                    <td>{number.exam}</td>
-                    <td className="flex gap-3">
-                      <FaInfoCircle
-                        className="text-primary text-lg inline-block cursor-pointer"
-                        onClick={() => {
-                          setStudentNumber(number);
-                          document
-                            .querySelector("#my_modal_1")
-                            ?.classList.add("modal-open");
-                        }}
-                      />
-                      <FiEdit className="text-primary text-lg cursor-pointer" />
-                    </td>
-                  </tr>
-                );
-              })
-            }
+            {//@ts-ignore
+            numbers?.map((number) => {
+              return (
+                <tr key={number.uid}>
+                  <td>{number.uid}</td>
+                  <td>{number.uid.slice(3, 4)}</td>
+                  <td>{number.exam}</td>
+                  <td className="flex gap-3">
+                    <FaInfoCircle
+                      className="inline-block cursor-pointer text-lg text-primary"
+                      onClick={() => {
+                        setStudentNumber(number);
+                        document
+                          .querySelector("#my_modal_1")
+                          ?.classList.add("modal-open");
+                      }}
+                    />
+                    <FiEdit className="cursor-pointer text-lg text-primary" />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -163,7 +161,7 @@ const AllNumbers = () => {
       {/* single student info modal*/}
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
+          <h3 className="text-lg font-bold">
             Uid:{" "}
             {
               //@ts-ignore
@@ -179,27 +177,25 @@ const AllNumbers = () => {
           </p>
           <p className="py-2 font-semibold">Numbers:</p>
           <div>
-            {
-              //@ts-ignore
-              studentNumber?.numbers?.map((item, index) => {
-                return (
-                  <div key={index} className="mb-4">
-                    {Object.entries(item)
-                      .filter(([key]) => key !== "_id")
-                      .map(([key, value]) => (
-                        <div
-                          key={key}
-                          className="flex justify-between border-b p-2"
-                        >
-                          <span className="font-bold">{key}</span>
+            {//@ts-ignore
+            studentNumber?.numbers?.map((item, index) => {
+              return (
+                <div key={index} className="mb-4">
+                  {Object.entries(item)
+                    .filter(([key]) => key !== "_id")
+                    .map(([key, value]) => (
+                      <div
+                        key={key}
+                        className="flex justify-between border-b p-2"
+                      >
+                        <span className="font-bold">{key}</span>
 
-                          <span>{String(value)}</span>
-                        </div>
-                      ))}
-                  </div>
-                );
-              })
-            }
+                        <span>{String(value)}</span>
+                      </div>
+                    ))}
+                </div>
+              );
+            })}
           </div>
 
           <div className="modal-action">

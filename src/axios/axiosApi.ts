@@ -17,7 +17,7 @@ axiosClient.interceptors.request.use(
   (error) => {
     // Handle request errors
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosClient;

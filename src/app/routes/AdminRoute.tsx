@@ -11,7 +11,7 @@ const AdminRoute = ({ children }: { children: ReactNode }) => {
   if (!data && !isLoading) redirect("/login");
   if (!isAdmin && !isLoading)
     return (
-      <h2 className="text-error text-lg font-bold">Unauthorized Access</h2>
+      <h2 className="text-lg font-bold text-error">Unauthorized Access</h2>
     );
   if (isAdmin && !isLoading) return children;
   return <span className="loading loading-spinner"></span>;

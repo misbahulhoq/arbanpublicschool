@@ -53,11 +53,11 @@ const LoginForm = () => {
     >
       <div className="hero-content">
         <div
-          className="card w-full max-w-[280px] mx-auto shadow-2xl border border-base-100"
+          className="card mx-auto w-full max-w-[280px] border border-base-100 shadow-2xl"
           style={{ backdropFilter: "blur(30px)" }}
         >
           <form
-            className="card-body pb-0 px-3"
+            className="card-body px-3 pb-0"
             ref={formRef}
             onSubmit={handleLogin}
           >
@@ -109,7 +109,7 @@ const LoginForm = () => {
                 alt=""
                 height={35}
                 width={35}
-                className="absolute right-3 bottom-[6px] cursor-pointer"
+                className="absolute bottom-[6px] right-3 cursor-pointer"
                 onClick={() => {
                   setShowPassword(!showPassword);
                 }}
@@ -123,9 +123,9 @@ const LoginForm = () => {
               {isLoading ? "Loading..." : "Login"}
             </button>
           </form>
-          <div className="pt-4 text-center pb-6 text-black">
+          <div className="pb-6 pt-4 text-center text-black">
             Dont have an account ?{" "}
-            <Link href="/signup" className="text-black p-2">
+            <Link href="/signup" className="p-2 text-black">
               SignUp
             </Link>
           </div>

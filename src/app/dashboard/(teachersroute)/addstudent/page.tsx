@@ -53,9 +53,9 @@ const StudentForm: React.FC = () => {
     <div className="flex min-h-screen">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="rounded-lg w-full max-w-md"
+        className="w-full max-w-md rounded-lg"
       >
-        <h2 className="text-2xl font-bold text-center mb-6">
+        <h2 className="mb-6 text-center text-2xl font-bold">
           Student Information Form
         </h2>
         {[
@@ -67,21 +67,21 @@ const StudentForm: React.FC = () => {
           { label: "Mother's Name", name: "mothersName" },
         ].map((field) => (
           <div className="mb-4" key={field.name}>
-            <label htmlFor={field.name} className="block font-medium mb-1">
+            <label htmlFor={field.name} className="mb-1 block font-medium">
               {field.label}
             </label>
             <input
               id={field.name}
               type="text"
               {...register(field.name as keyof FormValues, { required: true })}
-              className={`input input-bordered w-full  ${
+              className={`input input-bordered w-full ${
                 errors[field.name as keyof FormValues]
-                  ? "border-error focus:ring-errof"
+                  ? "focus:ring-errof border-error"
                   : ""
               }`}
             />
             {errors[field.name as keyof FormValues] && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="mt-1 text-sm text-red-500">
                 {field.label} is required
               </p>
             )}

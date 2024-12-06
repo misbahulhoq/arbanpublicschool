@@ -11,11 +11,11 @@ const Header = () => {
   const [theme, setTheme] = useState(
     typeof window !== "undefined" && localStorage.getItem("theme")
       ? localStorage.getItem("theme")
-      : "light"
+      : "light",
   );
   const [showUserMenu, setUserMenu] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
-  const { data: userInfo, isLoading, status } = useGetUserInfoQuery();
+  const { data: userInfo, isLoading } = useGetUserInfoQuery();
 
   const handleTheme = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -82,7 +82,7 @@ const Header = () => {
   );
 
   return (
-    <div className="navbar bg-primary text-primary-content sticky top-0 z-10">
+    <div className="navbar sticky top-0 z-10 bg-primary text-primary-content">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -103,19 +103,19 @@ const Header = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[1] mt-3 w-52 p-2 shadow space-y-1"
+            className="menu dropdown-content menu-sm z-[1] mt-3 w-52 space-y-1 rounded-box bg-base-100 p-2 text-base-content shadow"
           >
             {navLinks}
           </ul>
         </div>
         {/* <a className="btn btn-ghost text-xl">daisyUI</a> */}
-        <Link href="/" className="block ml-auto lg:ml-1">
+        <Link href="/" className="ml-auto block lg:ml-1">
           <Image
             src="/arban-public-school-logo.jpg"
             height={25}
             width={40}
             alt="Arban Public School Logo"
-            className="rounded lg:h-auto lg:w-auto h-9"
+            className="h-9 rounded lg:h-auto lg:w-auto"
           />
         </Link>
       </div>
@@ -125,7 +125,7 @@ const Header = () => {
       </div>
 
       <div className="navbar-end">
-        <div className="nav-content-end flex items-center gap-4 mr-3">
+        <div className="nav-content-end mr-3 flex items-center gap-4">
           <label className="swap swap-rotate">
             {/* this hidden checkbox controls the state */}
             <input
@@ -145,7 +145,7 @@ const Header = () => {
 
             {/* moon icon */}
             <svg
-              className=" swap-off h-8 w-8 fill-current"
+              className="swap-off h-8 w-8 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
@@ -173,7 +173,7 @@ const Header = () => {
             <ul
               className={`menu ${
                 showUserMenu ? "block" : "hidden"
-              } absolute right-0 top-9 bg-base-200 rounded-box w-56 text-base-content`}
+              } absolute right-0 top-9 w-56 rounded-box bg-base-200 text-base-content`}
             >
               <li>
                 <Link href={`/dashboard`}>Dashboard</Link>

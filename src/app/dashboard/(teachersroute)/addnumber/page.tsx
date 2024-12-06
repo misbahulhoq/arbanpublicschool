@@ -79,7 +79,7 @@ const ExamForm: React.FC = () => {
 
   return (
     <div className="">
-      <h1 className="text-2xl font-bold mb-4">Exam Form</h1>
+      <h1 className="mb-4 text-2xl font-bold">Exam Form</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* UID */}
         <div>
@@ -90,10 +90,10 @@ const ExamForm: React.FC = () => {
             type="text"
             placeholder="e.g. 123456"
             {...register("uid", { required: "UID is required" })}
-            className="mt-1 input input-bordered input-sm"
+            className="input input-sm input-bordered mt-1"
           />
           {errors.uid && (
-            <p className="text-red-500 text-sm">{errors.uid.message}</p>
+            <p className="text-sm text-red-500">{errors.uid.message}</p>
           )}
         </div>
 
@@ -104,10 +104,10 @@ const ExamForm: React.FC = () => {
             type="text"
             placeholder="e.g. First Tutorial"
             {...register("exam", { required: "Exam is required" })}
-            className="mt-1 input input-bordered input-sm"
+            className="input input-sm input-bordered mt-1"
           />
           {errors.exam && (
-            <p className="text-red-500 text-sm">{errors.exam.message}</p>
+            <p className="text-sm text-red-500">{errors.exam.message}</p>
           )}
         </div>
 
@@ -118,31 +118,31 @@ const ExamForm: React.FC = () => {
             type="text"
             placeholder="e.g. 2401"
             {...register("examCode", { required: "Exam Code is required" })}
-            className="mt-1 input input-bordered input-sm"
+            className="input input-sm input-bordered mt-1"
           />
           {errors.examCode && (
-            <p className="text-red-500 text-sm">{errors.examCode.message}</p>
+            <p className="text-sm text-red-500">{errors.examCode.message}</p>
           )}
         </div>
 
         {/* Numbers */}
         <div>
-          <label className="block text-sm font-medium mb-2">Numbers</label>
+          <label className="mb-2 block text-sm font-medium">Numbers</label>
           {fields.map((field, index) => (
-            <div key={field.id} className="grid grid-cols-3 gap-4 mb-4">
+            <div key={field.id} className="mb-4 grid grid-cols-3 gap-4">
               {/* Subject */}
               <div>
-                <label className="text-sm font-medium mr-1">Subject:</label>
+                <label className="mr-1 text-sm font-medium">Subject:</label>
                 <input
                   type="text"
                   {...register(`numbers.${index}.sub`, {
                     required: "Subject is required",
                   })}
                   defaultValue={field.sub}
-                  className="mt-1 input input-bordered input-sm"
+                  className="input input-sm input-bordered mt-1"
                 />
                 {errors.numbers?.[index]?.sub && (
-                  <p className="text-red-500 text-sm">
+                  <p className="text-sm text-red-500">
                     {errors.numbers[index]?.sub?.message}
                   </p>
                 )}
@@ -150,7 +150,7 @@ const ExamForm: React.FC = () => {
 
               {/* Full Marks */}
               <div>
-                <label className="text-sm font-medium mr-1">Full Marks:</label>
+                <label className="mr-1 text-sm font-medium">Full Marks:</label>
                 <input
                   type="number"
                   {...register(`numbers.${index}.fullMarks`, {
@@ -158,10 +158,10 @@ const ExamForm: React.FC = () => {
                     valueAsNumber: true,
                   })}
                   defaultValue={field.fullMarks}
-                  className="mt-1 input input-bordered input-sm"
+                  className="input input-sm input-bordered mt-1"
                 />
                 {errors.numbers?.[index]?.fullMarks && (
-                  <p className="text-red-500 text-sm">
+                  <p className="text-sm text-red-500">
                     {errors.numbers[index]?.fullMarks?.message}
                   </p>
                 )}
@@ -169,7 +169,7 @@ const ExamForm: React.FC = () => {
 
               {/* Obtained Marks */}
               <div>
-                <label className="text-sm font-medium mr-1">
+                <label className="mr-1 text-sm font-medium">
                   Obtained Marks:
                 </label>
                 <input
@@ -179,10 +179,10 @@ const ExamForm: React.FC = () => {
                     valueAsNumber: true,
                   })}
                   defaultValue={field.obtMarks}
-                  className="mt-1 input input-bordered input-sm"
+                  className="input input-sm input-bordered mt-1"
                 />
                 {errors.numbers?.[index]?.obtMarks && (
-                  <p className="text-red-500 text-sm">
+                  <p className="text-sm text-red-500">
                     {errors.numbers[index]?.obtMarks?.message}
                   </p>
                 )}
@@ -193,7 +193,7 @@ const ExamForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => remove(index)}
-                  className="text-red-600 hover:text-red-900 text-sm"
+                  className="text-sm text-red-600 hover:text-red-900"
                 >
                   Remove
                 </button>
@@ -205,7 +205,7 @@ const ExamForm: React.FC = () => {
             onClick={() =>
               append({ sub: "New Subject", fullMarks: 50, obtMarks: 0 })
             }
-            className="btn btn-primary btn-outline btn-sm"
+            className="btn btn-outline btn-primary btn-sm"
           >
             + Add Subject
           </button>
@@ -215,7 +215,7 @@ const ExamForm: React.FC = () => {
         <div>
           <button
             type="submit"
-            className={`btn btn-wide btn-primary ${
+            className={`btn btn-primary btn-wide ${
               isLoading && "btn-disabled"
             }`}
           >

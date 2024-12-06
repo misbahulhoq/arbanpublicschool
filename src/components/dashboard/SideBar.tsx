@@ -12,7 +12,7 @@ const SideBar = () => {
 
   return (
     <div className="">
-      <ul className="menu h-screen bg-base-200 w-56">
+      <ul className="menu h-screen w-56 bg-base-200">
         <li className={`${isTeacher ? "block" : "hidden"}`}>
           <DashboardLink
             props={{ href: "/dashboard/allstudents", children: "All Students" }}

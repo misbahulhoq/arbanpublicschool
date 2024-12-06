@@ -58,8 +58,8 @@ const SignupForm = () => {
     }
   };
   return (
-    <div className="grid lg:grid-cols-2 gap-5 items-center container-center py-2 md:py-5">
-      <div className="illustrator order-1 lg:order-0 mx-auto">
+    <div className="container-center grid items-center gap-5 py-2 md:py-5 lg:grid-cols-2">
+      <div className="illustrator lg:order-0 order-1 mx-auto">
         <Image
           src="/illustrators/signup-illustrator.svg"
           alt="Sign Up Illustrator"
@@ -70,8 +70,8 @@ const SignupForm = () => {
       </div>
 
       <div className="flex items-center justify-center">
-        <div className="w-full max-w-md rounded-lg ">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-3 mt-3">
+        <div className="w-full max-w-md rounded-lg">
+          <h2 className="mb-3 mt-3 text-center text-2xl font-extrabold sm:text-3xl">
             Create an account
           </h2>
 
@@ -93,7 +93,7 @@ const SignupForm = () => {
 
             {/* uid field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1">
+              <label htmlFor="email" className="mb-1 block text-sm font-medium">
                 UID
               </label>
               <input
@@ -101,14 +101,14 @@ const SignupForm = () => {
                 id="uid"
                 name="uid"
                 placeholder="Enter your uid"
-                className="input input-bordered w-full "
+                className="input input-bordered w-full"
                 required
               />
             </div>
 
             {/* email field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1">
+              <label htmlFor="email" className="mb-1 block text-sm font-medium">
                 Email
               </label>
               <input
@@ -125,7 +125,7 @@ const SignupForm = () => {
             <div className="relative">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium mb-1"
+                className="mb-1 block text-sm font-medium"
               >
                 Password
               </label>
@@ -134,7 +134,7 @@ const SignupForm = () => {
                 id="password"
                 name="password"
                 placeholder="Enter your password"
-                className="input input-bordered w-full "
+                className="input input-bordered w-full"
                 required
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -147,7 +147,7 @@ const SignupForm = () => {
                 alt="Sh"
                 height={35}
                 width={35}
-                className="absolute right-3 bottom-1"
+                className="absolute bottom-1 right-3"
                 onClick={() => {
                   setShowPassword(!showPassword);
                 }}
@@ -155,8 +155,8 @@ const SignupForm = () => {
             </div>
 
             {/* validation message */}
-            <div className="text-xs flex max-[410px]:flex-col max-[410px]:justify-start max-[410px]:items-start max-[410px]:gap-2 items-center gap-3">
-              <span className="flex gap-1 items-center">
+            <div className="flex items-center gap-3 text-xs max-[410px]:flex-col max-[410px]:items-start max-[410px]:justify-start max-[410px]:gap-2">
+              <span className="flex items-center gap-1">
                 <Image
                   src={
                     password.length >= 6
@@ -171,7 +171,7 @@ const SignupForm = () => {
                 Minimum 6 characters
               </span>
 
-              <span className="flex gap-1 items-center">
+              <span className="flex items-center gap-1">
                 <Image
                   src={
                     /[A-Z]/.test(password)
@@ -186,7 +186,7 @@ const SignupForm = () => {
                 One Uppercase
               </span>
 
-              <span className="flex gap-1 items-center">
+              <span className="flex items-center gap-1">
                 <Image
                   src={
                     /[a-z]/.test(password)
@@ -212,11 +212,11 @@ const SignupForm = () => {
             </button>
           </form>
 
-          <p className="mt-4 text-sm text-center">
+          <p className="mt-4 text-center text-sm">
             Already a member?{" "}
             <Link
               href="/login"
-              className="font-medium p-2 text-secondary hover:underline"
+              className="p-2 font-medium text-secondary hover:underline"
             >
               Log in
             </Link>
