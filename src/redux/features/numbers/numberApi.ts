@@ -10,7 +10,18 @@ const numbersApiSlice = baseApi.injectEndpoints({
         return { url: "/numbers" };
       },
     }),
+    getNumberByUid: build.query({
+      query: (uid: string | null) => {
+        console.log(uid);
+        return { url: `/numbers/${uid}` };
+      },
+    }),
   }),
+  overrideExisting: false,
 });
 
-export const { useAddNumberMutation, useGetNumberQuery } = numbersApiSlice;
+export const {
+  useAddNumberMutation,
+  useGetNumberQuery,
+  useGetNumberByUidQuery,
+} = numbersApiSlice;

@@ -6,7 +6,6 @@ import React, { ReactNode } from "react";
 
 const TeachersRoute = ({ children }: { children: ReactNode }) => {
   const { data, isLoading } = useGetUserInfoQuery();
-  console.log(data);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const isTeacher = data?.data?.role === "teacher";
