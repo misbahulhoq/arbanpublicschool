@@ -5,7 +5,7 @@ const numbersApiSlice = baseApi.injectEndpoints({
     addNumber: build.mutation({
       query: (body) => ({ url: "/numbers", method: "POST", body }),
     }),
-    getNumber: build.query({
+    getNumber: build.query<unknown, void>({
       query: () => {
         return { url: "/numbers" };
       },

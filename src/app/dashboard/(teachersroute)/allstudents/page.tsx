@@ -69,7 +69,6 @@ const AllStudentsPage = () => {
   const { data: students } = useGetStudentQuery({
     className: selectedClass.value,
   });
-  console.log(studentInfo);
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     const selectedOption = classes.find((item) => item.value === selectedValue);
