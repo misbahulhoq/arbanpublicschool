@@ -10,6 +10,7 @@ type FormValues = {
   uid: string;
   class: string;
   phone: string;
+  email: string;
   fathersName: string;
   mothersName: string;
 };
@@ -43,7 +44,7 @@ const StudentForm: React.FC = () => {
       Swal.fire({
         icon: "success",
         title: `Student added successfully`,
-        text: `${data.name} with id ${data.uid} is added successfully`,
+        text: `${data.name} with uid ${data.uid} is added successfully`,
       });
       reset();
     }
@@ -63,6 +64,7 @@ const StudentForm: React.FC = () => {
           { label: "UID", name: "uid" },
           { label: "Class", name: "class" },
           { label: "Phone", name: "phone" },
+          { label: "Email", name: "email" },
           { label: "Father's Name", name: "fathersName" },
           { label: "Mother's Name", name: "mothersName" },
         ].map((field) => (

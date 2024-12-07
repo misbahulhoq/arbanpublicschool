@@ -5,7 +5,7 @@ import TeachersRoute from "@/app/routes/TeachersRoute";
 const layout = ({ children }: { children: ReactNode }) => {
   return (
     <TeachersRoute>
-      <section className="dashboard-page-wrapper pointer-events-auto relative flex h-screen grid-cols-12 justify-between gap-4 overflow-auto lg:grid">
+      <section className="dashboard-page-wrapper pointer-events-auto relative flex h-screen grid-cols-12 justify-between gap-2 overflow-auto lg:grid">
         <div className="sidebar-wrapper col-span-3 lg:col-span-3 xl:col-span-2">
           <SideBar />
         </div>
