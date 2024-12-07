@@ -14,9 +14,7 @@ const NavLink = ({ className, href, children }: props) => {
   return (
     <Link
       href={`${href}`}
-      className={`${
-        pathName.includes(href) && "bg-neutral text-neutral-content"
-      } ${className}`}
+      className={`${pathName.includes(href) && "font-bold text-primary"} font-medium ${className}`}
     >
       {children}
     </Link>

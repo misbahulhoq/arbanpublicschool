@@ -2,7 +2,7 @@ import HeroSection from "@/components/home/Hero";
 
 export default function Home() {
   return (
-    <div className="text-xl">
+    <div className="min-h-screen text-xl">
       <HeroSection />
     </div>
   );
