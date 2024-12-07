@@ -8,7 +8,10 @@ const AdminRoute = ({ children }: { children: ReactNode }) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //   @ts-ignore
   const isAdmin = data?.data?.isAdmin;
-  if (!data && !isLoading) redirect("/login");
+  if (!data && !isLoading) {
+    localStorage.removeItem("authToken");
+    redirect("/login");
+  }
   if (!isAdmin && !isLoading)
     return (
       <h2 className="text-lg font-bold text-error">Unauthorized Access</h2>

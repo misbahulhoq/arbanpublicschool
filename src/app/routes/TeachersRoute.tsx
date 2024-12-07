@@ -10,6 +10,7 @@ const TeachersRoute = ({ children }: { children: ReactNode }) => {
   // @ts-ignore
   const isTeacher = data?.data?.role === "teacher";
   if (!data && !isLoading) {
+    localStorage.removeItem("authToken");
     redirect("/login");
   }
   if (!isTeacher && !isLoading)

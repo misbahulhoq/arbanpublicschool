@@ -31,6 +31,10 @@ const LoginForm = () => {
         localStorage.setItem("authToken", authToken as string);
         formRef.current.reset();
         router.push("/");
+        // router.forward();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     } catch (ex) {
       console.log(ex);

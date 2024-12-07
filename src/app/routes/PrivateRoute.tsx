@@ -6,7 +6,6 @@ import { ReactNode } from "react";
 const PrivateRoute = ({ children }: { children: ReactNode }) => {
   const { data, isLoading } = useGetUserInfoQuery();
 
-  console.log(data);
   if (!isLoading && !data) {
     localStorage.removeItem("authToken");
     redirect("/login");

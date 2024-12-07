@@ -13,6 +13,7 @@ const Header = () => {
       ? localStorage.getItem("theme")
       : "light",
   );
+
   const [showUserMenu, setUserMenu] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
   const { data: userInfo, isLoading } = useGetUserInfoQuery();
@@ -41,6 +42,8 @@ const Header = () => {
       confirmButtonText: "Yes, logout!",
     }).then((result) => {
       if (result.isConfirmed) {
+        localStorage.removeItem("authToken");
+        window.location.reload();
       }
     });
   };
