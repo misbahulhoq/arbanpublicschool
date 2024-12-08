@@ -17,3 +17,7 @@ p {
   max-width: 1440px;
   margin-inline: auto;
 }
+
+.btn {
+  border-radius: 9999px;
+}

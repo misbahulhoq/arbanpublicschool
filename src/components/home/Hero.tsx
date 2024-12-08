@@ -3,26 +3,52 @@ import React from "react";
 
 const HeroSection = () => {
   return (
-    <section className="container-center flex min-h-screen items-center">
-      <div className="h-14 w-12 bg-primary"></div>
-      <div className="grid items-center gap-5 lg:grid-cols-2">
+    <section className="container-center flex items-center py-10 lg:min-h-[calc(100vh-68px)] lg:py-0">
+      <div className="grid flex-grow items-center justify-between gap-5 lg:grid-cols-2">
         <div className="left-content space-y-2">
           <h2 className="text-4xl font-extrabold lg:text-5xl">
-            Welcome to{" "}
-            <span className="text-teal-400">Arban Public School!</span>
+            Welcome to <br />{" "}
+            <span className="text-accent">Arban Public School!</span>
           </h2>
-          <p>A place where learning is fun and every child is special.</p>
+          <p className="pb-5 pt-5">
+            A place where learning is fun and every child is special.
+          </p>
+
+          <div className="button-wrapper flex items-center gap-6">
+            <button className="btn btn-outline btn-primary w-44">
+              Contact Us
+            </button>
+            <button className="btn btn-primary w-44">About Us</button>
+          </div>
         </div>
 
-        <div className="right-content img-wrapper">
-          <Image
+        <div className="right-content img-wrapper justify-self-end">
+          <div className="absolute bottom-[200px] z-[1]">
+            <Image
+              src={`/illustrators/hero-vector.svg`}
+              alt=""
+              height={200}
+              width={500}
+              className=""
+            />
+          </div>
+          <div className="relative z-[2]">
+            <Image
+              src={`/illustrators/Placeholder.svg`}
+              alt=""
+              height={200}
+              width={500}
+              className=""
+            />
+          </div>
+          {/* <Image
             // src={`/illustrators/students.png`}
             src={`/illustrators/hero.webp`}
             alt="Arban Public Schools Students Illustration"
             height={100}
             width={500}
             className="h-[500px] w-full rounded-lg object-cover"
-          />
+          /> */}
         </div>
       </div>
     </section>
