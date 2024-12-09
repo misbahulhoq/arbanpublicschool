@@ -5,7 +5,7 @@ import { FaHeart } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-neutral text-neutral-content">
-      <div className="container-center grid gap-5 py-10 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="container-center grid gap-5 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-3">
         <div>
           <h3 className="mb-3 text-lg font-semibold">Quick Links</h3>
           <div className="flex flex-col items-start gap-1 text-sm">
@@ -30,7 +30,11 @@ const Footer = () => {
             <a href="" target="_blank" className="hover:underline">
               Frontend
             </a>
-            <a href="" target="_blank" className="hover:underline">
+            <a
+              href="https://github.com/misbah-ul-hoq/api-arbanpublicschool.git"
+              target="_blank"
+              className="hover:underline"
+            >
               Backend
             </a>
           </div>

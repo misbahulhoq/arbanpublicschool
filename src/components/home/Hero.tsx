@@ -4,7 +4,7 @@ import React from "react";
 const HeroSection = () => {
   return (
     <section className="container-center flex items-center py-10 lg:min-h-[calc(100vh-68px)] lg:py-0">
-      <div className="grid flex-grow items-center justify-between gap-5 lg:grid-cols-2">
+      <div className="grid flex-grow items-center justify-between gap-10 lg:grid-cols-2 lg:gap-5">
         <div className="left-content space-y-2">
           <h2 className="text-4xl font-extrabold lg:text-5xl">
             Welcome to <br />{" "}
@@ -14,16 +14,16 @@ const HeroSection = () => {
             A place where learning is fun and every child is special.
           </p>
 
-          <div className="button-wrapper flex items-center gap-6">
-            <button className="btn btn-outline btn-primary w-44">
+          <div className="button-wrapper flex items-center gap-6 max-[420px]:flex-col max-[420px]:items-start">
+            <button className="btn btn-outline btn-primary w-40">
               Contact Us
             </button>
-            <button className="btn btn-primary w-44">About Us</button>
+            <button className="btn btn-primary w-40">About Us</button>
           </div>
         </div>
 
-        <div className="right-content img-wrapper justify-self-end">
-          <div className="absolute bottom-[200px] z-[1]">
+        <div className="right-content img-wrapper relative justify-self-end">
+          <div className="absolute bottom-[80px] z-[1] max-[415px]:bottom-[50px]">
             <Image
               src={`/illustrators/hero-vector.svg`}
               alt=""
