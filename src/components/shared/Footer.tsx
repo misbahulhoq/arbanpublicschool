@@ -7,33 +7,49 @@ const Footer = () => {
     <footer className="bg-neutral text-neutral-content">
       <div className="container-center grid gap-5 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-3">
         <div>
-          <h3 className="mb-3 text-lg font-semibold">Quick Links</h3>
-          <div className="flex flex-col items-start gap-1 text-sm">
-            <Link href="/about" className="hover:underline">
+          <h3 className="mb-3 font-semibold">Quick Links</h3>
+          <div className="flex flex-col items-start gap-1 text-sm font-light">
+            <Link
+              href="/about"
+              className="hover:text-purple-500 hover:underline"
+            >
               About
             </Link>
-            <Link href="/contact" className="hover:underline">
+            <Link
+              href="/contact"
+              className="hover:text-purple-500 hover:underline"
+            >
               Contact
             </Link>
-            <Link href="/login" className="hover:underline">
+            <Link
+              href="/login"
+              className="hover:text-purple-500 hover:underline"
+            >
               Login
             </Link>
-            <Link href="/issues" className="hover:underline">
+            <Link
+              href="/issues"
+              className="hover:text-purple-500 hover:underline"
+            >
               Issues
             </Link>
           </div>
         </div>
 
         <div>
-          <h3 className="mb-3 text-lg font-semibold">Source Code</h3>
-          <div className="flex flex-col items-start gap-1 text-sm">
-            <a href="" target="_blank" className="hover:underline">
+          <h3 className="mb-3 font-semibold">Source Code</h3>
+          <div className="flex flex-col items-start gap-1 text-sm font-light">
+            <a
+              href=""
+              target="_blank"
+              className="hover:text-purple-500 hover:underline"
+            >
               Frontend
             </a>
             <a
               href="https://github.com/misbah-ul-hoq/api-arbanpublicschool.git"
               target="_blank"
-              className="hover:underline"
+              className="hover:text-purple-500 hover:underline"
             >
               Backend
             </a>
@@ -41,18 +57,34 @@ const Footer = () => {
         </div>
 
         <div>
-          <h3 className="mb-3 text-lg font-semibold">Technologies</h3>
-          <div className="flex flex-col items-start gap-1 text-sm">
-            <a href="" target="_blank" className="hover:underline">
+          <h3 className="mb-3 font-semibold">Technologies</h3>
+          <div className="flex flex-col items-start gap-1 text-sm font-light">
+            <a
+              href="https://react.dev/"
+              target="_blank"
+              className="hover:text-purple-500 hover:underline"
+            >
               React
             </a>
-            <a href="" target="_blank" className="hover:underline">
+            <a
+              href="https://www.mongodb.com"
+              target="_blank"
+              className="hover:text-purple-500 hover:underline"
+            >
               MongoDb
             </a>
-            <a href="" target="_blank" className="hover:underline">
+            <a
+              href="https://nodejs.org/en"
+              target="_blank"
+              className="hover:text-purple-500 hover:underline"
+            >
               NodeJS
             </a>
-            <a href="" target="_blank" className="hover:underline">
+            <a
+              href="https://expressjs.com/"
+              target="_blank"
+              className="hover:text-purple-500 hover:underline"
+            >
               ExpressJS
             </a>
           </div>
