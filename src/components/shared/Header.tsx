@@ -13,6 +13,7 @@ const Header = () => {
       ? localStorage.getItem("theme")
       : "light",
   );
+  const [showNavAnimation, setShowNavAnimation] = useState(false);
 
   const [showUserMenu, setUserMenu] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -54,6 +55,13 @@ const Header = () => {
     //@ts-expect-error
     document?.querySelector("html").setAttribute("data-theme", localTheme);
     document.addEventListener("click", handleClickOutside);
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 50) {
+        setShowNavAnimation(true);
+      } else {
+        setShowNavAnimation(false);
+      }
+    });
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
@@ -85,7 +93,15 @@ const Header = () => {
   );
 
   return (
-    <div className="navbar sticky top-0 z-10 bg-base-200 text-base-content">
+    <div
+      className={`navbar sticky top-0 z-10 max-[400px]:max-h-14 max-[400px]:min-h-0 ${showNavAnimation ? "bg-base-100" : "bg-base-200"} text-base-content ${showNavAnimation ? "bg-opacity-80" : "bg-opacity-100"} ${
+        showNavAnimation &&
+        "shadow-[0_4px_10px_rgba(128,0,128,0.5) backdrop-blur-lg"
+      } ${
+        showNavAnimation &&
+        "shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]"
+      }`}
+    >
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -111,7 +127,6 @@ const Header = () => {
             {navLinks}
           </ul>
         </div>
-        {/* <a className="btn btn-ghost text-xl">daisyUI</a> */}
         <Link href="/" className="ml-auto block lg:ml-1">
           <Image
             src="/arban-public-school-logo.jpg"
