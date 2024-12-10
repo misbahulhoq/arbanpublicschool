@@ -4,6 +4,7 @@ const baseUrl = "http://localhost:8000";
 
 export const baseApi = createApi({
   reducerPath: "api",
+  tagTypes: ["Student"],
   baseQuery: fetchBaseQuery({
     baseUrl,
     credentials: "include",

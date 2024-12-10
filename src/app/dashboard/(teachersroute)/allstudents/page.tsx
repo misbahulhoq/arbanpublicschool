@@ -1,9 +1,14 @@
 "use client";
-import { useGetStudentQuery } from "@/redux/features/students/studentsApi";
+import {
+  useGetStudentQuery,
+  useUpdateStudentByUidMutation,
+} from "@/redux/features/students/studentsApi";
 import React, { useState } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
-
+import { useForm } from "react-hook-form";
+import type { StudentType } from "@/types/studentType";
+import Swal from "sweetalert2";
 const classes = [
   {
     className: "All Classes",
@@ -52,16 +57,6 @@ const classes = [
   },
 ];
 
-type StudentType = {
-  _id: string;
-  name: string;
-  uid: string;
-  class: string;
-  phone: string;
-  fathersName: string;
-  mothersName: string;
-};
-
 const AllStudentsPage = () => {
   //   const [classQuery, setClassQuery] = useState("all");
   const [selectedClass, setClass] = useState(classes[0]);
@@ -69,17 +64,53 @@ const AllStudentsPage = () => {
   const { data: students } = useGetStudentQuery({
     className: selectedClass.value,
   });
+  const [updateStudentData, { isLoading: isUpdatingStuInfo }] =
+    useUpdateStudentByUidMutation();
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     const selectedOption = classes.find((item) => item.value === selectedValue);
     setClass(selectedOption as { className: string; value: string });
   };
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<StudentType>();
+
+  const handleSearch = (data) => {
+    console.log(data);
+  };
+
+  const onUpdate = async (data: StudentType) => {
+    console.log("Updated Data:", data);
+    const response = await updateStudentData({
+      uid: data.uid,
+      body: data,
+    }).unwrap();
+    if (response) {
+      Swal.fire({
+        icon: "success",
+        title: "Info updated successfully.",
+      });
+    }
+  };
+
   return (
     <div className="">
-      <div className="top-part-wrapper flex items-center justify-between gap-5">
-        <h2 className="text-2xl font-bold lg:text-4xl">
+      <div className="top-part-wrapper mb-5 flex items-center justify-between gap-5">
+        <h2 className="text-xl font-bold lg:text-3xl">
           {selectedClass.className}
         </h2>
+
+        <form className="join" onSubmit={handleSubmit(handleSearch)}>
+          <input
+            className="input join-item input-bordered"
+            placeholder="Search by uid"
+          />
+          <button className="btn btn-primary join-item">Search</button>
+        </form>
 
         <select
           className="select select-primary w-full max-w-xs"
@@ -94,6 +125,7 @@ const AllStudentsPage = () => {
           })}
         </select>
       </div>
+
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
@@ -126,7 +158,19 @@ const AllStudentsPage = () => {
                           ?.classList.add("modal-open");
                       }}
                     />
-                    <FiEdit className="cursor-pointer text-lg text-primary" />
+
+                    {/* Open the modal using document.getElementById('ID').showModal() method */}
+                    <button
+                      onClick={() => {
+                        setStudentInfo(student);
+                        reset(student);
+                        document
+                          .getElementById("update_modal")
+                          ?.classList.add("modal-open");
+                      }}
+                    >
+                      <FiEdit className="cursor-pointer text-lg text-primary" />
+                    </button>
                   </td>
                 </tr>
               );
@@ -157,6 +201,142 @@ const AllStudentsPage = () => {
                   Close
                 </button>
               </form>
+            </div>
+          </div>
+        </dialog>
+
+        {/* single student info update modal */}
+        <dialog id="update_modal" className="modal">
+          <div className="modal-box">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="mb-6 text-center text-2xl font-bold">
+                Student Information Form
+              </h2>
+              <form onSubmit={handleSubmit(onUpdate)} className="space-y-4">
+                {/* Name Field */}
+                <div>
+                  <label className="mb-2 block font-medium">Name</label>
+                  <input
+                    {...register("name", {
+                      required: "Name is required",
+                    })}
+                    className="input input-bordered w-full"
+                    placeholder="Enter student's name"
+                  />
+                  {errors.name && (
+                    <span className="text-sm text-red-500">
+                      {errors.name.message}
+                    </span>
+                  )}
+                </div>
+
+                {/* UID Field */}
+                <div>
+                  <label className="mb-2 block font-medium">UID</label>
+                  <input
+                    {...register("uid", {
+                      required: "UID is required",
+                    })}
+                    className="input input-bordered w-full"
+                    placeholder="Enter UID"
+                  />
+                </div>
+
+                {/* Class Field */}
+                <div>
+                  <label className="mb-2 block font-medium">Class</label>
+                  <input
+                    {...register("class", {
+                      required: "Class is required",
+                    })}
+                    className="input input-bordered w-full"
+                    placeholder="Enter class"
+                  />
+                  {errors.class && (
+                    <span className="text-sm text-red-500">
+                      {errors.class.message}
+                    </span>
+                  )}
+                </div>
+
+                {/* Phone Field */}
+                <div>
+                  <label className="mb-2 block font-medium">Phone</label>
+                  <input
+                    {...register("phone", {
+                      required: "Phone is required",
+                    })}
+                    className="input input-bordered w-full"
+                    placeholder="Enter phone number"
+                  />
+                  {errors.phone && (
+                    <span className="text-sm text-red-500">
+                      {errors.phone.message}
+                    </span>
+                  )}
+                </div>
+
+                {/* Father's Name Field */}
+                <div>
+                  <label className="mb-2 block font-medium">
+                    Father&apos;s Name
+                  </label>
+                  <input
+                    {...register("fathersName", {
+                      required: "Father's name is required",
+                    })}
+                    className="input input-bordered w-full"
+                    placeholder="Enter father's name"
+                  />
+                  {errors.fathersName && (
+                    <span className="text-sm text-red-500">
+                      {errors.fathersName.message}
+                    </span>
+                  )}
+                </div>
+
+                {/* Mother's Name Field */}
+                <div>
+                  <label className="mb-2 block font-medium">
+                    Mother&apos;s Name
+                  </label>
+                  <input
+                    {...register("mothersName", {
+                      required: "Mother's name is required",
+                    })}
+                    className="input input-bordered w-full"
+                    placeholder="Enter mother's name"
+                  />
+                  {errors.mothersName && (
+                    <span className="text-sm text-red-500">
+                      {errors.mothersName.message}
+                    </span>
+                  )}
+                </div>
+
+                <button
+                  className={`btn btn-primary ${isUpdatingStuInfo && "btn-disabled"}`}
+                >
+                  {isUpdatingStuInfo && (
+                    <span className="loading loading-spinner"></span>
+                  )}
+                  Update Information
+                </button>
+              </form>
+            </div>
+
+            {/*  it will close the modal */}
+            <div className="flex justify-end">
+              <button
+                className="btn"
+                onClick={() => {
+                  document
+                    .getElementById("update_modal")
+                    ?.classList.remove("modal-open");
+                }}
+              >
+                Close
+              </button>
             </div>
           </div>
         </dialog>
