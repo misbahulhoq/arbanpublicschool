@@ -18,6 +18,7 @@ const SignupForm = () => {
     const formValues = {
       // name: form.get("name"),
       email: form.get("email"),
+      phone: form.get("phone"),
       uid: form.get("uid"),
       password: form.get("password"),
       // this is default role //other roles can only be added from the backend
@@ -121,6 +122,21 @@ const SignupForm = () => {
               />
             </div>
 
+            {/* email field */}
+            <div>
+              <label htmlFor="phone" className="mb-1 block text-sm font-medium">
+                Phone
+              </label>
+              <input
+                type="string"
+                id="phone"
+                name="phone"
+                placeholder="Enter your phone no."
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+
             {/* Password field */}
             <div className="relative">
               <label
@@ -142,7 +158,7 @@ const SignupForm = () => {
               />
               <Image
                 src={`${
-                  showPassword ? "/icons/eye-off.svg" : "/icons/eye-on.svg"
+                  !showPassword ? "/icons/eye-off.svg" : "/icons/eye-on.svg"
                 }`}
                 alt="Sh"
                 height={35}
