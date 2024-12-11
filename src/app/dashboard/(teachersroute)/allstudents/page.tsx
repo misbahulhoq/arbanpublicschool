@@ -11,7 +11,6 @@ import { useForm } from "react-hook-form";
 import type { StudentType } from "@/types/studentType";
 import Swal from "sweetalert2";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import useRole from "@/hooks/useRole";
 import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
 const classes = [
   {
@@ -60,15 +59,17 @@ const classes = [
     value: "10",
   },
 ];
-
+type uid = {
+  uid: string;
+};
 const AllStudentsPage = () => {
-  //   const [classQuery, setClassQuery] = useState("all");
-
   const [selectedClass, setClass] = useState(classes[0]);
   const { data: userInfo } = useGetUserInfoQuery();
-  console.log(userInfo);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const isAdmin = userInfo?.data?.isAdmin;
   const [studentInfo, setStudentInfo] = useState<StudentType | null>(null);
+  const [searchedStu, setSearchStu] = useState<StudentType | null>(null);
   const { data: students } = useGetStudentQuery({
     className: selectedClass.value,
   });
@@ -88,8 +89,15 @@ const AllStudentsPage = () => {
     formState: { errors },
   } = useForm<StudentType>();
 
-  const handleSearch = (data) => {
-    console.log(data);
+  const { register: registerSearch, handleSubmit: handleSearchSubmit } =
+    useForm<uid>();
+
+  const handleSearch = (data: uid) => {
+    const foundStu = students.filter(
+      (stu: StudentType) => stu.uid === data.uid,
+    )[0];
+    console.log(foundStu);
+    if (foundStu) setSearchStu(foundStu);
   };
 
   const handleDelete = async (student: StudentType) => {
@@ -149,12 +157,15 @@ const AllStudentsPage = () => {
           {selectedClass.className}
         </h2>
 
-        <form className="join" onSubmit={handleSubmit(handleSearch)}>
+        <form className="join" onSubmit={handleSearchSubmit(handleSearch)}>
           <input
             className="input join-item input-bordered"
             placeholder="Search by uid"
+            {...registerSearch("uid")}
           />
-          <button className="btn btn-primary join-item">Search</button>
+          <button type="submit" className="btn btn-primary join-item">
+            Search
+          </button>
         </form>
 
         <select
@@ -183,7 +194,7 @@ const AllStudentsPage = () => {
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={`${searchedStu && "hidden"}`}>
             {/* row 1 */}
             {students?.map((student: StudentType) => {
               const { _id, name, uid, class: cls, phone } = student;
@@ -229,6 +240,52 @@ const AllStudentsPage = () => {
                 </tr>
               );
             })}
+          </tbody>
+
+          <tbody className={`${!searchedStu && "hidden"}`}>
+            <tr>
+              <th>{searchedStu?.name}</th>
+              <th>{searchedStu?.class}</th>
+              <th>{searchedStu?.uid}</th>
+              <td>{searchedStu?.phone}</td>
+              <td className="flex gap-3">
+                <FaInfoCircle
+                  className="inline-block cursor-pointer text-lg text-primary"
+                  onClick={() => {
+                    setStudentInfo(searchedStu);
+                    document
+                      .querySelector("#my_modal_1")
+                      ?.classList.add("modal-open");
+                  }}
+                />
+
+                {/* Open the modal using document.getElementById('ID').showModal() method */}
+                <button
+                  onClick={() => {
+                    setStudentInfo(searchedStu);
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    reset(searchedStu);
+                    document
+                      .getElementById("update_modal")
+                      ?.classList.add("modal-open");
+                  }}
+                >
+                  <FiEdit className="cursor-pointer text-lg text-primary" />
+                </button>
+
+                <button
+                  onClick={() => {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    handleDelete(searchedStu);
+                  }}
+                  className={`${isAdmin ? "block" : "hidden"}`}
+                >
+                  <RiDeleteBin6Line className="text-xl text-red-600" />
+                </button>
+              </td>
+            </tr>
           </tbody>
         </table>
 
