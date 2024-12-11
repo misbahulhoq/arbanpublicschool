@@ -1,5 +1,5 @@
 import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function useRole() {
   // Using useState
@@ -22,10 +22,8 @@ function useRole() {
     }
   }
 
-  useEffect(() => {}, [isAdmin, isTeacher]);
-
   // Return the state and setter to the consumer
-  return [isAdmin, isTeacher] as const;
+  return { isAdmin, isTeacher };
 }
 
 export default useRole;

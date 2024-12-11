@@ -2,6 +2,7 @@
 import {
   useGetStudentQuery,
   useUpdateStudentByUidMutation,
+  useDeleteStudentByUidMutation,
 } from "@/redux/features/students/studentsApi";
 import React, { useState } from "react";
 import { FaInfoCircle } from "react-icons/fa";
@@ -9,6 +10,9 @@ import { FiEdit } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import type { StudentType } from "@/types/studentType";
 import Swal from "sweetalert2";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import useRole from "@/hooks/useRole";
+import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
 const classes = [
   {
     className: "All Classes",
@@ -59,13 +63,18 @@ const classes = [
 
 const AllStudentsPage = () => {
   //   const [classQuery, setClassQuery] = useState("all");
+
   const [selectedClass, setClass] = useState(classes[0]);
+  const { data: userInfo } = useGetUserInfoQuery();
+  console.log(userInfo);
+  const isAdmin = userInfo?.data?.isAdmin;
   const [studentInfo, setStudentInfo] = useState<StudentType | null>(null);
   const { data: students } = useGetStudentQuery({
     className: selectedClass.value,
   });
   const [updateStudentData, { isLoading: isUpdatingStuInfo }] =
     useUpdateStudentByUidMutation();
+  const [deleteStudentData] = useDeleteStudentByUidMutation();
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     const selectedOption = classes.find((item) => item.value === selectedValue);
@@ -81,6 +90,42 @@ const AllStudentsPage = () => {
 
   const handleSearch = (data) => {
     console.log(data);
+  };
+
+  const handleDelete = async (student: StudentType) => {
+    setStudentInfo(student);
+    reset(student);
+    console.log(student.uid);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteStudentData({ uid: student.uid })
+          .then((res) => {
+            console.log(res);
+            if (res.data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
+          })
+          .catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: err.message,
+            });
+          });
+      }
+    });
   };
 
   const onUpdate = async (data: StudentType) => {
@@ -170,6 +215,15 @@ const AllStudentsPage = () => {
                       }}
                     >
                       <FiEdit className="cursor-pointer text-lg text-primary" />
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        handleDelete(student);
+                      }}
+                      className={`${isAdmin ? "block" : "hidden"}`}
+                    >
+                      <RiDeleteBin6Line className="text-xl text-red-600" />
                     </button>
                   </td>
                 </tr>

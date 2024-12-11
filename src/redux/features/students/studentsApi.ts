@@ -27,6 +27,15 @@ const studentApiSlice = baseApi.injectEndpoints({
       },
       invalidatesTags: ["Student"],
     }),
+    deleteStudentByUid: build.mutation({
+      query: (arg: { uid: string }) => {
+        return {
+          url: `/students/${arg.uid}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["Student"],
+    }),
   }),
 });
 
@@ -34,4 +43,5 @@ export const {
   useAddStudentMutation,
   useGetStudentQuery,
   useUpdateStudentByUidMutation,
+  useDeleteStudentByUidMutation,
 } = studentApiSlice;
