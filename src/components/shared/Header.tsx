@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
 import Swal from "sweetalert2";
+import { FaUser } from "react-icons/fa";
 
 const Header = () => {
   const [theme, setTheme] = useState(
@@ -14,9 +15,8 @@ const Header = () => {
       : "light",
   );
   const [showNavAnimation, setShowNavAnimation] = useState(false);
-
   const [showUserMenu, setUserMenu] = useState(false);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const imageRef = useRef<HTMLButtonElement>(null);
   const { data: userInfo, isLoading } = useGetUserInfoQuery();
 
   const handleTheme = (e: ChangeEvent<HTMLInputElement>) => {
@@ -176,7 +176,16 @@ const Header = () => {
               userInfo && !isLoading ? "block" : "hidden"
             }`}
           >
-            <Image
+            <button
+              onClick={() => {
+                setUserMenu(!showUserMenu);
+              }}
+              ref={imageRef}
+            >
+              <FaUser className="select-none text-2xl" />
+            </button>
+
+            {/* <Image
               src={`/icons/user.svg`}
               alt="Clickable"
               height={30}
@@ -186,7 +195,7 @@ const Header = () => {
                 setUserMenu(!showUserMenu);
               }}
               ref={imageRef}
-            />
+            /> */}
 
             <ul
               className={`menu ${

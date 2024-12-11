@@ -15,10 +15,12 @@ const HeroSection = () => {
           </p>
 
           <div className="button-wrapper flex items-center gap-6 max-[420px]:flex-col max-[420px]:items-start">
-            <button className="btn btn-outline btn-primary w-40">
+            <button className="btn btn-outline btn-primary w-40 rounded-full">
               Contact Us
             </button>
-            <button className="btn btn-primary w-40">About Us</button>
+            <button className="btn btn-primary w-40 rounded-full">
+              About Us
+            </button>
           </div>
         </div>
 
