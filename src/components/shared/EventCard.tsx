@@ -3,14 +3,14 @@ import React from "react";
 
 const EventCard = () => {
   return (
-    <div className="max-w-[290px] overflow-hidden rounded-md border max-[640px]:mx-auto max-[640px]:max-w-[290px]">
+    <div className="max-w-[290px] overflow-hidden rounded-lg border max-[640px]:mx-auto max-[640px]:max-w-[290px]">
       <div className="img-wrapper">
         <Image
           src={`/illustrators/students.png`}
           alt=""
           height={100}
           width={150}
-          className="h-[130px] w-full object-cover"
+          className="h-[160px] w-full object-cover"
         />
       </div>
       <div className="content-wrapper space-y-3 px-3 py-3">

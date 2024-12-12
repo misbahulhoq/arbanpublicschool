@@ -8,6 +8,9 @@ const SideBar = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const isTeacher = data?.data?.role === "teacher";
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const isAdmin = data?.data?.isAdmin;
   if (isLoading) return <span className="loading loading-spinner"></span>;
 
   return (
@@ -36,6 +39,11 @@ const SideBar = () => {
         <li className={`${isTeacher ? "block" : "hidden"}`}>
           <DashboardLink
             props={{ href: "/dashboard/results", children: "Results" }}
+          ></DashboardLink>
+        </li>
+        <li className={`${isAdmin ? "block" : "hidden"}`}>
+          <DashboardLink
+            props={{ href: "/dashboard/teachers", children: "Teachers" }}
           ></DashboardLink>
         </li>
       </ul>

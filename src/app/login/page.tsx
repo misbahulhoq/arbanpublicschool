@@ -48,7 +48,7 @@ const LoginForm = () => {
         title: "Oops!",
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
-        text: ex.data,
+        text: ex.error,
       });
     }
   };

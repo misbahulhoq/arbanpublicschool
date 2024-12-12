@@ -5,11 +5,13 @@ import AdminRoute from "@/app/routes/AdminRoute";
 const layout = ({ children }: { children: ReactNode }) => {
   return (
     <AdminRoute>
-      <section className="dashboard-page-wrapper grid min-w-fit grid-cols-12 overflow-x-scroll">
-        <div className="sidebar-wrapper pr-5 lg:col-span-3 xl:col-span-2">
+      <section className="dashboard-page-wrapper flex overflow-x-auto lg:grid lg:grid-cols-12">
+        <div className="sidebar-wrapper col-span-3 pr-5 xl:col-span-2">
           <SideBar />
         </div>
-        <div className="py-5 pr-5 lg:col-span-9 xl:col-span-10">{children}</div>
+        <div className="col-span-9 min-w-[800px] py-5 pr-5 xl:col-span-10">
+          {children}
+        </div>
       </section>
     </AdminRoute>
   );
