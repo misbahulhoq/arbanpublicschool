@@ -1,4 +1,6 @@
 import About from "@/components/home/About";
+import Campus from "@/components/home/Campus";
+import Events from "@/components/home/Events";
 import HeroSection from "@/components/home/Hero";
 import PrincipalsMessage from "@/components/home/Principal";
 
@@ -8,6 +10,8 @@ export default function Home() {
       <HeroSection />
       <About />
       <PrincipalsMessage />
+      <Campus />
+      <Events />
     </div>
   );
 }
