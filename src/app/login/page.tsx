@@ -1,8 +1,11 @@
 "use client";
-import { useLogInUserMutation } from "@/redux/features/auth/authApi";
+import {
+  useGetUserInfoQuery,
+  useLogInUserMutation,
+} from "@/redux/features/auth/authApi";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -10,6 +13,8 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const [addLoginUserData, { isLoading }] = useLogInUserMutation();
+  const { data: userInfo, isLoading: isUserInfoLoading } =
+    useGetUserInfoQuery();
   const router = useRouter();
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
@@ -47,6 +52,10 @@ const LoginForm = () => {
       });
     }
   };
+  if (isUserInfoLoading)
+    return <span className="loading loading-spinner"></span>;
+  if (!isUserInfoLoading && userInfo) redirect("/");
+
   return (
     <div
       className="hero bg-cover bg-no-repeat"
