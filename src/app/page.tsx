@@ -1,9 +1,21 @@
+import About from "@/components/home/About";
+import Campus from "@/components/home/Campus";
+import Contact from "@/components/home/Contact";
+import CallToAction from "@/components/home/CTA";
+// import Events from "@/components/home/Events";
+import HeroSection from "@/components/home/Hero";
+// import PrincipalsMessage from "@/components/home/Principal";
+
 export default function Home() {
   return (
-    <div className="flex items-center justify-center min-h-screen p-8 bg-neutral text-neutral-content">
-      <h2 className="text-3xl font-bold md:text-5xl">
-        We are developing it. Stay tuned...
-      </h2>
+    <div className="min-h-screen space-y-9 pb-9 text-lg lg:space-y-12">
+      <HeroSection />
+      <About />
+      {/* <PrincipalsMessage /> */}
+      <Campus />
+      {/* <Events /> */}
+      <Contact />
+      <CallToAction />
     </div>
   );
 }

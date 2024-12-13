@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import RootLayoutClient from "./layout-client";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -15,7 +16,10 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Arban Public School",
+  title: {
+    template: "%s | Arban Public School",
+    default: "Arban Public School",
+  },
   description: "A place where learning is fun and every child is special",
   keywords: [
     "Arban Public School",
@@ -36,9 +40,9 @@ export default function RootLayout({
     <html lang="en" data-theme="light">
       <link rel="icon" href="/icon.jpg" type="image/jpg" sizes="28x28" />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden antialiased`}
       >
-        {children}
+        <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
   );

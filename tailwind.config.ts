@@ -9,16 +9,14 @@ const config: Config = {
   plugins: [require("daisyui")],
   daisyui: {
     themes: [
-      // "fantasy",
-      // "sunset",
       {
         light: {
-          ...require("daisyui/src/theming/themes")["fantasy"],
+          ...require("daisyui/src/theming/themes")["light"],
           primary: "#813588",
           "primary-content": "#fff",
         },
         dim: {
-          ...require("daisyui/src/theming/themes")["sunset"],
+          ...require("daisyui/src/theming/themes")["dim"],
           primary: "#813588",
           "primary-content": "#fff",
         },
