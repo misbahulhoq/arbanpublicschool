@@ -10,12 +10,14 @@ export default function Home() {
   return (
     <div className="min-h-screen space-y-9 pb-9 text-lg lg:space-y-12">
       <HeroSection />
-      <About />
+      <div>
+        <CallToAction />
+        <About />
+      </div>
       {/* <PrincipalsMessage /> */}
       <Campus />
       {/* <Events /> */}
       <Contact />
-      <CallToAction />
     </div>
   );
 }
