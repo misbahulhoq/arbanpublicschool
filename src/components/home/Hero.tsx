@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const HeroSection = () => {
@@ -15,12 +16,15 @@ const HeroSection = () => {
           </p>
 
           <div className="button-wrapper flex items-center gap-6 max-[420px]:flex-col max-[420px]:items-start">
-            <button className="btn btn-outline btn-primary w-40 rounded-full">
+            <Link
+              href={`/contact`}
+              className="btn btn-outline btn-primary w-40 rounded-full"
+            >
               Contact Us
-            </button>
-            <button className="btn btn-primary w-40 rounded-full">
+            </Link>
+            <Link href={`/about`} className="btn btn-primary w-40 rounded-full">
               About Us
-            </button>
+            </Link>
           </div>
         </div>
 
