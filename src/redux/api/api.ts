@@ -1,6 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const baseUrl = "http://localhost:8000";
-// const baseUrl = "http://localhost:8000"
+// const baseUrl =
+//   process.env.NODE_ENV === "development"
+//     ? "http://localhost:8000"
+//     : "https://api-arbanpublicschool.vercel.app";
+const baseUrl = "https://api-arbanpublicschool.vercel.app";
 
 export const baseApi = createApi({
   reducerPath: "api",
