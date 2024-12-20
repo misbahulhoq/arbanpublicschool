@@ -11,7 +11,11 @@ const issuesApiSlice = baseApi.injectEndpoints({
         };
       },
     }),
+    getIssuesData: build.query<unknown, void>({
+      query: () => ({ url: "/issues" }),
+    }),
   }),
 });
 
-export const { useAddIssueDataMutation } = issuesApiSlice;
+export const { useAddIssueDataMutation, useGetIssuesDataQuery } =
+  issuesApiSlice;
