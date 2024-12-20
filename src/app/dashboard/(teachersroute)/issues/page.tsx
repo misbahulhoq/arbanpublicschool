@@ -15,7 +15,7 @@ const DashboardIssuesPage = () => {
   if (isLoading) return <span className="loading loading-spinner"></span>;
   console.log(issues);
   return (
-    <div className="grid grid-cols-2 gap-5">
+    <div className="grid gap-5 sm:grid-cols-2">
       {issues?.map((issue: IssueType) => (
         <IssueCard key={issue._id} {...issue} />
       ))}

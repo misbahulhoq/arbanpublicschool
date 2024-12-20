@@ -14,6 +14,10 @@ const studentApiSlice = baseApi.injectEndpoints({
           params: { class: className },
         };
       },
+      transformResponse: (response: StudentType[]) =>
+        response
+          .slice()
+          .sort((a, b) => parseInt(a.uid, 10) - parseInt(b.uid, 10)),
       providesTags: ["Student"],
     }),
     updateStudentByUid: build.mutation({

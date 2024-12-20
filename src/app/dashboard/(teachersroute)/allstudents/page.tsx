@@ -93,7 +93,7 @@ const AllStudentsPage = () => {
     useForm<uid>();
 
   const handleSearch = (data: uid) => {
-    const foundStu = students.filter(
+    const foundStu = students?.filter(
       (stu: StudentType) => stu.uid === data.uid,
     )[0];
     console.log(foundStu);
@@ -153,8 +153,8 @@ const AllStudentsPage = () => {
   return (
     <div className="">
       <div className="top-part-wrapper mb-5 flex items-center justify-between gap-5">
-        <h2 className="text-xl font-bold lg:text-3xl">
-          {selectedClass.className}
+        <h2 className="text-xl font-bold">
+          {selectedClass.className} ({students?.length} students)
         </h2>
 
         <form className="join" onSubmit={handleSearchSubmit(handleSearch)}>
@@ -194,6 +194,7 @@ const AllStudentsPage = () => {
               <th>Actions</th>
             </tr>
           </thead>
+          {/* this part is responsibe for displaying all students */}
           <tbody className={`${searchedStu && "hidden"}`}>
             {/* row 1 */}
             {students?.map((student: StudentType) => {
