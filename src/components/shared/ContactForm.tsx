@@ -39,8 +39,6 @@ const ContactForm: React.FC = () => {
         text: ex.error,
       });
     }
-    console.log("clicked");
-    console.log(data);
   };
 
   return (
@@ -66,7 +64,7 @@ const ContactForm: React.FC = () => {
           )}
         </div>
 
-        {/* Email */}
+        {/* Phone */}
         <div>
           <label htmlFor="phone" className="block text-sm font-medium">
             Phone <span className="text-error">*</span>
