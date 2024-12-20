@@ -33,7 +33,7 @@ const IssueCard: React.FC<IssueCardProps> = ({
   priority,
   status,
 }) => {
-  const [deleteIssueById, { isLoading }] = useDeleteIssueMutation();
+  const [deleteIssueById] = useDeleteIssueMutation();
   const handleDelete = async (_id: string) => {
     // console.log(_id);
     Swal.fire({
@@ -58,10 +58,12 @@ const IssueCard: React.FC<IssueCardProps> = ({
           }
         } catch (ex) {
           console.log(ex);
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           Swal.fire({
             icon: "error",
             title: "OOPS!",
-            text: ex.message,
+            text: ex,
           });
         }
       }
