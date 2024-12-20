@@ -3,7 +3,7 @@ import React from "react";
 const AboutUsPage: React.FC = () => {
   return (
     <div className="container-center py-8">
-      <div className="max-w-3xl">
+      <div className="mx-auto max-w-3xl">
         {/* Header Section */}
         <header className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-info">About Us</h1>

@@ -20,6 +20,7 @@ const AdmissionForm: React.FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
 
@@ -33,6 +34,9 @@ const AdmissionForm: React.FC = () => {
           icon: "success",
           text: "You have submitted admission form successfully.",
         });
+      }
+      if (response.messageId) {
+        reset();
       }
     } catch (ex) {
       Swal.fire({

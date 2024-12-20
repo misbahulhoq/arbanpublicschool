@@ -4,7 +4,6 @@ import Contact from "@/components/home/Contact";
 import CallToAction from "@/components/home/CTA";
 // import Events from "@/components/home/Events";
 import HeroSection from "@/components/home/Hero";
-import TestComponent from "@/components/home/test";
 // import PrincipalsMessage from "@/components/home/Principal";
 
 export default function Home() {
@@ -19,7 +18,6 @@ export default function Home() {
       <Campus />
       {/* <Events /> */}
       <Contact />
-      <TestComponent />
     </div>
   );
 }
