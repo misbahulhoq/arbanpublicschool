@@ -7,7 +7,7 @@ const About = () => {
         <h2 className="mb-5 text-center text-2xl font-bold lg:text-4xl">
           About Us
         </h2>
-        <div className="mx-auto max-w-[900px] space-y-2">
+        <div className="mx-auto max-w-[800px] space-y-2">
           <p className="text-justify">
             Welcome to{" "}
             <span className="font-semibold text-primary opacity-100">

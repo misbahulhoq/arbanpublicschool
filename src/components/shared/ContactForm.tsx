@@ -15,6 +15,7 @@ const ContactForm: React.FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ContactFormInputs>();
   const [addContactInfoData, { isLoading }] = useContactInfoMutation();
@@ -25,8 +26,9 @@ const ContactForm: React.FC = () => {
       if (response) {
         Swal.fire({
           icon: "success",
-          title: "Your message sent successfully",
+          text: "Your message is sent successfully.",
         });
+        reset();
       }
     } catch (ex) {
       Swal.fire({
@@ -42,7 +44,7 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-lg">
+    <div className="mx-auto max-w-3xl">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Name */}
         <div>
@@ -122,7 +124,7 @@ const ContactForm: React.FC = () => {
           className="btn btn-info btn-block sm:btn-wide"
         >
           {isLoading && <span className="loading loading-spinner"></span>}
-          Send Message
+          {isLoading ? "Sending.." : "Send Message"}
         </button>
       </form>
     </div>
