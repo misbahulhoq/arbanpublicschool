@@ -1,6 +1,8 @@
 "use client";
+import { useAddAdmissionDataMutation } from "@/redux/features/admissions/admissionApi";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import Swal from "sweetalert2";
 
 type FormData = {
   fullName: string;
@@ -8,10 +10,8 @@ type FormData = {
   phone: string;
   dob: string;
   address: string;
-  city: string;
-  state: string;
-  postalCode: string;
-  parentName: string;
+  fatherName: string;
+  motherName: string;
   parentContact: string;
   previousSchool?: string;
 };
@@ -20,17 +20,40 @@ const AdmissionForm: React.FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const [addAdmissionData, { isLoading }] = useAddAdmissionDataMutation();
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      const response = await addAdmissionData(data).unwrap();
+      if (response) {
+        Swal.fire({
+          icon: "success",
+          text: "You have submitted admission form successfully.",
+        });
+      }
+      if (response.messageId) {
+        reset();
+      }
+    } catch (ex) {
+      Swal.fire({
+        icon: "error",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        text: ex.data,
+      });
+    }
+
     console.log(data);
     // Handle form submission here, e.g., send data to the backend
   };
 
   return (
     <section className="container-center py-6">
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-2xl">
         <h2 className="mb-6 text-center text-2xl font-semibold">
           Admission Form
         </h2>
@@ -38,13 +61,16 @@ const AdmissionForm: React.FC = () => {
           {/* Full Name */}
           <div>
             <label htmlFor="fullName" className="block text-sm font-medium">
-              Student&apos;s Full Name
+              Student&apos;s Full Name <span className="text-error">*</span>
             </label>
             <input
               id="fullName"
               type="text"
+              placeholder="Enter student's full name"
               className="input input-bordered mt-2 w-full"
-              {...register("fullName", { required: "Full Name is required" })}
+              {...register("fullName", {
+                required: "Full Name is required",
+              })}
             />
             {errors.fullName && (
               <p className="mt-1 text-xs text-error">
@@ -59,26 +85,22 @@ const AdmissionForm: React.FC = () => {
               Email Address
             </label>
             <input
-              id="email"
               type="email"
+              placeholder="Enter email"
               className="input input-bordered mt-2 w-full"
-              {...register("email", { required: "Email is required" })}
+              {...register("email")}
             />
-            {errors.email && (
-              <p className="mt-1 text-xs text-red-500">
-                {errors.email.message}
-              </p>
-            )}
           </div>
 
           {/* Phone */}
           <div>
             <label htmlFor="phone" className="block text-sm font-medium">
-              Phone Number
+              Phone Number <span className="text-error">*</span>
             </label>
             <input
               id="phone"
               type="tel"
+              placeholder="Enter phone number"
               className="input input-bordered mt-2 w-full"
               {...register("phone", { required: "Phone Number is required" })}
             />
@@ -92,7 +114,7 @@ const AdmissionForm: React.FC = () => {
           {/* Date of Birth */}
           <div>
             <label htmlFor="dob" className="block text-sm font-medium">
-              Date of Birth
+              Date of Birth <span className="text-error">*</span>
             </label>
             <input
               id="dob"
@@ -108,11 +130,12 @@ const AdmissionForm: React.FC = () => {
           {/* Address */}
           <div>
             <label htmlFor="address" className="block text-sm font-medium">
-              Address
+              Address <span className="text-error">*</span>
             </label>
-            <textarea
+            <input
               id="address"
-              className="textarea textarea-bordered mt-2 w-full"
+              placeholder="Enter address"
+              className="input input-bordered mt-2 w-full"
               {...register("address", { required: "Address is required" })}
             />
             {errors.address && (
@@ -122,78 +145,44 @@ const AdmissionForm: React.FC = () => {
             )}
           </div>
 
-          {/* City, State, Postal Code */}
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <label htmlFor="city" className="block text-sm font-medium">
-                City
-              </label>
-              <input
-                id="city"
-                type="text"
-                className="input input-bordered mt-2 w-full"
-                {...register("city", { required: "City is required" })}
-              />
-              {errors.city && (
-                <p className="mt-1 text-xs text-red-500">
-                  {errors.city.message}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="state" className="block text-sm font-medium">
-                State
-              </label>
-              <input
-                id="state"
-                type="text"
-                className="input input-bordered mt-2 w-full"
-                {...register("state", { required: "State is required" })}
-              />
-              {errors.state && (
-                <p className="mt-1 text-xs text-red-500">
-                  {errors.state.message}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="postalCode" className="block text-sm font-medium">
-                Postal Code
-              </label>
-              <input
-                id="postalCode"
-                type="text"
-                className="input input-bordered mt-2 w-full"
-                {...register("postalCode", {
-                  required: "Postal Code is required",
-                })}
-              />
-              {errors.postalCode && (
-                <p className="mt-1 text-xs text-red-500">
-                  {errors.postalCode.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Parent Name */}
+          {/* Father Name */}
           <div>
             <label htmlFor="parentName" className="block text-sm font-medium">
-              Parent/Guardian Name
+              Father&apos;s Name <span className="text-error">*</span>
             </label>
             <input
               id="parentName"
               type="text"
+              placeholder="Enter father's name"
               className="input input-bordered mt-2 w-full"
-              {...register("parentName", {
-                required: "Parent/Guardian Name is required",
+              {...register("fatherName", {
+                required: "Father's Name is required",
               })}
             />
-            {errors.parentName && (
+            {errors.fatherName && (
               <p className="mt-1 text-xs text-red-500">
-                {errors.parentName.message}
+                {errors.fatherName.message}
+              </p>
+            )}
+          </div>
+
+          {/* Mother Name */}
+          <div>
+            <label htmlFor="parentName" className="block text-sm font-medium">
+              Mother&apos;s Name <span className="text-error">*</span>
+            </label>
+            <input
+              id="parentName"
+              type="text"
+              placeholder="Enter mother's name"
+              className="input input-bordered mt-2 w-full"
+              {...register("motherName", {
+                required: "Mother's Name is required",
+              })}
+            />
+            {errors.motherName && (
+              <p className="mt-1 text-xs text-red-500">
+                {errors.motherName.message}
               </p>
             )}
           </div>
@@ -204,11 +193,13 @@ const AdmissionForm: React.FC = () => {
               htmlFor="parentContact"
               className="block text-sm font-medium"
             >
-              Parent/Guardian Contact Number
+              Parent/Guardian Contact Number{" "}
+              <span className="text-error">*</span>
             </label>
             <input
               id="parentContact"
               type="tel"
+              placeholder="Enter guardian's contact number"
               className="input input-bordered mt-2 w-full"
               {...register("parentContact", {
                 required: "Parent/Guardian Contact Number is required",
@@ -230,24 +221,22 @@ const AdmissionForm: React.FC = () => {
               Previous School Name
             </label>
             <input
-              id="previousSchool"
               type="text"
+              placeholder="Enter previous school's name"
               className="input input-bordered mt-2 w-full"
-              {...register("previousSchool", {
-                required: "Previous School Name is required",
-              })}
+              {...register("previousSchool")}
             />
-            {errors.previousSchool && (
-              <p className="mt-1 text-xs text-red-500">
-                {errors.previousSchool.message}
-              </p>
-            )}
           </div>
 
           {/* Submit Button */}
           <div>
-            <button type="submit" className="btn btn-primary mt-6 w-full">
-              Submit
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="btn btn-primary btn-block mt-6 md:btn-wide"
+            >
+              {isLoading && <span className="loading loading-spinner"></span>}
+              {isLoading ? "Submitting." : "Submit"}
             </button>
           </div>
         </form>

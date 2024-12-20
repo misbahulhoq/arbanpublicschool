@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaHeart } from "react-icons/fa";
@@ -5,9 +6,26 @@ import { FaHeart } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-neutral text-neutral-content">
-      <div className="container-center grid gap-5 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="container-center grid gap-5 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-4">
+        <aside>
+          <Link href={`/`}>
+            <Image
+              src={`/arban-public-school-logo.jpg`}
+              alt="Arban Public School's Logo"
+              height={50}
+              width={50}
+              className="rounded"
+            />
+          </Link>
+          <h4 className="mt-2">
+            Arban Public School
+            <br />
+            Providing Quality Education Since 2001
+          </h4>
+        </aside>
+
         <div>
-          <h3 className="mb-3 font-semibold">Quick Links</h3>
+          <h3 className="footer-title">Quick Links</h3>
           <div className="flex flex-col items-start gap-1 text-sm font-light">
             <Link
               href="/about"
@@ -37,7 +55,7 @@ const Footer = () => {
         </div>
 
         <div>
-          <h3 className="mb-3 font-semibold">Source Code</h3>
+          <h3 className="footer-title">Source Code</h3>
           <div className="flex flex-col items-start gap-1 text-sm font-light">
             <a
               href=""
@@ -57,7 +75,7 @@ const Footer = () => {
         </div>
 
         <div>
-          <h3 className="mb-3 font-semibold">Technologies</h3>
+          <h3 className="footer-title">Technologies</h3>
           <div className="flex flex-col items-start gap-1 text-sm font-light">
             <a
               href="https://react.dev/"

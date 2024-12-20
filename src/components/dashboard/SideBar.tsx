@@ -46,6 +46,11 @@ const SideBar = () => {
             props={{ href: "/dashboard/teachers", children: "Teachers" }}
           ></DashboardLink>
         </li>
+        <li className={`${isAdmin ? "block" : "hidden"}`}>
+          <DashboardLink
+            props={{ href: "/dashboard/notices", children: "Notices" }}
+          ></DashboardLink>
+        </li>
       </ul>
     </div>
   );

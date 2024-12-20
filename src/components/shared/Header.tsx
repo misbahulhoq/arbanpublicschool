@@ -79,14 +79,19 @@ const Header = () => {
           About
         </NavLink>
       </li>
-      <li className={`${isLoading && "hidden"} ${userInfo && "hidden"}`}>
-        <NavLink href="/login" className="py-3 lg:py-2">
-          Login
+      <li>
+        <NavLink href="/admissions" className="py-3 lg:py-2">
+          Admission
         </NavLink>
       </li>
       <li>
-        <NavLink href="/results" className="py-3 lg:py-2">
-          Results
+        <NavLink href="/contact" className="py-3 lg:py-2">
+          Contact
+        </NavLink>
+      </li>
+      <li className={`${isLoading && "hidden"} ${userInfo && "hidden"}`}>
+        <NavLink href="/login" className="py-3 lg:py-2">
+          Login
         </NavLink>
       </li>
     </>

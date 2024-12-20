@@ -1,11 +1,13 @@
 "use client";
+import { useContactInfoMutation } from "@/redux/features/contact/contactApi";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import Swal from "sweetalert2";
 
 type ContactFormInputs = {
   name: string;
-  email: string;
-  subject: string;
+  phone: string;
+  subject?: string;
   message: string;
 };
 
@@ -13,16 +15,34 @@ const ContactForm: React.FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ContactFormInputs>();
+  const [addContactInfoData, { isLoading }] = useContactInfoMutation();
 
-  const onSubmit: SubmitHandler<ContactFormInputs> = (data) => {
-    console.log(data);
-    alert("Thank you for contacting us!");
+  const onSubmit: SubmitHandler<ContactFormInputs> = async (data) => {
+    try {
+      const response = await addContactInfoData(data).unwrap();
+      if (response) {
+        Swal.fire({
+          icon: "success",
+          text: "Your message is sent successfully.",
+        });
+        reset();
+      }
+    } catch (ex) {
+      Swal.fire({
+        icon: "error",
+        title: "OOPS!",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        text: ex.error,
+      });
+    }
   };
 
   return (
-    <div className="mx-auto max-w-lg">
+    <div className="mx-auto max-w-3xl">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Name */}
         <div>
@@ -34,51 +54,50 @@ const ContactForm: React.FC = () => {
             type="text"
             placeholder="Enter Your Name"
             className={`input input-bordered w-full`}
-            {...register("name", { required: "Name is required" })}
+            {...register("name", {
+              required: "Name is required",
+              minLength: 3,
+            })}
           />
           {errors.name && (
             <p className="text-sm text-error">{errors.name.message}</p>
           )}
         </div>
 
-        {/* Email */}
+        {/* Phone */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium">
-            Email <span className="text-error">*</span>
+          <label htmlFor="phone" className="block text-sm font-medium">
+            Phone <span className="text-error">*</span>
           </label>
           <input
-            id="email"
-            type="email"
-            placeholder="Enter Your Email"
+            id="phone"
+            type="text"
+            placeholder="Enter Your Phone Number"
             className={`input input-bordered w-full`}
-            {...register("email", {
+            {...register("phone", {
               required: "Email is required",
               pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                message: "Enter a valid email address",
+                value: /^(?:\+88)?01[3-9]\d{8}$/,
+                message: "Enter a valid phone Number",
               },
             })}
           />
-          {errors.email && (
-            <p className="text-sm text-error">{errors.email.message}</p>
+          {errors.phone && (
+            <p className="text-sm text-error">{errors.phone.message}</p>
           )}
         </div>
 
         {/* Subject */}
         <div>
           <label htmlFor="subject" className="block text-sm font-medium">
-            Subject <span className="text-error">*</span>
+            Subject
           </label>
           <input
-            id="subject"
             type="text"
             placeholder="Enter Subject"
             className={`input input-bordered w-full`}
-            {...register("subject", { required: "Subject is required" })}
+            {...register("subject")}
           />
-          {errors.subject && (
-            <p className="text-sm text-error">{errors.subject.message}</p>
-          )}
         </div>
 
         {/* Message */}
@@ -98,8 +117,12 @@ const ContactForm: React.FC = () => {
         </div>
 
         {/* Submit Button */}
-        <button className="btn btn-primary btn-block sm:btn-wide">
-          Send Message
+        <button
+          disabled={isLoading}
+          className="btn btn-info btn-block sm:btn-wide"
+        >
+          {isLoading && <span className="loading loading-spinner"></span>}
+          {isLoading ? "Sending.." : "Send Message"}
         </button>
       </form>
     </div>
