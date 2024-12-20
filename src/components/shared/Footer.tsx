@@ -58,7 +58,7 @@ const Footer = () => {
           <h3 className="footer-title">Source Code</h3>
           <div className="flex flex-col items-start gap-1 text-sm font-light">
             <a
-              href=""
+              href="https://github.com/misbah-ul-hoq/arbanpublicschool"
               target="_blank"
               className="hover:text-purple-500 hover:underline"
             >

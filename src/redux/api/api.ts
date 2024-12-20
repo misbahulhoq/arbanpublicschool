@@ -7,7 +7,7 @@ const baseUrl =
 
 export const baseApi = createApi({
   reducerPath: "api",
-  tagTypes: ["Student"],
+  tagTypes: ["Student", "Issues"],
   baseQuery: fetchBaseQuery({
     baseUrl,
     credentials: "include",
