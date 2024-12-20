@@ -10,12 +10,27 @@ const issuesApiSlice = baseApi.injectEndpoints({
           body,
         };
       },
+      invalidatesTags: ["Issues"],
     }),
     getIssuesData: build.query<unknown, void>({
       query: () => ({ url: "/issues" }),
+      providesTags: ["Issues"],
+    }),
+    deleteIssue: build.mutation({
+      query(id) {
+        console.log("id", id);
+        return {
+          url: `/issues/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["Issues"],
     }),
   }),
 });
 
-export const { useAddIssueDataMutation, useGetIssuesDataQuery } =
-  issuesApiSlice;
+export const {
+  useAddIssueDataMutation,
+  useGetIssuesDataQuery,
+  useDeleteIssueMutation,
+} = issuesApiSlice;

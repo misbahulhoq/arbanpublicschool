@@ -1,11 +1,26 @@
 "use client";
+import IssueCard from "@/components/dashboard/IssueCard";
 import { useGetIssuesDataQuery } from "@/redux/features/issues/issuesApi";
 import React from "react";
-
+type IssueType = {
+  _id: string;
+  submittedBy: string;
+  subject?: string;
+  issue: string;
+  priority: "low" | "medium" | "high";
+  status: "open" | "pending" | "closed";
+};
 const DashboardIssuesPage = () => {
-  const { data, isLoading } = useGetIssuesDataQuery();
+  const { data: issues, isLoading } = useGetIssuesDataQuery();
   if (isLoading) return <span className="loading loading-spinner"></span>;
-  return <div>DashboardIssuesPage</div>;
+  console.log(issues);
+  return (
+    <div className="grid grid-cols-2 gap-5">
+      {issues?.map((issue: IssueType) => (
+        <IssueCard key={issue._id} {...issue} />
+      ))}
+    </div>
+  );
 };
 
 export default DashboardIssuesPage;

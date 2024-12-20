@@ -19,7 +19,7 @@ const IssuesForm: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<FormData>({
-    defaultValues: { status: "pending" },
+    defaultValues: { status: "open" },
   });
   const [addIssueData, { isLoading }] = useAddIssueDataMutation();
 
