@@ -1,8 +1,8 @@
 "use client";
 import ContactForm from "@/components/shared/ContactForm";
+import Image from "next/image";
 import React from "react";
-import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
-import { IoLocationSharp } from "react-icons/io5";
+import { FaLocationDot } from "react-icons/fa6";
 
 const ContactPage: React.FC = () => {
   return (
@@ -18,13 +18,23 @@ const ContactPage: React.FC = () => {
           </p>
           <div className="space-y-4">
             <div className="flex items-center">
-              <FaPhoneAlt className="text-xl" />
+              <Image
+                src={`/icons/phone.svg`}
+                alt="Phone Icon"
+                height={20}
+                width={20}
+              />
               <a href="tel:+8801845992484" className="ml-2 font-medium">
                 +8801845992484
               </a>
             </div>
             <div className="flex items-center">
-              <FaEnvelope className="text-xl" />
+              <Image
+                src={`/icons/gmail.svg`}
+                alt="Gmail Icon"
+                height={20}
+                width={20}
+              />
               <a
                 href="mailto:arbanpublicschool@gmail.com"
                 className="ml-2 font-medium"
@@ -33,7 +43,7 @@ const ContactPage: React.FC = () => {
               </a>
             </div>
             <div className="flex items-center gap-2">
-              <IoLocationSharp className="text-2xl" />
+              <FaLocationDot className="text-xl text-primary" />
               <a className="font-medium">South Rajashon, Savar, Dhaka</a>
             </div>
           </div>
