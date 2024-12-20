@@ -16,9 +16,10 @@ const DashboardIssuesPage = () => {
   console.log(issues);
   return (
     <div className="grid gap-5 sm:grid-cols-2">
-      {issues?.map((issue: IssueType) => (
-        <IssueCard key={issue._id} {...issue} />
-      ))}
+      {Array.isArray(issues) &&
+        issues?.map((issue: IssueType) => (
+          <IssueCard key={issue._id} {...issue} />
+        ))}
     </div>
   );
 };
