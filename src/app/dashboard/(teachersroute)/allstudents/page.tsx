@@ -70,7 +70,7 @@ const AllStudentsPage = () => {
   const isAdmin = userInfo?.data?.isAdmin;
   const [studentInfo, setStudentInfo] = useState<StudentType | null>(null);
   const [searchedStu, setSearchStu] = useState<StudentType | null>(null);
-  const { data: students } = useGetStudentQuery({
+  const { data: students, isLoading } = useGetStudentQuery({
     className: selectedClass.value,
   });
   const [updateStudentData, { isLoading: isUpdatingStuInfo }] =
@@ -150,6 +150,13 @@ const AllStudentsPage = () => {
     }
   };
 
+  if (isLoading)
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <span className="loading loading-spinner"></span>
+      </div>
+    );
+
   return (
     <div className="">
       <div className="top-part-wrapper mb-5 flex items-center justify-between gap-5">
@@ -159,17 +166,17 @@ const AllStudentsPage = () => {
 
         <form className="join" onSubmit={handleSearchSubmit(handleSearch)}>
           <input
-            className="input join-item input-bordered"
+            className="input input-sm join-item input-bordered"
             placeholder="Search by uid"
             {...registerSearch("uid")}
           />
-          <button type="submit" className="btn btn-primary join-item">
+          <button type="submit" className="btn btn-primary join-item btn-sm">
             Search
           </button>
         </form>
 
         <select
-          className="select select-primary w-full max-w-xs"
+          className="select select-primary select-sm w-full max-w-xs"
           onChange={handleSelectChange}
         >
           {classes.map((item) => {
@@ -205,7 +212,7 @@ const AllStudentsPage = () => {
                   <th>{cls}</th>
                   <th>{uid}</th>
                   <td>{phone}</td>
-                  <td className="flex gap-3">
+                  <td className="flex gap-4">
                     <FaInfoCircle
                       className="inline-block cursor-pointer text-lg text-primary"
                       onClick={() => {
