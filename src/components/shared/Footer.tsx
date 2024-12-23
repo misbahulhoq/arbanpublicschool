@@ -26,7 +26,7 @@ const Footer = () => {
 
         <div>
           <h3 className="footer-title">Quick Links</h3>
-          <div className="flex flex-col items-start gap-1 text-sm font-light">
+          <div className="flex flex-col items-start gap-1">
             <Link
               href="/about"
               className="hover:text-purple-500 hover:underline"
@@ -56,27 +56,27 @@ const Footer = () => {
 
         <div>
           <h3 className="footer-title">Source Code</h3>
-          <div className="flex flex-col items-start gap-1 text-sm font-light">
+          <div className="flex flex-col items-start gap-1">
             <a
               href="https://github.com/misbah-ul-hoq/arbanpublicschool"
               target="_blank"
               className="hover:text-purple-500 hover:underline"
             >
-              Frontend
+              Front-end
             </a>
             <a
               href="https://github.com/misbah-ul-hoq/api-arbanpublicschool.git"
               target="_blank"
               className="hover:text-purple-500 hover:underline"
             >
-              Backend
+              Back-end
             </a>
           </div>
         </div>
 
         <div>
           <h3 className="footer-title">Technologies</h3>
-          <div className="flex flex-col items-start gap-1 text-sm font-light">
+          <div className="flex flex-col items-start gap-1">
             <a
               href="https://react.dev/"
               target="_blank"
