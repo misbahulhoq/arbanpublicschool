@@ -96,14 +96,12 @@ const AllStudentsPage = () => {
     const foundStu = students?.filter(
       (stu: StudentType) => stu.uid === data.uid,
     )[0];
-    console.log(foundStu);
     if (foundStu) setSearchStu(foundStu);
   };
 
   const handleDelete = async (student: StudentType) => {
     setStudentInfo(student);
     reset(student);
-    console.log(student.uid);
 
     Swal.fire({
       title: "Are you sure?",
@@ -137,7 +135,6 @@ const AllStudentsPage = () => {
   };
 
   const onUpdate = async (data: StudentType) => {
-    console.log("Updated Data:", data);
     const response = await updateStudentData({
       uid: data.uid,
       body: data,
@@ -223,7 +220,6 @@ const AllStudentsPage = () => {
                       }}
                     />
 
-                    {/* Open the modal using document.getElementById('ID').showModal() method */}
                     <button
                       onClick={() => {
                         setStudentInfo(student);
@@ -301,11 +297,15 @@ const AllStudentsPage = () => {
         <dialog id="my_modal_1" className="modal">
           <div className="modal-box">
             <h3 className="text-lg font-bold">{studentInfo?.name}</h3>
-            <p className="py-2">Class: {studentInfo?.class}</p>
-            <p className="py-2">Father: {studentInfo?.fathersName}</p>{" "}
-            <p className="py-2">Mother: {studentInfo?.mothersName}</p>{" "}
-            <p className="py-2">UID: {studentInfo?.uid}</p>
-            <p className="py-2">Phone: {studentInfo?.phone}</p>
+            <div className="flex items-center gap-2 py-1">
+              <h4 className="text-base-content opacity-100">Class:</h4>{" "}
+              <p>{studentInfo?.class}</p>
+            </div>
+            <p className="py-1">Father: {studentInfo?.fathersName}</p>{" "}
+            <p className="py-1">Mother: {studentInfo?.mothersName}</p>{" "}
+            <p className="py-1">UID: {studentInfo?.uid}</p>
+            <p className="py-1">Phone: {studentInfo?.phone}</p>
+            <p className="py-1">Email: {studentInfo?.email}</p>
             <div className="modal-action">
               <form method="dialog">
                 {/* if there is a button in form, it will close the modal */}
@@ -334,7 +334,7 @@ const AllStudentsPage = () => {
               <form onSubmit={handleSubmit(onUpdate)} className="space-y-4">
                 {/* Name Field */}
                 <div>
-                  <label className="mb-2 block font-medium">Name</label>
+                  <label className="block text-sm font-medium">Name</label>
                   <input
                     {...register("name", {
                       required: "Name is required",
@@ -351,7 +351,7 @@ const AllStudentsPage = () => {
 
                 {/* UID Field */}
                 <div>
-                  <label className="mb-2 block font-medium">UID</label>
+                  <label className="block text-sm font-medium">UID</label>
                   <input
                     {...register("uid", {
                       required: "UID is required",
@@ -363,7 +363,7 @@ const AllStudentsPage = () => {
 
                 {/* Class Field */}
                 <div>
-                  <label className="mb-2 block font-medium">Class</label>
+                  <label className="block text-sm font-medium">Class</label>
                   <input
                     {...register("class", {
                       required: "Class is required",
@@ -380,7 +380,7 @@ const AllStudentsPage = () => {
 
                 {/* Phone Field */}
                 <div>
-                  <label className="mb-2 block font-medium">Phone</label>
+                  <label className="block text-sm font-medium">Phone</label>
                   <input
                     {...register("phone", {
                       required: "Phone is required",
@@ -395,9 +395,26 @@ const AllStudentsPage = () => {
                   )}
                 </div>
 
+                {/* Email Field */}
+                <div>
+                  <label className="block text-sm font-medium">Email</label>
+                  <input
+                    {...register("email", {
+                      required: "Email is required",
+                    })}
+                    className="input input-bordered w-full"
+                    placeholder="Enter Email"
+                  />
+                  {errors.phone && (
+                    <span className="text-sm text-red-500">
+                      {errors.phone.message}
+                    </span>
+                  )}
+                </div>
+
                 {/* Father's Name Field */}
                 <div>
-                  <label className="mb-2 block font-medium">
+                  <label className="block text-sm font-medium">
                     Father&apos;s Name
                   </label>
                   <input
@@ -416,7 +433,7 @@ const AllStudentsPage = () => {
 
                 {/* Mother's Name Field */}
                 <div>
-                  <label className="mb-2 block font-medium">
+                  <label className="block text-sm font-medium">
                     Mother&apos;s Name
                   </label>
                   <input

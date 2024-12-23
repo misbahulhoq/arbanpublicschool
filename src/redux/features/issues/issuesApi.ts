@@ -1,3 +1,4 @@
+import { FormData } from "@/app/dashboard/(teachersroute)/issues/page";
 import { baseApi } from "@/redux/api/api";
 
 const issuesApiSlice = baseApi.injectEndpoints({
@@ -16,9 +17,12 @@ const issuesApiSlice = baseApi.injectEndpoints({
       query: () => ({ url: "/issues" }),
       providesTags: ["Issues"],
     }),
+    getIssueDataById: build.query<unknown, void>({
+      query: (id) => ({ url: `/issues/${id}` }),
+      providesTags: ["Issues"],
+    }),
     deleteIssue: build.mutation({
       query(id) {
-        console.log("id", id);
         return {
           url: `/issues/${id}`,
           method: "DELETE",
@@ -26,11 +30,23 @@ const issuesApiSlice = baseApi.injectEndpoints({
       },
       invalidatesTags: ["Issues"],
     }),
+    updateIssue: build.mutation({
+      query(args: { id: string; body: FormData }) {
+        const { id, body } = args;
+        return {
+          url: `/issues/${id}`,
+          method: "PUT",
+          body,
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useAddIssueDataMutation,
+  useGetIssueDataByIdQuery,
   useGetIssuesDataQuery,
   useDeleteIssueMutation,
+  useUpdateIssueMutation,
 } = issuesApiSlice;
