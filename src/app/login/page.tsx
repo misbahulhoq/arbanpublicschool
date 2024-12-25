@@ -36,7 +36,6 @@ const LoginForm = () => {
         localStorage.setItem("authToken", authToken as string);
         formRef.current.reset();
         router.push("/");
-        // router.forward();
         setTimeout(() => {
           window.location.reload();
         }, 1000);
@@ -48,7 +47,7 @@ const LoginForm = () => {
         title: "Oops!",
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
-        text: ex.error,
+        text: ex.data,
       });
     }
   };

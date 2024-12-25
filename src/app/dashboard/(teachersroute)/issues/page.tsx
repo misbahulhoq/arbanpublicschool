@@ -104,6 +104,9 @@ const DashboardIssuesPage = () => {
   return (
     <section>
       <div className="grid gap-5 sm:grid-cols-2">
+        {Array.isArray(issues) && !issues.length && (
+          <h3 className="text-lg font-semibold">No Issues found</h3>
+        )}
         {Array.isArray(issues) &&
           issues?.map((Issue: IssueType) => {
             const { _id, priority, status, subject, submittedBy, issue } =
