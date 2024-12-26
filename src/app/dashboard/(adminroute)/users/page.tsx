@@ -79,19 +79,21 @@ const UsersPage = () => {
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Role</th>
+                  <th>Admin</th>
                 </tr>
               </thead>
 
               <tbody>
                 {Array.isArray(allUsers) &&
                   allUsers?.map((user: UserType) => {
-                    const { uid, email, phone, role } = user;
+                    const { uid, email, phone, role, isAdmin } = user;
                     return (
                       <tr key={user._id}>
                         <th>{uid}</th>
                         <td>{email}</td>
                         <td>{phone}</td>
                         <td>{role}</td>
+                        <td>{isAdmin ? "Yes" : "No"}</td>
                       </tr>
                     );
                   })}

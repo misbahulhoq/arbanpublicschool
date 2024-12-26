@@ -2,7 +2,7 @@ import SideBar from "@/components/dashboard/SideBar";
 import React, { ReactNode } from "react";
 import AdminRoute from "@/app/routes/AdminRoute";
 
-const layout = ({ children }: { children: ReactNode }) => {
+const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <AdminRoute>
       <section className="dashboard-page-wrapper flex overflow-x-auto lg:grid lg:grid-cols-12">
@@ -17,4 +17,4 @@ const layout = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default layout;
+export default Layout;
