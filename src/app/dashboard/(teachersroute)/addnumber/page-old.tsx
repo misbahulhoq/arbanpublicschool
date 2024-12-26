@@ -203,7 +203,12 @@ const ExamForm: React.FC = () => {
           <button
             type="button"
             onClick={() =>
-              append({ sub: "New Subject", fullMarks: 50, obtMarks: 0 })
+              append({
+                sub: "New Subject",
+                fullMarks: 50,
+                obtMarks: 0,
+                subSlug: "",
+              })
             }
             className="btn btn-outline btn-primary btn-sm"
           >
