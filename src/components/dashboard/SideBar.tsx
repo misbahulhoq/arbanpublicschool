@@ -48,6 +48,11 @@ const SideBar = () => {
         </li>
         <li className={`${isAdmin ? "block" : "hidden"}`}>
           <DashboardLink
+            props={{ href: "/dashboard/users", children: "Users" }}
+          ></DashboardLink>
+        </li>
+        <li className={`${isAdmin ? "block" : "hidden"}`}>
+          <DashboardLink
             props={{ href: "/dashboard/notices", children: "Notices" }}
           ></DashboardLink>
         </li>

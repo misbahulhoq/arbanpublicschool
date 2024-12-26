@@ -55,7 +55,6 @@ const ExamForm: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     addNumberData(data)
       .then((res) => {
-        console.log(res);
         if (res.error) {
           Swal.fire({
             icon: "error",
