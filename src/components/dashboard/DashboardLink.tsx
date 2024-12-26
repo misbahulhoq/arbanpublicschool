@@ -12,10 +12,7 @@ const DashboardLink = ({ props }: { props: Props }) => {
   const pathName = usePathname();
   const { children, href } = props;
   return (
-    <Link
-      href={`${href}`}
-      className={`${pathName === href && "bg-neutral text-neutral-content"}`}
-    >
+    <Link href={`${href}`} className={`${pathName === href && "active"}`}>
       {children}
     </Link>
   );

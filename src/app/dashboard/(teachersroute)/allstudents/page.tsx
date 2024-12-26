@@ -18,6 +18,14 @@ const classes = [
     value: "all",
   },
   {
+    className: "PG",
+    value: "-1",
+  },
+  {
+    className: "Nursery",
+    value: "0",
+  },
+  {
     className: "Class 1",
     value: "1",
   },
