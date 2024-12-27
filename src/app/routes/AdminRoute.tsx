@@ -17,7 +17,11 @@ const AdminRoute = ({ children }: { children: ReactNode }) => {
       <h2 className="text-lg font-bold text-error">Unauthorized Access</h2>
     );
   if (isAdmin && !isLoading) return children;
-  return <span className="loading loading-spinner"></span>;
+  return (
+    <div className="flex h-screen items-center justify-center">
+      <span className="loading loading-spinner"></span>
+    </div>
+  );
 };
 
 export default AdminRoute;

@@ -112,9 +112,9 @@ const FormComponent = () => {
   } = useForm<FormData>({
     defaultValues: {
       uid: "",
+      class: "",
       exam: "",
       examCode: "",
-      class: "",
       fullMarks: 100,
       examYear: new Date().getFullYear().toString(),
       subjects: [],
