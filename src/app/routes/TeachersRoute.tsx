@@ -20,7 +20,11 @@ const TeachersRoute = ({ children }: { children: ReactNode }) => {
       </div>
     );
   if (isTeacher && !isLoading) return children;
-  return <span className="loading loading-spinner"></span>;
+  return (
+    <div className="flex h-screen items-center justify-center">
+      <span className="loading loading-spinner"></span>
+    </div>
+  );
 };
 
 export default TeachersRoute;
