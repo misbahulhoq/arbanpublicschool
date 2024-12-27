@@ -106,7 +106,7 @@ const AllNumbers = () => {
     );
 
   return (
-    <>
+    <section className="">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold">
           {selectedClass === "All" && "All"} Class{" "}
@@ -155,7 +155,7 @@ const AllNumbers = () => {
             {//@ts-ignore
             numbers?.map((number) => {
               return (
-                <tr key={number.uid}>
+                <tr key={number?._id}>
                   <td>{number?.uid}</td>
                   <td>{number?.uid.slice(3, 4)}</td>
                   <td>{number?.exam}</td>
@@ -171,7 +171,9 @@ const AllNumbers = () => {
                         }}
                       />
                     </Link>
-                    <FiEdit className="cursor-pointer text-lg text-primary" />
+                    <Link href={`/dashboard/numbers/update/${number?._id}`}>
+                      <FiEdit className="cursor-pointer text-lg text-primary" />
+                    </Link>
                   </td>
                 </tr>
               );
@@ -179,63 +181,7 @@ const AllNumbers = () => {
           </tbody>
         </table>
       </div>
-
-      {/* single student number info modal*/}
-      <dialog id="my_modal_1" className="modal">
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">
-            Uid:{" "}
-            {
-              //@ts-ignore
-              studentNumber?.uid
-            }
-          </h3>
-          <p className="py-2">
-            Exam:{" "}
-            {
-              //@ts-ignore
-              studentNumber?.exam
-            }
-          </p>
-          <p className="py-2 font-semibold">Numbers:</p>
-          <div>
-            {//@ts-ignore
-            studentNumber?.numbers?.map((item, index) => {
-              return (
-                <div key={index} className="mb-4">
-                  {Object.entries(item)
-                    .filter(([key]) => key !== "_id")
-                    .map(([key, value]) => (
-                      <div
-                        key={key}
-                        className="flex justify-between border-b p-2"
-                      >
-                        <span className="font-bold">{key}</span>
-                        <span>{String(value)}</span>
-                      </div>
-                    ))}
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="modal-action">
-            <form method="dialog">
-              <button
-                className="btn"
-                onClick={() => {
-                  document
-                    .querySelector("#my_modal_1")
-                    ?.classList.remove("modal-open");
-                }}
-              >
-                Close
-              </button>
-            </form>
-          </div>
-        </div>
-      </dialog>
-    </>
+    </section>
   );
 };
 

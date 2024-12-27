@@ -12,6 +12,7 @@ export interface ResultData {
   class: string;
   exam: string;
   examCode: string;
+  examYear: string;
   subjects: Subject[];
   __v?: number;
 }

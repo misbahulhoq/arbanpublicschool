@@ -1,15 +1,15 @@
 "use client";
 import SideBar from "@/components/dashboard/SideBar";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import TeachersRoute from "@/app/routes/TeachersRoute";
 
 const Layout = ({ children }: { children: ReactNode }) => {
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  });
+  // useEffect(() => {
+  //   document.body.style.overflow = "hidden";
+  //   return () => {
+  //     document.body.style.overflow = "auto";
+  //   };
+  // });
   return (
     <TeachersRoute>
       <section className="dashboard-page-wrapper pointer-events-auto relative flex h-screen grid-cols-12 justify-between gap-2 overflow-auto lg:grid">
