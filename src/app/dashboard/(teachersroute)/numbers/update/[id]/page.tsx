@@ -7,8 +7,9 @@ const NumberUpdatePage = ({ params }: { params: Promise<{ id: string }> }) => {
   useEffect(() => {
     params.then((res) => setId(res.id));
   }, [params]);
-  const { data: numbers, isLoading: isNumberLoading } =
+  const { data: resultData, isLoading: isNumberLoading } =
     useGetNumberByIdQuery(id);
+
   if (!id || isNumberLoading)
     return (
       <div className="flex h-screen items-center justify-center">
@@ -20,23 +21,23 @@ const NumberUpdatePage = ({ params }: { params: Promise<{ id: string }> }) => {
       <div className="space-y-2">
         <h3>
           <span className="font-bold">Uid: </span>
-          {numbers?.uid}
+          {resultData?.uid}
         </h3>
         <h3>
           <span className="font-bold">Class: </span>
-          {numbers?.class}
+          {resultData?.class}
         </h3>
         <h3>
           <span className="font-bold">Exam: </span>
-          {numbers?.exam}
+          {resultData?.exam}
         </h3>
         <h3>
           <span className="font-bold">Exam Code: </span>
-          {numbers?.examCode}
+          {resultData?.examCode}
         </h3>
         <h3>
           <span className="font-bold">Exam Year: </span>
-          {numbers?.examYear}
+          {resultData?.examYear}
         </h3>
       </div>
     </section>
