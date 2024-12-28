@@ -35,10 +35,11 @@ const ResultsPage = () => {
 
   return (
     <section>
-      <div className="mx-auto mt-10 max-w-md rounded p-5 shadow-md">
+      <div className="mx-auto my-10 max-w-md rounded p-5 shadow-md">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* Class Selection */}
-          <div>
+          <div></div>
+          <div className="mr-5 inline-block">
             <label htmlFor="class" className="block text-sm font-medium">
               Select Class
             </label>
@@ -70,7 +71,7 @@ const ResultsPage = () => {
           </div>
 
           {/* Year Input */}
-          <div>
+          <div className="inline-block">
             <label htmlFor="year" className="block text-sm font-medium">
               Exam Year
             </label>
@@ -94,10 +95,7 @@ const ResultsPage = () => {
 
           {/* Submit Button */}
           <div>
-            <button
-              type="submit"
-              className="w-full rounded-md bg-indigo-600 px-4 py-2 font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            >
+            <button type="submit" className="btn btn-primary btn-block">
               Submit
             </button>
           </div>
@@ -109,7 +107,7 @@ const ResultsPage = () => {
         </div>
       )}
       {numbers?.length > 0 && (
-        <div>
+        <div className="space-y-10">
           {formattedNums.map((i, index) => (
             <ResultCard key={index} props={i} />
           ))}

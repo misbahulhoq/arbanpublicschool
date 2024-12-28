@@ -258,8 +258,8 @@ const ResultCard = ({ props }: { props: Props }) => {
         </div>
       </div>
       {/* download button */}
-      <div className="flex justify-end">
-        <button className="btn btn-primary btn-sm" onClick={handleDownload}>
+      <div className="mt-4 flex justify-center">
+        <button className="btn btn-primary" onClick={handleDownload}>
           Downlaod
         </button>
       </div>
