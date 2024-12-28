@@ -157,6 +157,18 @@ const AllNumbers = () => {
             className="input input-sm join-item input-bordered"
             placeholder="Enter Uid"
             {...register("uid")}
+            onChange={(e) => {
+              const length = e.target.value.length;
+              const inputValue = e.target.value;
+              if (length === 6) {
+                setNumbers(
+                  //@ts-ignore
+                  allNumbers?.filter((number) => number.uid == inputValue),
+                );
+              } else {
+                setNumbers(allNumbers);
+              }
+            }}
           />
           <button className="btn btn-primary join-item btn-sm">Search</button>
         </form>
