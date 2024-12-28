@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import {
+  useDeleteNumberWithParamsMutation,
   useGetNumberByUidQuery,
   useGetNumberQuery,
 } from "@/redux/features/numbers/numberApi";
@@ -9,7 +10,9 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FaInfoCircle } from "react-icons/fa";
-import { FiEdit } from "react-icons/fi";
+import { FiDelete, FiEdit } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
 type Inputs = {
   uid: string;
 };
@@ -74,6 +77,8 @@ const AllNumbers = () => {
   const [selectedClass, setSelectedClass] = useState("All");
   const { data: allNumbers, isLoading: allNumbersLoading } =
     useGetNumberQuery();
+  const [deleteNumberQuery, { isLoading: isDeleting }] =
+    useDeleteNumberWithParamsMutation();
   const [numbers, setNumbers] = useState(allNumbers);
   const [searchStudentUid, setSearchStudentUid] = useState<string | null>(null);
   const { register, handleSubmit } = useForm<Inputs>();
@@ -95,6 +100,23 @@ const AllNumbers = () => {
         //@ts-ignore
         allNumbers?.filter((number) => number.class === selectedValue),
       );
+    }
+  };
+
+  const handleDelete = async (uid: string, examCode: string) => {
+    try {
+      const response = await deleteNumberQuery({ uid, examCode }).unwrap();
+      if (response)
+        Swal.fire({
+          icon: "success",
+          text: "Deleted Successfully",
+        });
+    } catch (ex) {
+      Swal.fire({
+        icon: "error",
+        // @ts-ignore
+        text: ex?.data?.message,
+      });
     }
   };
 
@@ -135,6 +157,18 @@ const AllNumbers = () => {
             className="input input-sm join-item input-bordered"
             placeholder="Enter Uid"
             {...register("uid")}
+            onChange={(e) => {
+              const length = e.target.value.length;
+              const inputValue = e.target.value;
+              if (length === 6) {
+                setNumbers(
+                  //@ts-ignore
+                  allNumbers?.filter((number) => number.uid == inputValue),
+                );
+              } else {
+                setNumbers(allNumbers);
+              }
+            }}
           />
           <button className="btn btn-primary join-item btn-sm">Search</button>
         </form>
@@ -158,22 +192,46 @@ const AllNumbers = () => {
                 <tr key={number?._id}>
                   <td>{number?.uid}</td>
                   <td>{number?.uid.slice(3, 4)}</td>
-                  <td>{number?.exam}</td>
-                  <td className="flex gap-3">
+                  <td>
+                    {number?.examCode.endsWith("02")
+                      ? "First Semester"
+                      : number?.examCode.endsWith("04")
+                        ? "Second Semester"
+                        : number?.examCode.endsWith("06")
+                          ? "Third Semester"
+                          : "Wrong exam code"}
+                  </td>
+                  <td className="flex items-center gap-3">
                     <Link href={`/dashboard/numbers/${number?.uid}`}>
                       <FaInfoCircle
                         className="inline-block cursor-pointer text-lg text-primary"
                         onClick={() => {
                           setStudentNumber(number);
-                          // document
-                          //   .querySelector("#my_modal_1")
-                          //   ?.classList.add("modal-open");
                         }}
                       />
                     </Link>
                     <Link href={`/dashboard/numbers/update/${number?._id}`}>
                       <FiEdit className="cursor-pointer text-lg text-primary" />
                     </Link>
+
+                    <MdDelete
+                      className="cursor-pointer text-xl text-error"
+                      onClick={() => {
+                        Swal.fire({
+                          title: "Are you sure?",
+                          text: "You won't be able to revert this!",
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#3085d6",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "Yes, delete it!",
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            handleDelete(number?.uid, number?.examCode);
+                          }
+                        });
+                      }}
+                    />
                   </td>
                 </tr>
               );

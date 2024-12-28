@@ -79,7 +79,7 @@ const ViewNumberPage = ({ params }: { params: Promise<{ uid: string }> }) => {
                   </tbody>
                 </table>
               </div>
-              <div className="flex justify-end">
+              <div className="flex justify-end gap-4">
                 <Link
                   href={`/dashboard/numbers/update/${_id}`}
                   className="text-primary underline"

@@ -94,13 +94,13 @@ const ResultCard = ({ props }: { props: Props }) => {
     const element = pdfRef.current;
     if (!element) return;
     const canvas = await html2canvas(element);
-    const data = canvas.toDataURL("image/png");
+    const data = canvas.toDataURL("image/svg");
     const doc = new jsPDF({
       orientation: "portrait",
       unit: "mm",
       format: "A4",
     });
-    doc.addImage(data, "PNG", 0, 0, 210, 297);
+    doc.addImage(data, "SVG", 0, 0, 210, 297);
     doc.save(uid);
   };
 
@@ -113,7 +113,7 @@ const ResultCard = ({ props }: { props: Props }) => {
         className="relative mx-auto h-[297mm] w-[210mm] border border-gray-800 bg-white p-8 text-black"
       >
         {/* header */}
-        <div className="mb-6 border-b border-gray-800 pb-4 text-center font-medium">
+        <div className="mb-6 border-b border-gray-800 pb-4 text-center font-medium text-black">
           <h1 className="text-2xl font-bold uppercase">Arban Public School</h1>
           <div className="space-y-1">
             <h4 className="block text-sm">South Rajashon, Savar, Dhaka</h4>
@@ -131,7 +131,7 @@ const ResultCard = ({ props }: { props: Props }) => {
             <div className="space-y-1">
               <h3>
                 <span className="font-semibold">Name:</span>{" "}
-                <span className="italic">{studentInfo?.name}</span>
+                <span className="">{studentInfo?.name}</span>
               </h3>
               <h3>
                 <span className="font-semibold">Class:</span>{" "}
@@ -312,64 +312,64 @@ const ResultCard = ({ props }: { props: Props }) => {
 
         {/* high section marks table */}
         <div className={`${isHighSchool ? "block" : "hidden"}`}>
-          <table className="w-full border-collapse border border-gray-800 text-sm">
+          <table className="w-full border-collapse border border-black text-sm">
             <thead>
               <tr>
-                <th className="border border-gray-800 px-2 py-1 text-left">
+                <th className="border border-black px-2 py-1 text-left">
                   Subject
                 </th>
-                <th className="border border-gray-800 px-2 py-1 text-center">
+                <th className="border border-black px-2 py-1 text-center">
                   1st Semester
                 </th>
-                <th className="border border-gray-800 px-2 py-1 text-center">
+                <th className="border border-black px-2 py-1 text-center">
                   2nd Semester
                 </th>
-                <th className="border border-gray-800 px-2 py-1 text-center">
+                <th className="border border-black px-2 py-1 text-center">
                   3rd Semester
                 </th>
-                <th className="border border-gray-800 px-2 py-1 text-center">
+                <th className="border border-black px-2 py-1 text-center">
                   Average
                 </th>
-                <th className="border border-gray-800 px-2 py-1 text-center">
+                <th className="border border-black px-2 py-1 text-center">
                   GPA
                 </th>
               </tr>
             </thead>
             <tbody>
               {tableData.map((row) => (
-                <tr key={row.subject}>
-                  <td className="border border-gray-800 px-2 py-1">
+                <tr key={row.subject} className="text-black">
+                  <td className="border border-black px-2 py-1 text-black">
                     {row.subject.replace("First", "")}
                   </td>
-                  <td className="border border-gray-800 px-2 py-1 text-center">
+                  <td className="border border-black px-2 py-1 text-center text-black">
                     {row.marks1}
                   </td>
-                  <td className="border border-gray-800 px-2 py-1 text-center">
+                  <td className="border border-black px-2 py-1 text-center text-black">
                     {row.marks2}
                   </td>
-                  <td className="border border-gray-800 px-2 py-1 text-center">
+                  <td className="border border-black px-2 py-1 text-center text-black">
                     {row.marks3}
                   </td>
-                  <td className="border border-gray-800 px-2 py-1 text-center">
+                  <td className="border border-black px-2 py-1 text-center text-black">
                     {row.average}
                   </td>
-                  <td className="border border-gray-800 px-2 py-1 text-center">
+                  <td className="border border-black px-2 py-1 text-center text-black">
                     {row.GPA}
                   </td>
                 </tr>
               ))}
 
               <tr>
-                <td className="border border-gray-800 px-2 py-1 font-semibold">
+                <td className="border border-black px-2 py-1 font-semibold">
                   Total
                 </td>
-                <td className="border border-gray-800 px-2 py-1 text-center"></td>
-                <td className="border border-gray-800 px-2 py-1 text-center"></td>
-                <td className="border border-gray-800 px-2 py-1 text-center"></td>
-                <td className="border border-gray-800 px-2 py-1 text-center font-semibold">
+                <td className="border border-black px-2 py-1 text-center"></td>
+                <td className="border border-black px-2 py-1 text-center"></td>
+                <td className="border border-black px-2 py-1 text-center"></td>
+                <td className="border border-black px-2 py-1 text-center font-semibold">
                   {totalAverageMarks.toFixed(2)}
                 </td>
-                <td className="border border-gray-800 px-2 py-1 text-center font-semibold">
+                <td className="border border-black px-2 py-1 text-center font-semibold">
                   {averageGPA.toFixed(2)}
                 </td>
               </tr>
@@ -395,7 +395,7 @@ const ResultCard = ({ props }: { props: Props }) => {
         <div className="lef-0 absolute bottom-16 right-0 mt-14 w-full px-4 text-sm">
           <div className="mt-10 flex items-center justify-between">
             <div>
-              <div className="mb-2 w-44 border-t border-gray-800"></div>
+              <div className="mb-2 w-44 border-t border-black"></div>
               <h3 className="font-semibold">Class Teacher&apos;s Signature</h3>
             </div>
             <div>
