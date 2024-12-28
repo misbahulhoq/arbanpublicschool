@@ -1,10 +1,65 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useRef } from "react";
 import html2canvas from "html2canvas-pro";
 import { jsPDF } from "jspdf";
+import { Subject } from "@/types/numberType";
+import { useGetStudentByUidQuery } from "@/redux/features/students/studentsApi";
 
-const ResultCard = () => {
+interface Props {
+  uid: string;
+  examYear: string;
+  firstSemester: Subject[];
+  secondSemester: Subject[];
+  thirdSemester: Subject[];
+}
+const ResultCard = ({ props }: { props: Props }) => {
+  const { uid, examYear, firstSemester, secondSemester, thirdSemester } =
+    props || {};
   const pdfRef = useRef(null);
+  const { data: studentInfo, isLoading: studentInfoLoading } =
+    useGetStudentByUidQuery(uid);
+  // Extract unique subjects across all data objects
+  // Extract unique subjects
+  const subjects = [
+    ...new Set([
+      ...props.firstSemester.map((item) => item.name),
+      ...props.secondSemester.map((item) => item.name),
+      ...props.thirdSemester.map((item) => item.name),
+    ]),
+  ];
+  // Prepare table data
+  const tableData = subjects.map((subject) => {
+    const firstSemester = props.firstSemester.find(
+      (item) => item.name === subject,
+    );
+    const secondSemester = props.secondSemester.find(
+      (item) => item.name === subject,
+    );
+    const thirdSemester = props.thirdSemester.find(
+      (item) => item.name === subject,
+    );
+
+    const marks1 = firstSemester ? firstSemester.obtMarks : 0;
+    const marks2 = secondSemester ? secondSemester.obtMarks : 0;
+    const marks3 = thirdSemester ? thirdSemester.obtMarks : 0;
+    const totalMarks = marks1 + marks2 + marks3;
+    const average = ((marks1 + marks2 + marks3) / 3).toFixed(2);
+
+    return {
+      subject,
+      marks1,
+      marks2,
+      marks3,
+      totalMarks,
+      average,
+    };
+  });
+  //   calculate total marks
+  const totalAverageMarks = tableData.reduce(
+    (sum, av) => sum + parseFloat(av.average),
+    0,
+  );
 
   const handleDownload = async () => {
     const element = pdfRef.current;
@@ -17,19 +72,19 @@ const ResultCard = () => {
       format: "A4",
     });
     doc.addImage(data, "PNG", 0, 0, 210, 297);
-    doc.save("test");
+    doc.save(uid);
   };
 
   return (
     <section>
       {/* A4 size result card */}
       <div
-        id={`result_card_one`}
+        id={`${uid}`}
         ref={pdfRef}
         className="relative mx-auto h-[297mm] w-[210mm] border border-gray-800 bg-white p-8 text-black"
       >
         {/* header */}
-        <div className="mb-6 border-b border-gray-800 p-4 pb-4 text-center font-medium">
+        <div className="mb-6 border-b border-gray-800 pb-4 text-center font-medium">
           <h1 className="text-2xl font-bold uppercase">Arban Public School</h1>
           <div className="space-y-1">
             <h4 className="block text-sm">South Rajashon, Savar, Dhaka</h4>
@@ -46,16 +101,25 @@ const ResultCard = () => {
           <div className="space-y-1">
             <h3>
               <span className="font-semibold">Name:</span>{" "}
-              <span className="italic">John Doe</span>
+              <span className="italic">{studentInfo?.name}</span>
             </h3>
             <h3>
-              <span className="font-semibold">Class:</span> 8
+              <span className="font-semibold">Class:</span>{" "}
+              {studentInfo?.class === "-1"
+                ? "PG"
+                : studentInfo?.class === "0"
+                  ? "Nursery"
+                  : studentInfo?.class}
             </h3>
             <h3>
-              <span className="font-semibold">Roll No:</span> 12345
+              <span className="font-semibold">UID:</span> {studentInfo?.uid}
             </h3>
             <h3>
-              <span className="font-semibold">Year:</span> 2024
+              <span className="font-semibold">Roll No:</span>{" "}
+              {studentInfo?.uid.slice(4)}
+            </h3>
+            <h3>
+              <span className="font-semibold">Year:</span> {examYear}
             </h3>
           </div>
         </div>
@@ -69,21 +133,40 @@ const ResultCard = () => {
                   Subject
                 </th>
                 <th className="border border-gray-800 px-2 py-1 text-center">
-                  Semester 1
+                  1st Semester
                 </th>
                 <th className="border border-gray-800 px-2 py-1 text-center">
-                  Semester 2
+                  2nd Semester
                 </th>
                 <th className="border border-gray-800 px-2 py-1 text-center">
-                  Semester 3
+                  3rd Semester
                 </th>
                 <th className="border border-gray-800 px-2 py-1 text-center">
-                  Total
+                  Average
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              {tableData.map((row) => (
+                <tr key={row.subject}>
+                  <td className="border border-gray-800 px-2 py-1">
+                    {row.subject}
+                  </td>
+                  <td className="border border-gray-800 px-2 py-1 text-center">
+                    {row.marks1}
+                  </td>
+                  <td className="border border-gray-800 px-2 py-1 text-center">
+                    {row.marks2}
+                  </td>
+                  <td className="border border-gray-800 px-2 py-1 text-center">
+                    {row.marks3}
+                  </td>
+                  <td className="border border-gray-800 px-2 py-1 text-center">
+                    {row.average}
+                  </td>
+                </tr>
+              ))}
+              {/* <tr>
                 <td className="border border-gray-800 px-2 py-1">
                   Mathematics
                 </td>
@@ -129,17 +212,35 @@ const ResultCard = () => {
                 <td className="border border-gray-800 px-2 py-1 text-center">
                   260
                 </td>
+              </tr> */}
+
+              <tr>
+                <td className="border border-gray-800 px-2 py-1 font-semibold">
+                  Total
+                </td>
+                <td className="border border-gray-800 px-2 py-1 text-center"></td>
+                <td className="border border-gray-800 px-2 py-1 text-center"></td>
+                <td className="border border-gray-800 px-2 py-1 text-center"></td>
+                <td className="border border-gray-800 px-2 py-1 text-center font-semibold">
+                  {totalAverageMarks.toFixed(2)}
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        {/* bottom part */}
-        <div className="lef-0 absolute bottom-16 right-0 mt-10 w-full px-4 text-sm">
+        <div className="mt-7 space-y-3">
+          <h3>
+            <span className="font-semibold">Position:</span>{" "}
+            <span className="italic">{}</span>
+          </h3>
           <h3>
             <span className="font-semibold">Teacher&apos;s Remarks:</span>{" "}
           </h3>
+        </div>
 
+        {/* bottom part */}
+        <div className="lef-0 absolute bottom-16 right-0 mt-14 w-full px-4 text-sm">
           <div className="mt-10 flex items-center justify-between">
             <div>
               <div className="mb-2 w-44 border-t border-gray-800"></div>
@@ -158,7 +259,7 @@ const ResultCard = () => {
       </div>
       {/* download button */}
       <div className="flex justify-end">
-        <button className="btn btn-primary" onClick={handleDownload}>
+        <button className="btn btn-primary btn-sm" onClick={handleDownload}>
           Downlaod
         </button>
       </div>

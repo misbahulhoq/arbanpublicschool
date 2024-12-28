@@ -20,6 +20,13 @@ const studentApiSlice = baseApi.injectEndpoints({
           .sort((a, b) => parseInt(a.uid, 10) - parseInt(b.uid, 10)),
       providesTags: ["Student"],
     }),
+    getStudentByUid: build.query({
+      query: (uid) => {
+        return {
+          url: `/students/${uid}`,
+        };
+      },
+    }),
     updateStudentByUid: build.mutation({
       query: (args: { uid: string; body: StudentType }) => {
         const { uid, body } = args;
@@ -46,6 +53,7 @@ const studentApiSlice = baseApi.injectEndpoints({
 export const {
   useAddStudentMutation,
   useGetStudentQuery,
+  useGetStudentByUidQuery,
   useUpdateStudentByUidMutation,
   useDeleteStudentByUidMutation,
 } = studentApiSlice;
