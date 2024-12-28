@@ -158,16 +158,21 @@ const AllNumbers = () => {
                 <tr key={number?._id}>
                   <td>{number?.uid}</td>
                   <td>{number?.uid.slice(3, 4)}</td>
-                  <td>{number?.exam}</td>
+                  <td>
+                    {number?.examCode.endsWith("02")
+                      ? "First Semester"
+                      : number?.examCode.endsWith("04")
+                        ? "Second Semester"
+                        : number?.examCode.endsWith("06")
+                          ? "Third Semester"
+                          : "Wrong exam code"}
+                  </td>
                   <td className="flex gap-3">
                     <Link href={`/dashboard/numbers/${number?.uid}`}>
                       <FaInfoCircle
                         className="inline-block cursor-pointer text-lg text-primary"
                         onClick={() => {
                           setStudentNumber(number);
-                          // document
-                          //   .querySelector("#my_modal_1")
-                          //   ?.classList.add("modal-open");
                         }}
                       />
                     </Link>
