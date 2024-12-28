@@ -8,14 +8,21 @@ import { useGetStudentByUidQuery } from "@/redux/features/students/studentsApi";
 
 interface Props {
   uid: string;
+  class: string;
   examYear: string;
   firstSemester: Subject[];
   secondSemester: Subject[];
   thirdSemester: Subject[];
 }
 const ResultCard = ({ props }: { props: Props }) => {
-  const { uid, examYear, firstSemester, secondSemester, thirdSemester } =
-    props || {};
+  const {
+    uid,
+    class: cls,
+    examYear,
+    firstSemester,
+    secondSemester,
+    thirdSemester,
+  } = props || {};
   const pdfRef = useRef(null);
   const { data: studentInfo, isLoading: studentInfoLoading } =
     useGetStudentByUidQuery(uid);
@@ -39,12 +46,20 @@ const ResultCard = ({ props }: { props: Props }) => {
     const thirdSemester = props.thirdSemester.find(
       (item) => item.name === subject,
     );
+    console.log("firstSemester", firstSemester);
+    console.log("secondSemester", secondSemester);
+    console.log("thirdSemester", thirdSemester);
 
     const marks1 = firstSemester ? firstSemester.obtMarks : 0;
     const marks2 = secondSemester ? secondSemester.obtMarks : 0;
     const marks3 = thirdSemester ? thirdSemester.obtMarks : 0;
     const totalMarks = marks1 + marks2 + marks3;
-    const average = ((marks1 + marks2 + marks3) / 3).toFixed(2);
+    const average = (
+      (marks1 + marks2 + marks3) /
+      ((firstSemester ? 1 : 0) +
+        (secondSemester ? 1 : 0) +
+        (thirdSemester ? 1 : 0))
+    ).toFixed(2);
 
     return {
       subject,
@@ -75,6 +90,8 @@ const ResultCard = ({ props }: { props: Props }) => {
     doc.save(uid);
   };
 
+  const isHighSchool = ["6", "7", "8", "9", "10"].includes(cls);
+
   return (
     <section>
       {/* A4 size result card */}
@@ -96,31 +113,83 @@ const ResultCard = ({ props }: { props: Props }) => {
           <h2 className="mt-4 text-lg font-semibold">Result Card</h2>
         </div>
 
-        {/* student info */}
-        <div className="mb-6 flex justify-between text-sm">
-          <div className="space-y-1">
-            <h3>
-              <span className="font-semibold">Name:</span>{" "}
-              <span className="italic">{studentInfo?.name}</span>
-            </h3>
-            <h3>
-              <span className="font-semibold">Class:</span>{" "}
-              {studentInfo?.class === "-1"
-                ? "PG"
-                : studentInfo?.class === "0"
-                  ? "Nursery"
-                  : studentInfo?.class}
-            </h3>
-            <h3>
-              <span className="font-semibold">UID:</span> {studentInfo?.uid}
-            </h3>
-            <h3>
-              <span className="font-semibold">Roll No:</span>{" "}
-              {studentInfo?.uid.slice(4)}
-            </h3>
-            <h3>
-              <span className="font-semibold">Year:</span> {examYear}
-            </h3>
+        {/* student info and gpa chart*/}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex justify-between text-sm">
+            <div className="space-y-1">
+              <h3>
+                <span className="font-semibold">Name:</span>{" "}
+                <span className="italic">{studentInfo?.name}</span>
+              </h3>
+              <h3>
+                <span className="font-semibold">Class:</span>{" "}
+                {studentInfo?.class === "-1"
+                  ? "PG"
+                  : studentInfo?.class === "0"
+                    ? "Nursery"
+                    : studentInfo?.class}
+              </h3>
+              <h3>
+                <span className="font-semibold">UID:</span> {studentInfo?.uid}
+              </h3>
+              <h3>
+                <span className="font-semibold">Roll No:</span>{" "}
+                {studentInfo?.uid.slice(4)}
+              </h3>
+              <h3>
+                <span className="font-semibold">Year:</span> {examYear}
+              </h3>
+            </div>
+          </div>
+          <div className={`${isHighSchool ? "block" : "hidden"}`}>
+            <div className="overflow-x-auto">
+              <table className="mx-auto table-auto border-collapse border border-gray-800 text-xs">
+                <thead>
+                  <tr className="">
+                    <th className="border border-gray-800 px-4">Range</th>
+                    <th className="border border-gray-800 px-4">Grade</th>
+                    <th className="border border-gray-800 px-4">GPA</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="text-center">
+                    <td className="border border-gray-800 px-4">80-100</td>
+                    <td className="border border-gray-800 px-4">A+</td>
+                    <td className="border border-gray-800 px-4">5.0</td>
+                  </tr>
+                  <tr className="text-center">
+                    <td className="border border-gray-800 px-4">70-79</td>
+                    <td className="border border-gray-800 px-4">A</td>
+                    <td className="border border-gray-800 px-4">4.0</td>
+                  </tr>
+                  <tr className="text-center">
+                    <td className="border border-gray-800 px-4">60-69</td>
+                    <td className="border border-gray-800 px-4">A-</td>
+                    <td className="border border-gray-800 px-4">3.5</td>
+                  </tr>
+                  <tr className="text-center">
+                    <td className="border border-gray-800 px-4">50-59</td>
+                    <td className="border border-gray-800 px-4">B</td>
+                    <td className="border border-gray-800 px-4">3.0</td>
+                  </tr>
+                  <tr className="text-center">
+                    <td className="border border-gray-800 px-4">40-49</td>
+                    <td className="border border-gray-800 px-4">C</td>
+                    <td className="border border-gray-800 px-4">2.0</td>
+                  </tr>
+                  <tr className="text-center">
+                    <td className="border border-gray-800 px-4">33-39</td>
+                    <td className="border border-gray-800 px-4">D</td>
+                    <td className="border border-gray-800 px-4">1.0</td>
+                  </tr>
+                  <tr className="text-center">
+                    <td className="border border-gray-800 px-4">00-32</td>
+                    <td className="border border-gray-800 px-4">F</td>
+                    <td className="border border-gray-800 px-4">0.0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 

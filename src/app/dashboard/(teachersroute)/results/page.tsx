@@ -25,13 +25,13 @@ const ResultsPage = () => {
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
+    //console.log(data);
     setResultQuery(data);
   };
   const { data: numbers, isLoading } = useGetNumberWithParamsQuery(resultQuery);
 
   const formattedNums = consolidateNumbers(numbers);
-  console.log(formattedNums);
+  //console.log(formattedNums);
 
   return (
     <section>
