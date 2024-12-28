@@ -109,6 +109,8 @@ const ResultsPage = () => {
       {numbers?.length > 0 && (
         <div className="space-y-10">
           {formattedNums.map((i, index) => (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             <ResultCard key={index} props={i} />
           ))}
         </div>
