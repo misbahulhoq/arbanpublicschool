@@ -5,6 +5,7 @@ import html2canvas from "html2canvas-pro";
 import { jsPDF } from "jspdf";
 import { Subject } from "@/types/numberType";
 import { useGetStudentByUidQuery } from "@/redux/features/students/studentsApi";
+import { table } from "console";
 
 interface Props {
   uid: string;
@@ -26,6 +27,7 @@ const ResultCard = ({ props }: { props: Props }) => {
   const pdfRef = useRef(null);
   const { data: studentInfo, isLoading: studentInfoLoading } =
     useGetStudentByUidQuery(uid);
+  const isHighSchool = ["6", "7", "8", "9", "10"].includes(cls);
   // Extract unique subjects across all data objects
   // Extract unique subjects
   const subjects = [
@@ -35,6 +37,7 @@ const ResultCard = ({ props }: { props: Props }) => {
       ...props.thirdSemester.map((item) => item.name),
     ]),
   ];
+
   // Prepare table data
   const tableData = subjects.map((subject) => {
     const firstSemester = props.firstSemester.find(
@@ -46,21 +49,29 @@ const ResultCard = ({ props }: { props: Props }) => {
     const thirdSemester = props.thirdSemester.find(
       (item) => item.name === subject,
     );
-    console.log("firstSemester", firstSemester);
-    console.log("secondSemester", secondSemester);
-    console.log("thirdSemester", thirdSemester);
 
     const marks1 = firstSemester ? firstSemester.obtMarks : 0;
     const marks2 = secondSemester ? secondSemester.obtMarks : 0;
     const marks3 = thirdSemester ? thirdSemester.obtMarks : 0;
+    const fullMarks = firstSemester?.fullMarks;
     const totalMarks = marks1 + marks2 + marks3;
-    const average = (
+    let average: string | number = (
       (marks1 + marks2 + marks3) /
       ((firstSemester ? 1 : 0) +
         (secondSemester ? 1 : 0) +
         (thirdSemester ? 1 : 0))
     ).toFixed(2);
 
+    average = parseFloat(average);
+    const percentage = (average / (fullMarks as number)) * 100;
+    let GPA: number;
+    if (percentage >= 80 && percentage <= 100) GPA = 5;
+    else if (percentage < 80 && percentage >= 70) GPA = 4;
+    else if (percentage < 70 && percentage >= 60) GPA = 3.5;
+    else if (percentage < 60 && percentage >= 50) GPA = 3;
+    else if (percentage < 50 && percentage >= 40) GPA = 2;
+    else if (percentage < 40 && percentage >= 33) GPA = 1;
+    else GPA = 0;
     return {
       subject,
       marks1,
@@ -68,13 +79,16 @@ const ResultCard = ({ props }: { props: Props }) => {
       marks3,
       totalMarks,
       average,
+      GPA,
+      fullMarks,
     };
   });
+  console.log(tableData.every((d) => d.GPA > 0));
   //   calculate total marks
-  const totalAverageMarks = tableData.reduce(
-    (sum, av) => sum + parseFloat(av.average),
-    0,
-  );
+  const totalAverageMarks = tableData.reduce((sum, av) => sum + av.average, 0);
+  const averageGPA = tableData.every((d) => d.GPA > 0)
+    ? tableData.reduce((sum, av) => sum + av.GPA, 0) / tableData.length
+    : 0;
 
   const handleDownload = async () => {
     const element = pdfRef.current;
@@ -89,8 +103,6 @@ const ResultCard = ({ props }: { props: Props }) => {
     doc.addImage(data, "PNG", 0, 0, 210, 297);
     doc.save(uid);
   };
-
-  const isHighSchool = ["6", "7", "8", "9", "10"].includes(cls);
 
   return (
     <section>
@@ -130,11 +142,11 @@ const ResultCard = ({ props }: { props: Props }) => {
                     : studentInfo?.class}
               </h3>
               <h3>
-                <span className="font-semibold">UID:</span> {studentInfo?.uid}
-              </h3>
-              <h3>
                 <span className="font-semibold">Roll No:</span>{" "}
                 {studentInfo?.uid.slice(4)}
+              </h3>
+              <h3>
+                <span className="font-semibold">UID:</span> {studentInfo?.uid}
               </h3>
               <h3>
                 <span className="font-semibold">Year:</span> {examYear}
@@ -148,7 +160,7 @@ const ResultCard = ({ props }: { props: Props }) => {
                   <tr className="">
                     <th className="border border-gray-800 px-4">Range</th>
                     <th className="border border-gray-800 px-4">Grade</th>
-                    <th className="border border-gray-800 px-4">GPA</th>
+                    <th className="border border-gray-800 px-4">GP</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -193,8 +205,8 @@ const ResultCard = ({ props }: { props: Props }) => {
           </div>
         </div>
 
-        {/* mark's table */}
-        <div className="">
+        {/*primary section mark's table */}
+        <div className={`${isHighSchool && "hidden"}`}>
           <table className="w-full border-collapse border border-gray-800 text-sm">
             <thead>
               <tr>
@@ -298,7 +310,78 @@ const ResultCard = ({ props }: { props: Props }) => {
           </table>
         </div>
 
+        {/* high section marks table */}
+        <div className={`${isHighSchool ? "block" : "hidden"}`}>
+          <table className="w-full border-collapse border border-gray-800 text-sm">
+            <thead>
+              <tr>
+                <th className="border border-gray-800 px-2 py-1 text-left">
+                  Subject
+                </th>
+                <th className="border border-gray-800 px-2 py-1 text-center">
+                  1st Semester
+                </th>
+                <th className="border border-gray-800 px-2 py-1 text-center">
+                  2nd Semester
+                </th>
+                <th className="border border-gray-800 px-2 py-1 text-center">
+                  3rd Semester
+                </th>
+                <th className="border border-gray-800 px-2 py-1 text-center">
+                  Average
+                </th>
+                <th className="border border-gray-800 px-2 py-1 text-center">
+                  GPA
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.map((row) => (
+                <tr key={row.subject}>
+                  <td className="border border-gray-800 px-2 py-1">
+                    {row.subject.replace("First", "")}
+                  </td>
+                  <td className="border border-gray-800 px-2 py-1 text-center">
+                    {row.marks1}
+                  </td>
+                  <td className="border border-gray-800 px-2 py-1 text-center">
+                    {row.marks2}
+                  </td>
+                  <td className="border border-gray-800 px-2 py-1 text-center">
+                    {row.marks3}
+                  </td>
+                  <td className="border border-gray-800 px-2 py-1 text-center">
+                    {row.average}
+                  </td>
+                  <td className="border border-gray-800 px-2 py-1 text-center">
+                    {row.GPA}
+                  </td>
+                </tr>
+              ))}
+
+              <tr>
+                <td className="border border-gray-800 px-2 py-1 font-semibold">
+                  Total
+                </td>
+                <td className="border border-gray-800 px-2 py-1 text-center"></td>
+                <td className="border border-gray-800 px-2 py-1 text-center"></td>
+                <td className="border border-gray-800 px-2 py-1 text-center"></td>
+                <td className="border border-gray-800 px-2 py-1 text-center font-semibold">
+                  {totalAverageMarks.toFixed(2)}
+                </td>
+                <td className="border border-gray-800 px-2 py-1 text-center font-semibold">
+                  {averageGPA.toFixed(2)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <div className="mt-7 space-y-3">
+          <h3>
+            <span className="font-semibold">Result:</span>{" "}
+            <span className="italic">Promoted</span>
+          </h3>
           <h3>
             <span className="font-semibold">Position:</span>{" "}
             <span className="italic">{}</span>
