@@ -22,32 +22,26 @@ const StudentForm: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<FormValues>();
-  const [addStudentData, { isLoading, error, isSuccess }] =
-    useAddStudentMutation();
+  const [addStudentData, { isLoading }] = useAddStudentMutation();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log(data);
-
-    const response = await addStudentData(data);
-    console.log(response);
-    console.log("isSuccess", isSuccess);
-    console.log("error", error);
-    if (response.error) {
+    try {
+      const response = await addStudentData(data).unwrap();
+      if (response) {
+        Swal.fire({
+          icon: "success",
+          title: `Student added successfully`,
+          text: `${data.name} with uid ${data.uid} is added successfully`,
+        });
+      }
+    } catch (ex) {
       Swal.fire({
         icon: "error",
-        // @ts-ignore
-        title: `${response.error?.data}`,
+        //@ts-ignore
+        text: `${ex.data.message}`,
       });
-      return;
     }
-    if (response.data) {
-      Swal.fire({
-        icon: "success",
-        title: `Student added successfully`,
-        text: `${data.name} with uid ${data.uid} is added successfully`,
-      });
-      reset();
-    }
+    reset();
   };
 
   return (

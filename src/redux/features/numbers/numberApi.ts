@@ -20,6 +20,18 @@ const numbersApiSlice = baseApi.injectEndpoints({
         return { url: `/numbers/id/${id}` };
       },
     }),
+    getNumberWithParams: build.query({
+      query: (params: Record<string, string | number | boolean | null>) => {
+        const queryString = Object.entries(params)
+          .filter(([, value]) => value !== null && value !== undefined) // Remove null or undefined values
+          .map(
+            ([key, value]) =>
+              `${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`,
+          )
+          .join("&");
+        return { url: `/numbers?${queryString}` };
+      },
+    }),
   }),
   overrideExisting: false,
 });
@@ -29,4 +41,5 @@ export const {
   useGetNumberQuery,
   useGetNumberByUidQuery,
   useGetNumberByIdQuery,
+  useGetNumberWithParamsQuery,
 } = numbersApiSlice;
