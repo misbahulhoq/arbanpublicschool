@@ -5,7 +5,7 @@ import html2canvas from "html2canvas-pro";
 import { jsPDF } from "jspdf";
 import { Subject } from "@/types/numberType";
 import { useGetStudentByUidQuery } from "@/redux/features/students/studentsApi";
-import { table } from "console";
+import { getGradeByGP } from "@/lib/utils/gradeCalculator";
 
 interface Props {
   uid: string;
@@ -83,9 +83,9 @@ const ResultCard = ({ props }: { props: Props }) => {
       fullMarks,
     };
   });
-  console.log(tableData.every((d) => d.GPA > 0));
   //   calculate total marks
   const totalAverageMarks = tableData.reduce((sum, av) => sum + av.average, 0);
+  const totalGPA = tableData.reduce((sum, av) => sum + av.GPA, 0);
   const averageGPA = tableData.every((d) => d.GPA > 0)
     ? tableData.reduce((sum, av) => sum + av.GPA, 0) / tableData.length
     : 0;
@@ -331,7 +331,10 @@ const ResultCard = ({ props }: { props: Props }) => {
                   Average
                 </th>
                 <th className="border border-black px-2 py-1 text-center">
-                  GPA
+                  Grade
+                </th>
+                <th className="border border-black px-2 py-1 text-center">
+                  GP
                 </th>
               </tr>
             </thead>
@@ -354,6 +357,9 @@ const ResultCard = ({ props }: { props: Props }) => {
                     {row.average}
                   </td>
                   <td className="border border-black px-2 py-1 text-center text-black">
+                    {getGradeByGP(row.GPA)}
+                  </td>
+                  <td className="border border-black px-2 py-1 text-center text-black">
                     {row.GPA}
                   </td>
                 </tr>
@@ -369,6 +375,21 @@ const ResultCard = ({ props }: { props: Props }) => {
                 <td className="border border-black px-2 py-1 text-center font-semibold">
                   {totalAverageMarks.toFixed(2)}
                 </td>
+                <td className="border border-black px-2 py-1 text-center"></td>
+                <td className="border border-black px-2 py-1 text-center font-semibold">
+                  {totalGPA.toFixed(2)}
+                </td>
+              </tr>
+
+              <tr>
+                <td className="border border-black px-2 py-1 font-semibold">
+                  Average
+                </td>
+                <td className="border border-black px-2 py-1 text-center"></td>
+                <td className="border border-black px-2 py-1 text-center"></td>
+                <td className="border border-black px-2 py-1 text-center"></td>
+                <td className="border border-black px-2 py-1 text-center font-semibold"></td>
+                <td className="border border-black px-2 py-1 text-center"></td>
                 <td className="border border-black px-2 py-1 text-center font-semibold">
                   {averageGPA.toFixed(2)}
                 </td>
