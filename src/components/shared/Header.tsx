@@ -132,7 +132,7 @@ const Header = () => {
             {navLinks}
           </ul>
         </div>
-        <Link href="/" className="ml-auto block lg:ml-1">
+        <Link href="/" className="ml-auto flex items-center gap-3 lg:ml-1">
           <Image
             src="/arban-public-school-logo.jpg"
             height={25}
@@ -140,6 +140,9 @@ const Header = () => {
             alt="Arban Public School Logo"
             className="h-9 rounded lg:h-auto lg:w-auto"
           />
+          <h4 className="hidden text-xl font-bold text-primary lg:block">
+            Arban <br /> Public School
+          </h4>
         </Link>
       </div>
 

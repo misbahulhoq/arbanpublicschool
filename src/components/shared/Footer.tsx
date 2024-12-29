@@ -6,7 +6,7 @@ import { FaHeart } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-neutral text-neutral-content">
-      <div className="container-center grid gap-5 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="container-center flex flex-wrap items-center justify-between gap-5 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-4">
         <aside>
           <Link href={`/`}>
             <Image
@@ -54,7 +54,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <h3 className="footer-title">Source Code</h3>
           <div className="flex flex-col items-start gap-1">
             <a
@@ -72,9 +72,9 @@ const Footer = () => {
               Back-end
             </a>
           </div>
-        </div>
+        </div> */}
 
-        <div>
+        {/* <div>
           <h3 className="footer-title">Technologies</h3>
           <div className="flex flex-col items-start gap-1">
             <a
@@ -106,7 +106,7 @@ const Footer = () => {
               ExpressJS
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="copywright bg-black px-2 py-4 text-center text-white">
         &copy; Created with <FaHeart className="inline-block text-red-500" /> by{" "}
