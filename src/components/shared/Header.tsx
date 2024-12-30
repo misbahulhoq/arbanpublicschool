@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
 import Swal from "sweetalert2";
 import { FaUser } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const [theme, setTheme] = useState(
@@ -16,6 +17,7 @@ const Header = () => {
   );
   const [showNavAnimation, setShowNavAnimation] = useState(false);
   const [showUserMenu, setUserMenu] = useState(false);
+  const pathName = usePathname();
   const imageRef = useRef<HTMLButtonElement>(null);
   const { data: userInfo, isLoading } = useGetUserInfoQuery();
 
@@ -96,6 +98,7 @@ const Header = () => {
       </li>
     </>
   );
+  if (pathName.includes("/dashboard")) return null;
 
   return (
     <div

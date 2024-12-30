@@ -2,6 +2,7 @@
 import React from "react";
 import DashboardLink from "./DashboardLink";
 import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
+import Logo from "../shared/Logo";
 
 const SideBar = () => {
   const { data, isLoading } = useGetUserInfoQuery();
@@ -14,8 +15,11 @@ const SideBar = () => {
   if (isLoading) return <span className="loading loading-spinner"></span>;
 
   return (
-    <div className="">
-      <ul className="menu sticky left-0 top-0 h-screen w-56 overflow-y-auto scroll-smooth bg-base-200">
+    <div className="h-screen bg-base-200 py-5">
+      <div className="logo-wrapper mb-4 px-5">
+        <Logo />
+      </div>
+      <ul className="menu sticky left-0 top-0 w-56 overflow-y-auto scroll-smooth bg-base-200">
         <li className={`${isTeacher ? "block" : "hidden"}`}>
           <DashboardLink
             props={{ href: "/dashboard/allstudents", children: "All Students" }}
