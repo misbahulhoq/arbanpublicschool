@@ -1,9 +1,13 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { FaHeart } from "react-icons/fa";
 
 const Footer = () => {
+  const pathName = usePathname();
+  if (pathName.includes("dashboard")) return null;
   return (
     <footer className="bg-neutral text-neutral-content">
       <div className="container-center flex flex-wrap items-center justify-between gap-5 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-4">

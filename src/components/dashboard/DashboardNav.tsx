@@ -2,11 +2,9 @@
 "use client";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
 import Swal from "sweetalert2";
 import { FaUser } from "react-icons/fa";
-import NavLink from "../shared/NavLink";
 
 const DashboardNav = () => {
   const [theme, setTheme] = useState(
@@ -67,39 +65,9 @@ const DashboardNav = () => {
     };
   }, [theme]);
 
-  const navLinks = (
-    <>
-      <li>
-        <NavLink href="/" className="py-3 lg:py-2">
-          Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink href="/about" className="py-3 lg:py-2">
-          About
-        </NavLink>
-      </li>
-      <li>
-        <NavLink href="/admissions" className="py-3 lg:py-2">
-          Admission
-        </NavLink>
-      </li>
-      <li>
-        <NavLink href="/contact" className="py-3 lg:py-2">
-          Contact
-        </NavLink>
-      </li>
-      <li className={`${isLoading && "hidden"} ${userInfo && "hidden"}`}>
-        <NavLink href="/login" className="py-3 lg:py-2">
-          Login
-        </NavLink>
-      </li>
-    </>
-  );
-
   return (
     <div
-      className={`navbar sticky top-0 z-10 justify-between text-base-content max-[400px]:max-h-14 max-[400px]:min-h-0 ${showNavAnimation ? "bg-opacity-80" : "bg-opacity-100"} ${
+      className={`navbar sticky top-0 z-10 items-center justify-between text-base-content max-[400px]:max-h-14 max-[400px]:min-h-0 ${showNavAnimation ? "bg-opacity-80" : "bg-opacity-100"} ${
         showNavAnimation &&
         "shadow-[0_4px_10px_rgba(128,0,128,0.5) backdrop-blur-lg"
       } ${
@@ -107,11 +75,8 @@ const DashboardNav = () => {
         "shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]"
       }`}
     >
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{navLinks}</ul>
-      </div>
-
-      <div className="navbar-end">
+      <div className="breadcrumbs-wrapper"></div>
+      <div className="justify-self-end">
         <div className="nav-content-end mr-3 flex items-center gap-4">
           <label className="swap swap-rotate">
             {/* this hidden checkbox controls the state */}

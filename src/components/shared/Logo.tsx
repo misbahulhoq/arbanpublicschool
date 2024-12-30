@@ -4,13 +4,13 @@ import React from "react";
 
 const Logo = () => {
   return (
-    <Link href="/" className="ml-auto flex items-center gap-3 lg:ml-1">
+    <Link href="/" className="">
       <Image
         src="/arban-public-school-logo.jpg"
         height={25}
-        width={40}
+        width={35}
         alt="Arban Public School Logo"
-        className="h-9 rounded lg:h-auto lg:w-auto"
+        className="rounded"
       />
     </Link>
   );
