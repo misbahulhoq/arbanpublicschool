@@ -31,12 +31,13 @@ const ContactForm: React.FC = () => {
         reset();
       }
     } catch (ex) {
+      console.log(ex);
       Swal.fire({
         icon: "error",
         title: "OOPS!",
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
-        text: ex.error,
+        text: ex.data.message,
       });
     }
   };

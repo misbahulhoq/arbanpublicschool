@@ -18,7 +18,7 @@ const Footer = () => {
             />
           </Link>
           <h4 className="mt-2">
-            Arban Public School
+            <span className="font-semibold">Arban Public School</span>
             <br />
             Providing Quality Education Since 2001
           </h4>
