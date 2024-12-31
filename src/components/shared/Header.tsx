@@ -87,6 +87,11 @@ const Header = () => {
         </NavLink>
       </li>
       <li>
+        <NavLink href="/notices" className="py-3 lg:py-2">
+          Notices
+        </NavLink>
+      </li>
+      <li>
         <NavLink href="/contact" className="py-3 lg:py-2">
           Contact
         </NavLink>
