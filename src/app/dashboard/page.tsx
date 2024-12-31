@@ -1,8 +1,7 @@
 "use client";
-
-import SideBar from "@/components/dashboard/SideBar";
 import React from "react";
 import PrivateRoute from "../routes/PrivateRoute";
+export const imgbbApiKey = process.env.IMGBB_API_KEY;
 
 const DashboardPage = () => {
   return (

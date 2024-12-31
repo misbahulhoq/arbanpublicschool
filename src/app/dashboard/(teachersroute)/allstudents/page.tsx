@@ -309,6 +309,7 @@ const AllStudentsPage = () => {
               <h4 className="text-base-content opacity-100">Class:</h4>{" "}
               <p>{studentInfo?.class}</p>
             </div>
+            <p className="py-1">Year: {studentInfo?.year}</p>{" "}
             <p className="py-1">Father: {studentInfo?.fathersName}</p>{" "}
             <p className="py-1">Mother: {studentInfo?.mothersName}</p>{" "}
             <p className="py-1">UID: {studentInfo?.uid}</p>
