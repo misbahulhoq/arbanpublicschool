@@ -4,6 +4,7 @@ export type StudentType = {
   uid: string;
   email: string;
   class: string;
+  year: number;
   phone: string;
   fathersName: string;
   mothersName: string;
