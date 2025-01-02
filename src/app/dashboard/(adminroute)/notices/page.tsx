@@ -1,48 +1,74 @@
 "use client";
 import { uploadImageToImgBB } from "@/lib/utils/imgbbImageHoster";
+import { useAddNoticeMutation } from "@/redux/features/notices/noticeApi";
 import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-
-// Define the form data type
-interface NoticeFormData {
-  title: string;
-  description: string;
-  image?: FileList; // Optional field for image
-}
+import Swal from "sweetalert2";
 
 const NoticePage = () => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    image: null as File | null,
+  });
+  const [isUploadingImage, setUploadingImage] = useState(false);
+  const [addNoticeData, { isLoading: isUploadingNotice, isSuccess }] =
+    useAddNoticeMutation();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    //reset,
-  } = useForm<NoticeFormData>();
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-  // Handler for form submission
-  const onSubmit: SubmitHandler<NoticeFormData> = async (data) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData({ ...formData, image: e.target.files[0] });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setUploadingImage(true);
+
+    if (!formData.image) {
+      alert("Please select an image to upload.");
+      return;
+    }
+    const imageData = new FormData();
+    imageData.append("image", formData.image);
+
     try {
-      let hostedImageUrl = null;
+      const noticeImgUrl = await uploadImageToImgBB(formData.image);
+      if (noticeImgUrl) setUploadingImage(false);
 
-      // Upload image if provided
-      if (data.image && data.image[0]) {
-        console.log(data.image[0].type);
-        hostedImageUrl = await uploadImageToImgBB(data.image[0]);
-        setImageUrl(hostedImageUrl); // Save for display
+      await addNoticeData({
+        title: formData.title,
+        description: formData.description,
+        resourceUrl: noticeImgUrl,
+      }).unwrap();
+
+      if (isSuccess) {
+        Swal.fire({
+          icon: "success",
+          text: "Notice added successfully",
+        });
+        // Reset the form
+        setFormData({
+          title: "",
+          description: "",
+          image: null,
+        });
       }
-
-      console.log({
-        title: data.title,
-        description: data.description,
-        imageUrl: hostedImageUrl,
-      });
-
-      //reset(); // Reset the form
-      alert("Notice created successfully!");
     } catch (error) {
       console.error("Error uploading image:", error);
-      alert("Failed to create notice. Please try again.");
+      Swal.fire({
+        icon: "error",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        text: error.data?.message,
+      });
+      alert("Failed to upload image.");
     }
   };
 
@@ -62,31 +88,25 @@ const NoticePage = () => {
       </div>
 
       {/* Notice add modal */}
-      <dialog id="notice_modal" className="modal">
+      <dialog id="notice_modal" className="modal z-[-1]">
         <div className="modal-box">
           <div className="">
-            <h2 className="mb-4 text-lg font-semibold">Create Notice</h2>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              {/* Title Field */}
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="title" className="block text-sm">
+                <label htmlFor="title" className="block text-sm font-medium">
                   Title
                 </label>
                 <input
-                  id="title"
                   type="text"
-                  {...register("title", { required: "Title is required" })}
+                  id="title"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  placeholder="Enter title"
                   className="input input-bordered w-full"
-                  placeholder="Enter the title"
                 />
-                {errors.title && (
-                  <p className="mt-1 text-sm text-error">
-                    {errors.title.message}
-                  </p>
-                )}
               </div>
 
-              {/* Description Field */}
               <div>
                 <label
                   htmlFor="description"
@@ -96,37 +116,43 @@ const NoticePage = () => {
                 </label>
                 <textarea
                   id="description"
-                  {...register("description", {
-                    required: "Description is required",
-                  })}
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
                   className="textarea textarea-bordered w-full"
-                  placeholder="Enter the description"
-                ></textarea>
-                {errors.description && (
-                  <p className="mt-1 text-sm text-error">
-                    {errors.description.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Image Upload Field */}
-              <div>
-                <label htmlFor="image" className="block text-sm font-medium">
-                  Image (Optional)
-                </label>
-                <input
-                  id="image"
-                  type="file"
-                  {...register("image")}
-                  className="file-input file-input-bordered w-full max-w-xs"
+                  placeholder="Enter description"
                 />
               </div>
 
-              {/* Submit Button */}
               <div>
-                <button type="submit" className="btn btn-primary">
+                <label htmlFor="image" className="block text-sm font-medium">
+                  Image
+                </label>
+                <input
+                  type="file"
+                  id="image"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="file-input file-input-bordered w-full"
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={isUploadingImage || isUploadingNotice}
+                >
+                  {(isUploadingImage || isUploadingNotice) && (
+                    <span className="loading loading-spinner"></span>
+                  )}
                   Submit
                 </button>
+                {isSuccess && (
+                  <button className="btn btn-success btn-sm">
+                    Notice added successfully.
+                  </button>
+                )}
               </div>
             </form>
           </div>

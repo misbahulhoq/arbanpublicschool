@@ -18,3 +18,7 @@ p {
   max-width: 1440px;
   margin-inline: auto;
 }
+
+.swal2-popup {
+  z-index: 100 !important;
+}
