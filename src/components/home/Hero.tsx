@@ -1,14 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Marquee from "./Marquee";
+import Notices from "./Notices";
 
 const HeroSection = () => {
   return (
     <section className="">
-      <div className="notice-wrapper sticky top-14 z-[3] w-full bg-base-100">
-        <Marquee text="test marquee some long" speed={22} />
-      </div>
+      <Notices />
       <div className="container-center flex items-center py-10 lg:min-h-[calc(100vh-68px)] lg:py-0">
         <div className="grid flex-grow items-center justify-between gap-10 lg:grid-cols-2 lg:gap-5">
           <div className="left-content space-y-2">

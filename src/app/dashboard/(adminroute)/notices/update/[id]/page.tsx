@@ -109,9 +109,12 @@ const NoticeUpdatePage = ({ params }: { params: Promise<{ id: string }> }) => {
 
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || isUpdatingNotice}
           className="btn btn-primary"
         >
+          {(isSubmitting || isUpdatingNotice) && (
+            <span className="loading loading-spinner"></span>
+          )}
           {isSubmitting ? "Submitting..." : "Update Notice"}
         </button>
       </form>
