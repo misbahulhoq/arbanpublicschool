@@ -11,6 +11,7 @@ const noticeApiSlice = baseApi.injectEndpoints({
             body,
           };
         },
+        invalidatesTags: ["Notices"],
       }),
       getNotices: build.query<unknown, void>({
         query() {
@@ -18,6 +19,7 @@ const noticeApiSlice = baseApi.injectEndpoints({
             url: "/notices",
           };
         },
+        providesTags: ["Notices"],
       }),
       getNoticeById: build.query({
         query(id) {
@@ -39,6 +41,15 @@ const noticeApiSlice = baseApi.injectEndpoints({
         },
         providesTags: ["Notices"],
       }),
+      deleteNoticeById: build.mutation({
+        query(id) {
+          return {
+            url: "/notices/" + id,
+            method: "DELETE",
+          };
+        },
+        invalidatesTags: ["Notices"],
+      }),
     };
   },
 });
@@ -47,4 +58,5 @@ export const {
   useAddNoticeMutation,
   useGetNoticesQuery,
   useGetNoticeByIdQuery,
+  useDeleteNoticeByIdMutation,
 } = noticeApiSlice;

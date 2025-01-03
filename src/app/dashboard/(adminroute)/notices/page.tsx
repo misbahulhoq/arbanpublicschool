@@ -2,6 +2,7 @@
 import { uploadImageToImgBB } from "@/lib/utils/imgbbImageHoster";
 import {
   useAddNoticeMutation,
+  useDeleteNoticeByIdMutation,
   useGetNoticesQuery,
 } from "@/redux/features/notices/noticeApi";
 import Image from "next/image";
@@ -22,6 +23,7 @@ const NoticePage = () => {
     useAddNoticeMutation();
   const { data: allNotices, isLoading: isGettingAllNotices } =
     useGetNoticesQuery();
+  const [addDeleteNoticeId] = useDeleteNoticeByIdMutation();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -81,6 +83,25 @@ const NoticePage = () => {
     }
   };
 
+  const deleteNoticeById = async (id: string) => {
+    try {
+      const response = await addDeleteNoticeId(id).unwrap();
+      if (response) {
+        Swal.fire({
+          icon: "success",
+          text: "Deleted successfully",
+        });
+      }
+    } catch (ex) {
+      Swal.fire({
+        icon: "error",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        text: ex?.data?.message,
+      });
+    }
+  };
+
   if (isGettingAllNotices)
     return <span className="loading loading-spinner"></span>;
 
@@ -124,7 +145,24 @@ const NoticePage = () => {
                 </Link>
                 <div className="actions flex items-center gap-3">
                   <FiEdit className="cursor-pointer" />
-                  <MdDelete className="cursor-pointer text-xl" />
+                  <MdDelete
+                    className="cursor-pointer text-xl"
+                    onClick={() => {
+                      Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          deleteNoticeById(notice._id);
+                        }
+                      });
+                    }}
+                  />
                 </div>
               </div>
             </div>
