@@ -12,7 +12,7 @@ const noticeApiSlice = baseApi.injectEndpoints({
           };
         },
       }),
-      getNotices: build.query({
+      getNotices: build.query<unknown, void>({
         query() {
           return {
             url: "/notices",
@@ -25,6 +25,19 @@ const noticeApiSlice = baseApi.injectEndpoints({
             url: `/notices/${id}`,
           };
         },
+      }),
+      getNoticesByQuery: build.query({
+        query: (params: Record<string, string | number | boolean | null>) => {
+          const queryString = Object.entries(params)
+            .filter(([, value]) => value !== null && value !== undefined) // Remove null or undefined values
+            .map(
+              ([key, value]) =>
+                `${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`,
+            )
+            .join("&");
+          return { url: `/notices?${queryString}` };
+        },
+        providesTags: ["Notices"],
       }),
     };
   },

@@ -1,7 +1,14 @@
 "use client";
 import { uploadImageToImgBB } from "@/lib/utils/imgbbImageHoster";
-import { useAddNoticeMutation } from "@/redux/features/notices/noticeApi";
+import {
+  useAddNoticeMutation,
+  useGetNoticesQuery,
+} from "@/redux/features/notices/noticeApi";
+import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
+import { FiEdit } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 
 const NoticePage = () => {
@@ -13,6 +20,8 @@ const NoticePage = () => {
   const [isUploadingImage, setUploadingImage] = useState(false);
   const [addNoticeData, { isLoading: isUploadingNotice, isSuccess }] =
     useAddNoticeMutation();
+  const { data: allNotices, isLoading: isGettingAllNotices } =
+    useGetNoticesQuery();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -29,17 +38,17 @@ const NoticePage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setUploadingImage(true);
+    let noticeImgUrl;
 
-    if (!formData.image) {
-      alert("Please select an image to upload.");
-      return;
+    if (formData.image) {
+      const imageData = new FormData();
+      imageData.append("image", formData.image);
+      setUploadingImage(true);
     }
-    const imageData = new FormData();
-    imageData.append("image", formData.image);
 
     try {
-      const noticeImgUrl = await uploadImageToImgBB(formData.image);
+      if (formData.image)
+        noticeImgUrl = await uploadImageToImgBB(formData.image);
       if (noticeImgUrl) setUploadingImage(false);
 
       await addNoticeData({
@@ -72,9 +81,12 @@ const NoticePage = () => {
     }
   };
 
+  if (isGettingAllNotices)
+    return <span className="loading loading-spinner"></span>;
+
   return (
     <section className="">
-      <div className="top-part-wrapper flex items-center justify-between gap-4">
+      <div className="top-part-wrapper mb-6 flex items-center justify-between gap-4">
         <h3 className="text-xl font-bold">Notices</h3>
         {/* Open the modal using document.getElementById('ID').showModal() method */}
         <button
@@ -85,6 +97,38 @@ const NoticePage = () => {
         >
           Add Notice
         </button>
+      </div>
+
+      <div className="notices-wrapper grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.isArray(allNotices) &&
+          allNotices.map((notice) => (
+            <div key={notice._id} className="rounded-md border p-3">
+              <Image
+                src={notice.resourceUrl || "/notice.jpg"}
+                alt={""}
+                height={100}
+                width={200}
+                className="h-[200px] w-full border-b object-cover"
+              />
+              <div className="flex items-center justify-between">
+                <h3 className="my-1 text-xl font-semibold">{notice.title}</h3>
+                <div
+                  className={`badge ${notice.isActive ? "badge-success" : "badge-error"}`}
+                >
+                  {notice.isActive ? "Active" : "Inactive"}
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <Link href={"/"} className="btn btn-outline btn-sm">
+                  Read More
+                </Link>
+                <div className="actions flex items-center gap-3">
+                  <FiEdit className="cursor-pointer" />
+                  <MdDelete className="cursor-pointer text-xl" />
+                </div>
+              </div>
+            </div>
+          ))}
       </div>
 
       {/* Notice add modal */}
