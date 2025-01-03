@@ -21,6 +21,14 @@ const noticeApiSlice = baseApi.injectEndpoints({
         },
         providesTags: ["Notices"],
       }),
+      getActiveNotices: build.query<unknown, void>({
+        query() {
+          return {
+            url: "/notices/status/active",
+          };
+        },
+        providesTags: ["Notices"],
+      }),
       getNoticeById: build.query({
         query(id) {
           return {
@@ -50,6 +58,19 @@ const noticeApiSlice = baseApi.injectEndpoints({
         },
         invalidatesTags: ["Notices"],
       }),
+      updateNoticeById: build.mutation({
+        query(arg) {
+          const { id, body } = arg;
+          console.log("id", id);
+          console.log("body", body);
+          return {
+            url: `/notices/${id}`,
+            method: "PUT",
+            body,
+          };
+        },
+        invalidatesTags: ["Notices"],
+      }),
     };
   },
 });
@@ -57,6 +78,8 @@ const noticeApiSlice = baseApi.injectEndpoints({
 export const {
   useAddNoticeMutation,
   useGetNoticesQuery,
+  useGetActiveNoticesQuery,
   useGetNoticeByIdQuery,
   useDeleteNoticeByIdMutation,
+  useUpdateNoticeByIdMutation,
 } = noticeApiSlice;

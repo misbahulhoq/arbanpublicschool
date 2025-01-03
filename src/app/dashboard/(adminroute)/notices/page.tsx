@@ -144,7 +144,9 @@ const NoticePage = () => {
                   Read More
                 </Link>
                 <div className="actions flex items-center gap-3">
-                  <FiEdit className="cursor-pointer" />
+                  <Link href={`/dashboard/notices/update/${notice._id}`}>
+                    <FiEdit className="cursor-pointer" />
+                  </Link>
                   <MdDelete
                     className="cursor-pointer text-xl"
                     onClick={() => {
