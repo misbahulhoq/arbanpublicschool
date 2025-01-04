@@ -3,12 +3,14 @@ import React from "react";
 
 type MarqueeProps = {
   text: string;
+  id: string;
   speed?: number; // Speed in seconds
   direction?: "left" | "right"; // Direction of scrolling
 };
 
 const Marquee: React.FC<MarqueeProps> = ({
   text,
+  id,
   speed = 14,
   direction = "left",
 }) => {
@@ -16,21 +18,15 @@ const Marquee: React.FC<MarqueeProps> = ({
     direction === "left" ? "animate-marquee-left" : "animate-marquee-right";
 
   return (
-    <div className="sticky top-16 h-8 w-full overflow-hidden">
+    <div className="sticky top-16 flex h-10 w-full items-center overflow-hidden">
       <div
-        className={`flex w-max whitespace-nowrap ${animationClass}`}
-        style={{ animationDuration: `${speed}s`, minWidth: "100vw" }}
+        className={`whitespace-nowrap flex w-max ${animationClass}`}
+        style={{ animationDuration: `${speed}s`, minWidth: "90vw" }}
       >
-        <Link href={`/`} className="mx-4">
+        <Link href={`/notices/${id}`} className="mx-4">
           {text}
         </Link>
-        <Link href={`/`} className="mx-4">
-          {text}
-        </Link>{" "}
-        <Link href={`/`} className="mx-4">
-          {text}
-        </Link>{" "}
-        <Link href={`/`} className="mx-4">
+        <Link href={`/notices/${id}`} className="mx-4">
           {text}
         </Link>
         {/* Duplicate text for seamless looping */}
