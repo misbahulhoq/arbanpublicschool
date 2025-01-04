@@ -9,7 +9,7 @@ import {
   PiTarget,
   PiUsers,
 } from "react-icons/pi";
-import { MdInsertChartOutlined } from "react-icons/md";
+import { MdInsertChartOutlined, MdOutlineEventAvailable } from "react-icons/md";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { TfiStatsUp } from "react-icons/tfi";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -84,6 +84,15 @@ const SideBar = () => {
                 href: "/dashboard/teachers",
                 children: "Teachers",
                 icon: <PiChalkboardTeacher />,
+              }}
+            ></DashboardLink>
+          </li>
+          <li className={`${isTeacher ? "block" : "hidden"}`}>
+            <DashboardLink
+              props={{
+                href: "/dashboard/events",
+                children: "Events",
+                icon: <MdOutlineEventAvailable />,
               }}
             ></DashboardLink>
           </li>
