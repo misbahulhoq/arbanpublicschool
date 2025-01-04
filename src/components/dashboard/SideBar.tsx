@@ -3,6 +3,17 @@ import React from "react";
 import DashboardLink from "./DashboardLink";
 import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
 import Logo from "../shared/Logo";
+import {
+  PiChalkboardTeacher,
+  PiStudent,
+  PiTarget,
+  PiUsers,
+} from "react-icons/pi";
+import { MdInsertChartOutlined } from "react-icons/md";
+import { IoPersonAddOutline } from "react-icons/io5";
+import { TfiStatsUp } from "react-icons/tfi";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { GoIssueReopened } from "react-icons/go";
 
 const SideBar = () => {
   const { data, isLoading } = useGetUserInfoQuery();
@@ -26,48 +37,81 @@ const SideBar = () => {
             <DashboardLink
               props={{
                 href: "/dashboard/allstudents",
-                children: "All Students",
+                icon: <PiStudent className="text-xl" />,
+                children: "Students",
               }}
             ></DashboardLink>
           </li>
           <li className={`${isTeacher ? "block" : "hidden"}`}>
             <DashboardLink
-              props={{ href: "/dashboard/addstudent", children: "Add Student" }}
+              props={{
+                href: "/dashboard/addstudent",
+                children: "Add Student",
+                icon: <IoPersonAddOutline className="text-xl" />,
+              }}
             ></DashboardLink>
           </li>
           <li className={`${isTeacher ? "block" : "hidden"}`}>
             <DashboardLink
-              props={{ href: "/dashboard/addnumber", children: "Add Number" }}
+              props={{
+                href: "/dashboard/addnumber",
+                children: "Add Number",
+                icon: <MdInsertChartOutlined className="text-xl" />,
+              }}
             ></DashboardLink>
           </li>
           <li className={`${isTeacher ? "block" : "hidden"}`}>
             <DashboardLink
-              props={{ href: "/dashboard/numbers", children: "Numbers" }}
+              props={{
+                href: "/dashboard/numbers",
+                children: "Numbers",
+                icon: <TfiStatsUp className="text-lg" />,
+              }}
             ></DashboardLink>
           </li>
           <li className={`${isTeacher ? "block" : "hidden"}`}>
             <DashboardLink
-              props={{ href: "/dashboard/results", children: "Results" }}
+              props={{
+                href: "/dashboard/results",
+                children: "Results",
+                icon: <PiTarget className="text-xl" />,
+              }}
             ></DashboardLink>
           </li>
           <li className={`${isAdmin ? "block" : "hidden"}`}>
             <DashboardLink
-              props={{ href: "/dashboard/teachers", children: "Teachers" }}
+              props={{
+                href: "/dashboard/teachers",
+                children: "Teachers",
+                icon: <PiChalkboardTeacher />,
+              }}
             ></DashboardLink>
           </li>
           <li className={`${isAdmin ? "block" : "hidden"}`}>
             <DashboardLink
-              props={{ href: "/dashboard/users", children: "Users" }}
+              props={{
+                href: "/dashboard/users",
+                children: "Users",
+                icon: <PiUsers />,
+              }}
             ></DashboardLink>
           </li>
           <li className={`${isAdmin ? "block" : "hidden"}`}>
             <DashboardLink
-              props={{ href: "/dashboard/notices", children: "Notices" }}
+              props={{
+                href: "/dashboard/notices",
+                children: "Notices",
+                icon: <IoIosNotificationsOutline />,
+              }}
             ></DashboardLink>
           </li>
           <li className={`${isTeacher ? "block" : "hidden"}`}>
             <DashboardLink
-              props={{ href: "/dashboard/issues", children: "Issues" }}
+              props={{
+                href: "/dashboard/issues",
+                children: "Issues",
+                icon: <GoIssueReopened />,
+              }}
             ></DashboardLink>
           </li>
         </ul>

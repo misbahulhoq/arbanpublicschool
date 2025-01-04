@@ -5,14 +5,23 @@ import React, { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
+  icon?: ReactNode;
+  iconClassName?: string;
   href: string;
   className?: string;
 }
 const DashboardLink = ({ props }: { props: Props }) => {
   const pathName = usePathname();
-  const { children, href } = props;
+  const { children, href, icon, iconClassName } = props;
   return (
-    <Link href={`${href}`} className={`${pathName === href && "active"}`}>
+    <Link
+      href={`${href}`}
+      className={`flex items-center gap-3 ${pathName === href && "active"}`}
+    >
+      <span className={`${iconClassName ? iconClassName : "text-xl"}`}>
+        {" "}
+        {icon}{" "}
+      </span>{" "}
       {children}
     </Link>
   );
