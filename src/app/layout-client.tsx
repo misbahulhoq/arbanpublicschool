@@ -8,7 +8,7 @@ const RootLayoutClient = ({ children }: { children: ReactNode }) => {
   return (
     <Provider store={store}>
       <Header />
-      {children}
+      <div className="min-h-screen">{children}</div>
       <Footer />
     </Provider>
   );

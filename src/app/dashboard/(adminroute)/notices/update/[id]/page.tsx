@@ -40,7 +40,6 @@ const NoticeUpdatePage = ({ params }: { params: Promise<{ id: string }> }) => {
   }, [fetchedNotice, params, reset]);
 
   const onSubmit: SubmitHandler<Notice> = async (data) => {
-    console.log("submitted data", data);
     try {
       const response = await addUpdateNoticeData({
         id: notice?._id,
