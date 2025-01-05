@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-
 import EventCard from "@/components/dashboard/EventCard";
-import { useAddNewEventMutation } from "@/redux/features/events/eventsApiSlice";
+import Spinner from "@/components/shared/Spinner";
+import {
+  useAddNewEventMutation,
+  useGetAllEventsQuery,
+} from "@/redux/features/events/eventsApiSlice";
 import Image from "next/image";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -13,6 +16,8 @@ const EventsPage = () => {
   const [uploading, setUploading] = useState(false);
   const [addEventData, { isLoading: isUploadingEvent }] =
     useAddNewEventMutation();
+  const { data: events, isLoading: isGettingEvents } = useGetAllEventsQuery();
+  console.log(events);
 
   //   @ts-ignore
   const onImageChange = (event) => {
@@ -55,7 +60,6 @@ const EventsPage = () => {
       }
 
       if (uploadedImageUrls.length > 0) {
-        console.log("Uploaded image URLs:", uploadedImageUrls);
         alert("All images uploaded successfully!");
       } else {
         alert("No images were uploaded.");
@@ -71,13 +75,14 @@ const EventsPage = () => {
         images: uploadedImageUrls,
       })
         .unwrap()
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           reset();
         });
       setImagePreviews([]);
     }
   };
+
+  if (isGettingEvents) return <Spinner />;
 
   return (
     <div>
@@ -96,9 +101,14 @@ const EventsPage = () => {
       </div>
 
       <div className="mx-auto grid grid-cols-1 gap-6 p-6 sm:grid-cols-2 lg:grid-cols-3">
-        {[1, 2, 3, 4, 5].map((item) => (
+        {Array.isArray(events) &&
+          events.map((ev) => {
+            return <EventCard key={ev._id} props={ev} />;
+          })}
+
+        {/* {[1, 2, 3, 4, 5].map((item) => (
           <EventCard key={item} />
-        ))}
+        ))} */}
       </div>
 
       {/* Add new even modal */}

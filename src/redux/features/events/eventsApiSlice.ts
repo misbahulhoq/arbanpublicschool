@@ -12,7 +12,7 @@ const eventsApiSlice = baseApi.injectEndpoints({
           };
         },
       }),
-      getAllEvents: build.query({
+      getAllEvents: build.query<unknown, void>({
         query() {
           return {
             url: "/events",
