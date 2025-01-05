@@ -15,19 +15,16 @@ const EventCard = ({ props }: { props: Props }) => {
   return (
     <div className="transform overflow-hidden rounded-lg shadow-lg transition-transform hover:scale-105 hover:shadow-2xl">
       <div className="relative">
-        <img src={images[0]} alt="" className="h-[250px] w-full object-cover" />
-        {/* <Image
+        {/* <img src={images[0]} alt="" className="h-[250px] w-full object-cover" /> */}
+        <Image
           // src={`${images[0]}`}
-          // src={images[0]}
-          priority
-          src={
-            "https://i.ibb.co/y52Zqht/117001931-945918015923871-2662978322563336210-n.jpg"
-          }
+          src={images[0]}
+          unoptimized
           alt={title}
-          height={300}
-          width={400}
-          className="w-full"
-        /> */}
+          height={250}
+          width={300}
+          className="h-[250px] w-full object-cover"
+        />
 
         {/* <div className="absolute inset-0 flex items-center justify-center bg-opacity-40 opacity-0 transition-opacity hover:opacity-100">
           <h2 className="text-center text-xl font-bold">
