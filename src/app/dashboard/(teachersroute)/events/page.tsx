@@ -17,7 +17,6 @@ const EventsPage = () => {
   const [addEventData, { isLoading: isUploadingEvent }] =
     useAddNewEventMutation();
   const { data: events, isLoading: isGettingEvents } = useGetAllEventsQuery();
-  console.log(events);
 
   //   @ts-ignore
   const onImageChange = (event) => {

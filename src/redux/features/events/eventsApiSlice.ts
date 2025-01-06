@@ -11,6 +11,7 @@ const eventsApiSlice = baseApi.injectEndpoints({
             body,
           };
         },
+        invalidatesTags: ["Events"],
       }),
       getAllEvents: build.query<unknown, void>({
         query() {
@@ -18,6 +19,7 @@ const eventsApiSlice = baseApi.injectEndpoints({
             url: "/events",
           };
         },
+        providesTags: ["Events"],
       }),
       getEventById: build.query({
         query(id) {
@@ -25,6 +27,15 @@ const eventsApiSlice = baseApi.injectEndpoints({
             url: `/events/${id}`,
           };
         },
+      }),
+      deleteEventById: build.mutation({
+        query(id) {
+          return {
+            url: `/events/${id}`,
+            method: "DELETE",
+          };
+        },
+        invalidatesTags: ["Events"],
       }),
     };
   },
@@ -34,4 +45,5 @@ export const {
   useAddNewEventMutation,
   useGetAllEventsQuery,
   useGetEventByIdQuery,
+  useDeleteEventByIdMutation,
 } = eventsApiSlice;
