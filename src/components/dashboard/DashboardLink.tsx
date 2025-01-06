@@ -16,7 +16,7 @@ const DashboardLink = ({ props }: { props: Props }) => {
   return (
     <Link
       href={`${href}`}
-      className={`flex items-center gap-3 ${pathName === href && "active"}`}
+      className={`flex items-center gap-4 ${pathName === href && "active"}`}
     >
       <span className={`${iconClassName ? iconClassName : "text-xl"}`}>
         {" "}
