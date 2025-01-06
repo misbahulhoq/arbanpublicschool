@@ -6,8 +6,11 @@ import React, { useEffect, useState } from "react";
 
 const EventDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const [eventId, setEventId] = useState<null | string>(null);
-  const { data: event, isLoading: fetchingEvent } =
-    useGetEventByIdQuery(eventId);
+  const { data: event, isLoading: fetchingEvent } = useGetEventByIdQuery(
+    eventId,
+    { skip: !eventId },
+  );
+
   useEffect(() => {
     params.then((res) => setEventId(res.id));
   }, [params]);

@@ -6,13 +6,15 @@ import React, { useEffect, useState } from "react";
 
 const NoticeDetailsPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const [noticeId, setNoticeId] = useState<null | string>(null);
-  const { data: notice, isLoading } = useGetNoticeByIdQuery(noticeId);
   useEffect(() => {
     params.then((res) => {
       setNoticeId(res.id);
     });
   }, [params]);
-  console.log(noticeId);
+
+  const { data: notice, isLoading } = useGetNoticeByIdQuery(noticeId, {
+    skip: !noticeId,
+  });
   if (!noticeId || isLoading) return <Spinner />;
 
   const { title, description, publishDate, resourceUrl } = notice || {};
