@@ -58,7 +58,6 @@ const EventEditPage = ({ params }: { params: Promise<{ id: string }> }) => {
         text: ex?.data?.message,
       });
     }
-    console.log(data);
   };
   return (
     <div>
