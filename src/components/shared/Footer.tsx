@@ -58,6 +58,28 @@ const Footer = () => {
           </div>
         </div>
 
+        <div>
+          <h3 className="footer-title">Follow Us On</h3>
+          <div className="flex flex-col items-start gap-1">
+            <a
+              href="https://www.facebook.com/arbanpublicschool"
+              target="_blank"
+              className="hover:text-purple-500 hover:underline"
+            >
+              Facebook
+            </a>
+            <Link href="/" className="hover:text-purple-500 hover:underline">
+              LinkedIn
+            </Link>
+            <Link href="/" className="hover:text-purple-500 hover:underline">
+              Twitter
+            </Link>
+            <Link href="/" className="hover:text-purple-500 hover:underline">
+              Instagram
+            </Link>
+          </div>
+        </div>
+
         {/* <div>
           <h3 className="footer-title">Source Code</h3>
           <div className="flex flex-col items-start gap-1">
