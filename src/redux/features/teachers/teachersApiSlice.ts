@@ -16,6 +16,17 @@ const teachersApiSlice = baseApi.injectEndpoints({
       }),
       providesTags: ["Teachers"],
     }),
+    getTeacherById: build.query({
+      query: (id) => ({
+        url: "/teachers/" + id,
+      }),
+    }),
+    updateTeacherById: build.mutation({
+      query: (arg) => {
+        const { id, body } = arg;
+        return { url: `/teachers/${id}`, method: "PUT", body };
+      },
+    }),
     deleteTeacherById: build.mutation({
       query: (id) => ({
         url: `/teachers/${id}`,
@@ -29,5 +40,7 @@ const teachersApiSlice = baseApi.injectEndpoints({
 export const {
   useAddTeacherMutation,
   useGetAllTeachersQuery,
+  useGetTeacherByIdQuery,
+  useUpdateTeacherByIdMutation,
   useDeleteTeacherByIdMutation,
 } = teachersApiSlice;

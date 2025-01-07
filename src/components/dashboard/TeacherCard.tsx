@@ -1,5 +1,6 @@
 import { useDeleteTeacherByIdMutation } from "@/redux/features/teachers/teachersApiSlice";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import Swal from "sweetalert2";
 
@@ -37,7 +38,13 @@ const TeacherCard = ({ props }: { props: Props }) => {
         )}
       </div>
       <div className="flex items-center gap-6 p-4">
-        <button className="btn btn-primary btn-sm">Edit</button>
+        <Link
+          href={`/dashboard/teachers/edit/${_id}`}
+          className="btn btn-primary btn-sm"
+        >
+          Edit
+        </Link>
+
         <button
           className="btn btn-outline btn-warning btn-sm"
           onClick={async () => {
