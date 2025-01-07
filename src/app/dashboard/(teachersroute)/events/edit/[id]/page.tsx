@@ -1,10 +1,14 @@
 "use client";
 import Spinner from "@/components/shared/Spinner";
-import { useGetEventByIdQuery } from "@/redux/features/events/eventsApiSlice";
+import {
+  useGetEventByIdQuery,
+  useUpdateEventByIdMutation,
+} from "@/redux/features/events/eventsApiSlice";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { RxCross1 } from "react-icons/rx";
+import Swal from "sweetalert2";
 
 type EventType = {
   title: string;
@@ -13,10 +17,12 @@ type EventType = {
 };
 const EventEditPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const [eventId, setEventId] = useState<null | string>(null);
-  const [event, setEvent] = useState<null | EventType[]>(null);
+  const [, setEvent] = useState<null | EventType[]>(null);
   const { data: fetchedEvent, isLoading } = useGetEventByIdQuery(eventId, {
     skip: !eventId,
   });
+  const [addUpdateEventData, { isLoading: isUpdatingEvent }] =
+    useUpdateEventByIdMutation();
 
   const { register, handleSubmit, reset } = useForm<EventType>();
 
@@ -33,6 +39,25 @@ const EventEditPage = ({ params }: { params: Promise<{ id: string }> }) => {
   if (!eventId || isLoading) return <Spinner />;
 
   const onSubmit = async (data: EventType) => {
+    try {
+      const response = await addUpdateEventData({
+        id: eventId,
+        body: { title: data.title, description: data.description },
+      }).unwrap();
+      if (response) {
+        Swal.fire({
+          icon: "success",
+          text: "Event updated successfully.",
+        });
+      }
+    } catch (ex) {
+      Swal.fire({
+        icon: "error",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        text: ex?.data?.message,
+      });
+    }
     console.log(data);
   };
   return (
@@ -82,14 +107,11 @@ const EventEditPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
         <button
           type="submit"
-          //disabled={isSubmitting || isUpdatingNotice}
+          disabled={isUpdatingEvent}
           className="btn btn-primary mt-10"
         >
-          {/* {(isSubmitting || isUpdatingNotice) && (
-            <span className="loading loading-spinner"></span>
-          )} */}
-          {/* {isSubmitting ? "Submitting..." : "Update Notice"} */}
-          Submit button
+          {isUpdatingEvent && <span className="loading loading-spinner"></span>}
+          {isUpdatingEvent ? "Submitting..." : "Update Event"}
         </button>
       </form>
     </div>
