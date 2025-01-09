@@ -383,7 +383,7 @@ const ResultCard = ({ props }: { props: Props }) => {
 
               <tr>
                 <td className="border border-black px-2 py-1 font-semibold">
-                  Average
+                  GPA
                 </td>
                 <td className="border border-black px-2 py-1 text-center"></td>
                 <td className="border border-black px-2 py-1 text-center"></td>

@@ -43,7 +43,7 @@ const AdmissionForm: React.FC = () => {
         icon: "error",
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
-        text: ex.data,
+        text: ex.data.message,
       });
     }
 
@@ -99,10 +99,13 @@ const AdmissionForm: React.FC = () => {
             </label>
             <input
               id="phone"
-              type="tel"
+              type="text"
               placeholder="Enter phone number"
               className="input input-bordered mt-2 w-full"
-              {...register("phone", { required: "Phone Number is required" })}
+              {...register("phone", {
+                required: "Phone Number is required",
+                //pattern: /^(\+88)?01[3-9]\\d{8}$/,
+              })}
             />
             {errors.phone && (
               <p className="mt-1 text-xs text-red-500">

@@ -33,6 +33,7 @@ const StudentForm: React.FC = () => {
           title: `Student added successfully`,
           text: `${data.name} with uid ${data.uid} is added successfully`,
         });
+        reset();
       }
     } catch (ex) {
       Swal.fire({
@@ -41,7 +42,6 @@ const StudentForm: React.FC = () => {
         text: `${ex.data.message}`,
       });
     }
-    reset();
   };
 
   return (

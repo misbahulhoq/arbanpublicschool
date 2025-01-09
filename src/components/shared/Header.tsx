@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
 import Swal from "sweetalert2";
 import { FaUser } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const [theme, setTheme] = useState(
@@ -16,6 +17,7 @@ const Header = () => {
   );
   const [showNavAnimation, setShowNavAnimation] = useState(false);
   const [showUserMenu, setUserMenu] = useState(false);
+  const pathName = usePathname();
   const imageRef = useRef<HTMLButtonElement>(null);
   const { data: userInfo, isLoading } = useGetUserInfoQuery();
 
@@ -85,6 +87,11 @@ const Header = () => {
         </NavLink>
       </li>
       <li>
+        <NavLink href="/notices" className="py-3 lg:py-2">
+          Notices
+        </NavLink>
+      </li>
+      <li>
         <NavLink href="/contact" className="py-3 lg:py-2">
           Contact
         </NavLink>
@@ -96,6 +103,7 @@ const Header = () => {
       </li>
     </>
   );
+  if (pathName.includes("/dashboard")) return null;
 
   return (
     <div
@@ -132,7 +140,7 @@ const Header = () => {
             {navLinks}
           </ul>
         </div>
-        <Link href="/" className="ml-auto block lg:ml-1">
+        <Link href="/" className="ml-auto flex items-center gap-3 lg:ml-1">
           <Image
             src="/arban-public-school-logo.jpg"
             height={25}
@@ -140,6 +148,9 @@ const Header = () => {
             alt="Arban Public School Logo"
             className="h-9 rounded lg:h-auto lg:w-auto"
           />
+          <h4 className="hidden text-xl font-bold text-primary lg:block">
+            Arban <br /> Public School
+          </h4>
         </Link>
       </div>
 
