@@ -198,7 +198,7 @@ const Header = () => {
               }}
               ref={imageRef}
             >
-              <FaUser className="select-none text-2xl" />
+              <FaUser className="select-none" size={24} />
             </button>
 
             {/* <Image

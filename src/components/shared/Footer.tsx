@@ -134,7 +134,7 @@ const Footer = () => {
           </div>
         </div> */}
       </div>
-      <div className="copywright bg-black px-2 py-4 text-center text-white">
+      <div className="copywright bg-black px-2 py-4 text-center text-sm text-white">
         &copy; Created with <FaHeart className="inline-block text-red-500" /> by{" "}
         <a
           href="https://misbahulhoq.vercel.app/"
