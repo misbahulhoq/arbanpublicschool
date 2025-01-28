@@ -1,5 +1,5 @@
 "use client";
-import SideBar from "@/components/dashboard/SideBar";
+// import SideBar from "@/components/dashboard/SideBar";
 import React, { ReactNode } from "react";
 import TeachersRoute from "@/app/routes/TeachersRoute";
 
