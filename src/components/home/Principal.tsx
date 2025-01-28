@@ -9,11 +9,11 @@ const PrincipalsMessage = () => {
         </h2>
         <div className="grid flex-col items-center gap-6 lg:grid-cols-12">
           <div className="img-wrapper flex justify-center lg:col-span-4">
-            <img
+            {/* <img
               src="https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg"
               alt=""
               className="h-32 w-32 rounded-full object-cover"
-            />
+            /> */}
           </div>
 
           <div className="message-wrapper space-y-2 lg:col-span-8 lg:max-w-screen-md">
