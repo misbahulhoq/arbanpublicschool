@@ -96,6 +96,11 @@ const Header = () => {
           Contact
         </NavLink>
       </li>
+      <li>
+        <NavLink href="/chat-alm" className="py-3 lg:py-2">
+          Chat ALM
+        </NavLink>
+      </li>
       <li className={`${isLoading && "hidden"} ${userInfo && "hidden"}`}>
         <NavLink href="/login" className="py-3 lg:py-2">
           Login
