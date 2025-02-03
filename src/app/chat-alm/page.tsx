@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ReactMarkdown from "react-markdown";
+import { data } from "../../../public/data";
 
 const genAI = new GoogleGenerativeAI(
   process.env.NEXT_PUBLIC_GEMINI_KEY as string,
@@ -21,7 +22,7 @@ const ChatPromptForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const result = await model.generateContent(prompt);
+      const result = await model.generateContent(data + "\n User: " + prompt);
       console.log(result.response.text());
       if (prompt.trim()) {
         setChats([...chats, { prompt, response: result.response.text() }]);
