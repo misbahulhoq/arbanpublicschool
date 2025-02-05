@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ReactMarkdown from "react-markdown";
@@ -17,6 +17,13 @@ const ChatPromptForm = () => {
     [],
   );
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,43 +45,45 @@ const ChatPromptForm = () => {
   };
 
   return (
-    <div className="mx-auto flex h-[calc(100vh-4rem)] max-w-xl flex-col justify-end px-4 py-5 lg:max-w-3xl">
+    <div className="flex h-[calc(100vh-100px)] flex-col justify-end overflow-hidden px-3 py-5 lg:h-[calc(100vh-4rem)]">
       <div className="flex-grow overflow-y-auto">
-        {chats.map((chat, index) => (
-          <div key={index} className="">
-            <div className="chat chat-end">
-              <div className="chat-bubble bg-base-300 text-base-content">
-                {chat.prompt}
-              </div>
-            </div>
-            <div className="chat chat-start">
-              <div className="avatar chat-image">
-                <div className="w-8 rounded-full">
-                  <Image
-                    src={`/icons/bard.svg`}
-                    alt=""
-                    height={20}
-                    width={20}
-                  />
+        <div className="mx-auto max-w-3xl">
+          {chats.map((chat, index) => (
+            <div key={index} className="">
+              <div className="chat chat-end">
+                <div className="chat-bubble bg-base-300 text-base-content">
+                  {chat.prompt}
                 </div>
               </div>
-              <div className="chat-bubble space-y-2 bg-base-300 text-base-content">
-                {index === chats.length - 1 && loading ? (
-                  <span className="loading loading-dots loading-md"></span>
-                ) : (
-                  <ReactMarkdown>
-                    {chat.response || "I'm sorry, I don't understand."}
-                  </ReactMarkdown>
-                )}
+              <div className="chat chat-start">
+                <div className="avatar chat-image">
+                  <div className="w-8 rounded-full">
+                    <Image
+                      src={`/icons/bard.svg`}
+                      alt=""
+                      height={20}
+                      width={20}
+                    />
+                  </div>
+                </div>
+                <div className="chat-bubble space-y-2 bg-base-300 text-base-content">
+                  {index === chats.length - 1 && loading ? (
+                    <span className="loading loading-dots loading-md"></span>
+                  ) : (
+                    <ReactMarkdown>
+                      {chat.response || "I'm sorry, I don't understand."}
+                    </ReactMarkdown>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="relative bottom-0 left-0 right-0 z-10 mx-auto mt-5 w-full max-w-xl self-end justify-self-end rounded-lg bg-base-100 px-3"
+        className="relative bottom-0 left-0 right-0 z-10 mx-auto mt-5 w-full max-w-[800px] self-end justify-self-end rounded-lg bg-base-100"
       >
         {chats.length < 1 && (
           <h2 className="mb-4 text-center text-2xl font-bold">
@@ -106,7 +115,7 @@ const ChatPromptForm = () => {
       </form>
 
       <strong className="text-center text-xs">
-        Generative AI is experimental. It may make mistakes.
+        ApolloChat is experimental, so mistakes are possible.
       </strong>
     </div>
   );

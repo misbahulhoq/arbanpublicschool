@@ -17,7 +17,7 @@ const ALMHighlight = () => {
           and get instant responses!
         </p>
         <Link
-          href="/chat-alm"
+          href="/apollochat"
           className="rounded-lg bg-white px-6 py-3 font-semibold text-indigo-500 shadow-lg transition duration-300 hover:bg-gray-200"
         >
           Start Chatting

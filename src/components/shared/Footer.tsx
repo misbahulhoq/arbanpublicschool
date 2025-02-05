@@ -7,7 +7,7 @@ import { FaHeart } from "react-icons/fa";
 
 const Footer = () => {
   const pathName = usePathname();
-  if (pathName.includes("dashboard") || pathName.includes("chat-alm"))
+  if (pathName.includes("dashboard") || pathName.includes("apollo"))
     return null;
   return (
     <footer className="bg-neutral text-neutral-content">
