@@ -7,7 +7,8 @@ import { FaHeart } from "react-icons/fa";
 
 const Footer = () => {
   const pathName = usePathname();
-  if (pathName.includes("dashboard")) return null;
+  if (pathName.includes("dashboard") || pathName.includes("chat-alm"))
+    return null;
   return (
     <footer className="bg-neutral text-neutral-content">
       <div className="container-center flex flex-wrap items-center justify-between gap-5 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-4">
