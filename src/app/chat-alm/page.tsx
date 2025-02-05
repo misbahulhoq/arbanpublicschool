@@ -38,7 +38,7 @@ const ChatPromptForm = () => {
   };
 
   return (
-    <div className="mx-auto flex h-[calc(100vh-5rem)] max-w-xl flex-col justify-end px-4 py-6 lg:max-w-3xl">
+    <div className="mx-auto flex h-[calc(100vh-4rem)] max-w-xl flex-col justify-end px-4 py-5 lg:max-w-3xl">
       <div className="flex-grow overflow-y-auto">
         {chats.map((chat, index) => (
           <div key={index} className="">
@@ -74,7 +74,7 @@ const ChatPromptForm = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="relative bottom-0 left-0 right-0 z-10 mx-auto mt-6 w-full max-w-xl self-end justify-self-end rounded-lg bg-base-100 px-3"
+        className="relative bottom-0 left-0 right-0 z-10 mx-auto mt-5 w-full max-w-xl self-end justify-self-end rounded-lg bg-base-100 px-3"
       >
         {chats.length < 1 && (
           <h2 className="mb-4 text-center text-2xl font-bold">
@@ -82,25 +82,25 @@ const ChatPromptForm = () => {
           </h2>
         )}
 
-        <div className="mb-4">
+        <div className="mb-">
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            className="textarea textarea-bordered w-full shadow-lg"
+            className="textarea textarea-bordered w-full text-base shadow-lg"
             placeholder="Ask me anything..."
-            rows={3}
+            rows={2}
             disabled={loading}
           />
         </div>
         <button
           type="submit"
-          className="absolute bottom-10 right-6"
+          className="absolute bottom-5 right-6"
           disabled={loading}
         >
           {loading ? (
             <span className="loading loading-spinner loading-md"></span>
           ) : (
-            <FaArrowCircleUp size={35} />
+            <FaArrowCircleUp size={30} />
           )}
         </button>
       </form>
