@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ReactMarkdown from "react-markdown";
@@ -17,6 +17,8 @@ const ChatPromptForm = () => {
     [],
   );
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {}, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +40,7 @@ const ChatPromptForm = () => {
   };
 
   return (
-    <div className="mx-auto flex h-[calc(100vh-4rem)] max-w-xl flex-col justify-end px-4 py-5 lg:max-w-3xl">
+    <div className="mx-auto flex h-[calc(100vh-4rem)] max-w-xl flex-col justify-end overflow-hidden px-4 py-5 lg:max-w-3xl">
       <div className="flex-grow overflow-y-auto">
         {chats.map((chat, index) => (
           <div key={index} className="">
@@ -106,7 +108,7 @@ const ChatPromptForm = () => {
       </form>
 
       <strong className="text-center text-xs">
-        Generative AI is experimental. It may make mistakes.
+        ApolloTalk is experimental, so mistakes are possible.
       </strong>
     </div>
   );
