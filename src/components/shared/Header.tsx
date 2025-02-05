@@ -98,7 +98,7 @@ const Header = () => {
       </li>
       <li>
         <NavLink href="/chat-alm" className="py-3 lg:py-2">
-          Chat ALM
+          ApolloTalk
         </NavLink>
       </li>
       <li className={`${isLoading && "hidden"} ${userInfo && "hidden"}`}>
