@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ReactMarkdown from "react-markdown";
-import { data } from "../../../public/data";
+import { data } from "../../../public/data/data";
 
 const genAI = new GoogleGenerativeAI(
   process.env.NEXT_PUBLIC_GEMINI_KEY as string,
