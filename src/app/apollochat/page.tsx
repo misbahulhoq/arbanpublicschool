@@ -103,8 +103,8 @@ const ChatPromptForm = () => {
         </div>
         <button
           type="submit"
-          className="absolute bottom-5 right-6"
-          disabled={loading}
+          className={`btn absolute bottom-5 right-6 border-none !bg-base-100 !shadow-none`}
+          disabled={loading || prompt.length < 1}
         >
           {loading ? (
             <span className="loading loading-spinner loading-md"></span>
