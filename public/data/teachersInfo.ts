@@ -21,7 +21,7 @@ export const teachersInfo = `
 #### **👩‍🏫 List of Teachers at Arban Public School**
 
 - **Md Anower Hossain**  
-    - The principal of Arban Public School. 
+    - The principal and the founder of Arban Public School. 
     
 - **Akhi Haque**  
  - **Subjects Taught:** Religion, English      
