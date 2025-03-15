@@ -2,21 +2,15 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FaArrowCircleUp } from "react-icons/fa";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import ReactMarkdown from "react-markdown";
-import { data } from "../../../public/data/data";
-
-const genAI = new GoogleGenerativeAI(
-  process.env.NEXT_PUBLIC_GEMINI_KEY as string,
-);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+import { useApolloChatMutation } from "@/redux/features/apollochat/apollochatApiSlice";
 
 const ChatPromptForm = () => {
   const [prompt, setPrompt] = useState("");
   const [chats, setChats] = useState<{ prompt: string; response: string }[]>(
     [],
   );
-  const [loading, setLoading] = useState(false);
+  const [addPrompt, { isLoading }] = useApolloChatMutation();
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -27,21 +21,27 @@ const ChatPromptForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    const fullPrompt = `${data}\n\nUser: ${prompt}`;
+
     setChats([...chats, { prompt, response: "" }]);
-    try {
-      const result = await model.generateContent(fullPrompt);
-      console.log(result.response.text());
-      if (prompt.trim()) {
-        setChats([...chats, { prompt, response: result.response.text() }]);
+    addPrompt({ prompt })
+      .unwrap()
+      .then((res) => {
+        setChats([...chats, { prompt, response: res.response }]);
         setPrompt("");
-      }
-    } catch (error) {
-      console.error("Error generating content:", error);
-    } finally {
-      setLoading(false);
-    }
+      });
+    setChats([...chats, { prompt, response: "" }]);
+    // try {
+    //   const result = await model.generateContent(fullPrompt);
+    //   console.log(result.response.text());
+    //   if (prompt.trim()) {
+    //     setChats([...chats, { prompt, response: result.response.text() }]);
+    //     setPrompt("");
+    //   }
+    // } catch (error) {
+    //   console.error("Error generating content:", error);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (
@@ -67,7 +67,7 @@ const ChatPromptForm = () => {
                   </div>
                 </div>
                 <div className="chat-bubble space-y-2 bg-base-300 text-base-content">
-                  {index === chats.length - 1 && loading ? (
+                  {index === chats.length - 1 && isLoading ? (
                     <span className="loading loading-dots loading-md"></span>
                   ) : (
                     <ReactMarkdown>
@@ -98,15 +98,15 @@ const ChatPromptForm = () => {
             className="textarea textarea-bordered w-full text-base shadow-lg"
             placeholder="Ask me anything..."
             rows={2}
-            disabled={loading}
+            disabled={isLoading}
           />
         </div>
         <button
           type="submit"
           className={`btn absolute bottom-5 right-6 border-none !bg-base-100 !shadow-none`}
-          disabled={loading || prompt.length < 1}
+          disabled={isLoading || prompt.length < 1}
         >
-          {loading ? (
+          {isLoading ? (
             <span className="loading loading-spinner loading-md"></span>
           ) : (
             <FaArrowCircleUp size={30} />
