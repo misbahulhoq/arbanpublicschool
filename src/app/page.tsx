@@ -20,6 +20,7 @@ export default function Home() {
       {/* <Events /> */}
       <Contact />
       <ALMHighlight />
+      <HeroSection />
     </div>
   );
 }
