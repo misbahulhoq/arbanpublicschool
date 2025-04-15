@@ -21,7 +21,7 @@ export default function Home() {
       {/* <Events /> */}
       <Contact />
       <ALMHighlight />
-      <Hero />
+      {/* <Hero /> */}
     </div>
   );
 }
