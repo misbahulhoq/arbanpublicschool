@@ -203,7 +203,7 @@ const AnimatedBackground = () => {
 };
 
 // Hero section component
-export default function HeroSection() {
+export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { scrollYProgress } = useScroll();
 
