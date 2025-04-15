@@ -138,7 +138,7 @@ const LoginForm = () => {
           </form>
           <span className="divider text-black">OR</span>
           <div className="flex justify-center px-3">
-            {/* <GoogleLoginButton /> */}
+            <GoogleLoginButton />
           </div>
           <div className="pb-6 pt-4 text-center text-black">
             Dont have an account ?{" "}
