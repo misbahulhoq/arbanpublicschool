@@ -1,4 +1,5 @@
 "use client";
+import GoogleLoginButton from "@/components/shared/GoogleLogin";
 import {
   useGetUserInfoQuery,
   useLogInUserMutation,
@@ -135,6 +136,10 @@ const LoginForm = () => {
               {isLoading ? "Loading..." : "Login"}
             </button>
           </form>
+          <span className="divider text-black">OR</span>
+          <div className="flex justify-center px-3">
+            <GoogleLoginButton />
+          </div>
           <div className="pb-6 pt-4 text-center text-black">
             Dont have an account ?{" "}
             <Link href="/signup" className="p-2 text-black">
