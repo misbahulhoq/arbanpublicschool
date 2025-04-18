@@ -36,7 +36,7 @@ const SideBar = () => {
           <li className={`${isTeacher ? "block" : "hidden"}`}>
             <DashboardLink
               props={{
-                href: "/dashboard/allstudents",
+                href: "/dashboard/students?class=all&page=1&size=20",
                 icon: <PiStudent className="text-xl" />,
                 children: "Students",
               }}
