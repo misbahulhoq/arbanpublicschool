@@ -110,9 +110,9 @@ const AllStudentsPage = () => {
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      setParams({ ...params, [name]: value });
       const paramsNew = new URLSearchParams(searchParams.toString());
       paramsNew.set(name, value);
+      setParams({ ...params, [name]: value });
       return paramsNew.toString();
     },
     [searchParams, params],
@@ -534,7 +534,23 @@ const AllStudentsPage = () => {
 
         {/* pagination */}
         <div className="join mt-6">
-          <button className="btn join-item">«</button>
+          <button
+            className="btn join-item"
+            onClick={() => {
+              if (
+                students?.totalStudents !== undefined &&
+                Number(params.page) > 1
+              ) {
+                createQueryString("page", String(Number(params.page) - 1));
+              }
+            }}
+            disabled={
+              students?.totalStudents !== undefined && Number(params.page) <= 1
+              //Math.ceil(students?.totalStudents / Number(params.size))
+            }
+          >
+            «
+          </button>
           <button className="btn join-item">
             Page {params.page} of{" "}
             {typeof students?.totalStudents === "number" &&
@@ -549,8 +565,14 @@ const AllStudentsPage = () => {
                 Number(params.page) <
                   Math.ceil(students?.totalStudents / Number(params.size))
               ) {
+                createQueryString("page", String(Number(params.page) + 1));
               }
             }}
+            disabled={
+              students?.totalStudents !== undefined &&
+              Number(params.page) >=
+                Math.ceil(students?.totalStudents / Number(params.size))
+            }
           >
             »
           </button>
