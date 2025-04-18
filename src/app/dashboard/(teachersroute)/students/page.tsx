@@ -87,7 +87,6 @@ const AllStudentsPage = () => {
 
   useEffect(() => {}, [page, size, classValue]);
 
-  const [selectedClass, setClass] = useState(classes[0]);
   const { data: userInfo } = useGetUserInfoQuery();
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -101,13 +100,6 @@ const AllStudentsPage = () => {
   const pathName = usePathname();
   const router = useRouter();
 
-  const updateQuery = (name: string, value: string) => {
-    setParams({ ...params, [name]: value });
-    const paramsNew = new URLSearchParams(searchParams.toString());
-    paramsNew.set(name, value);
-    return paramsNew.toString();
-  };
-
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const paramsNew = new URLSearchParams(searchParams.toString());
@@ -117,11 +109,6 @@ const AllStudentsPage = () => {
     },
     [searchParams, params],
   );
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = event.target.value;
-    const selectedOption = classes.find((item) => item.value === selectedValue);
-    setClass(selectedOption as { className: string; value: string });
-  };
 
   const {
     register,
