@@ -28,10 +28,15 @@ const ResultsPage = () => {
     //console.log(data);
     setResultQuery(data);
   };
-  const { data: numbers, isLoading } = useGetNumberWithParamsQuery(resultQuery);
+  const { data: numbers, isLoading } = useGetNumberWithParamsQuery(
+    resultQuery,
+    { skip: !resultQuery.class || !resultQuery.examYear },
+  );
+  console.log(numbers);
 
   const formattedNums = consolidateNumbers(numbers);
   //console.log(formattedNums);
+  console.log(formattedNums);
 
   return (
     <section>
