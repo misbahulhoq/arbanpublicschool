@@ -35,8 +35,6 @@ const ResultsPage = () => {
   console.log(numbers);
 
   const formattedNums = consolidateNumbers(numbers);
-  //console.log(formattedNums);
-  console.log(formattedNums);
 
   return (
     <section>
