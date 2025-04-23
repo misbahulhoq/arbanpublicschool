@@ -1,6 +1,6 @@
 "use client";
-import ResultCard from "@/components/dashboard/ResultCard";
-import { consolidateNumbers } from "@/lib/utils/numberFormatter";
+import ResultCard, { ResultCardProps } from "@/components/dashboard/ResultCard";
+// import { consolidateNumbers } from "@/lib/utils/numberFormatter";
 import { useGetNumberWithParamsQuery } from "@/redux/features/numbers/numberApi";
 import { useGetResultsQuery } from "@/redux/features/results/resultApi";
 import React, { useState } from "react";
@@ -34,14 +34,11 @@ const ResultsPage = () => {
     { skip: !resultQuery.class || !resultQuery.examYear },
   );
   console.log(numbers);
-  const { data: results, isLoading: isLoadingResults } = useGetResultsQuery(
-    resultQuery,
-    {
-      skip: !resultQuery.class || !resultQuery.examYear,
-    },
-  );
+  const { data: results } = useGetResultsQuery(resultQuery, {
+    skip: !resultQuery.class || !resultQuery.examYear,
+  });
 
-  const formattedNums = consolidateNumbers(numbers);
+  // const formattedNums = consolidateNumbers(numbers);
   console.log(results);
 
   return (
@@ -117,9 +114,9 @@ const ResultsPage = () => {
           <span className="loading loading-spinner"></span>
         </div>
       )}
-      {numbers?.length > 0 && (
+      {results?.length > 0 && (
         <div className="space-y-10">
-          {results?.map((i, index) => (
+          {results?.map((i: ResultCardProps, index: number) => (
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             <ResultCard

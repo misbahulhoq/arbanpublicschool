@@ -8,11 +8,23 @@ import { useGetStudentByUidQuery } from "@/redux/features/students/studentsApi";
 import { getGradeByGP } from "@/lib/utils/gradeCalculator";
 import { useGetExamsQuery } from "@/redux/features/exams/examApiSlice";
 
-interface Props {
+export interface ResultCardProps {
   uid: string;
   level: string;
   examYear: string;
-  tableData: any[];
+  tableData: {
+    subject: string;
+    marks1?: number;
+    marks2?: number;
+    marks3?: number;
+    marks4?: number;
+    marks5?: number;
+    marks6?: number;
+    totalMarks: number;
+    average: number;
+    GPA: number;
+    fullMarks: number;
+  }[];
   firstTutorial: Subject[];
   secondTutorial: Subject[];
   thirdTutorial: Subject[];
@@ -24,7 +36,8 @@ interface Props {
   averageGPA: number;
   position: string;
 }
-const ResultCard = ({ props }: { props: Props }) => {
+
+const ResultCard = ({ props }: { props: ResultCardProps }) => {
   const {
     uid,
     level,
