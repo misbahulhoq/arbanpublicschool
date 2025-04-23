@@ -456,15 +456,52 @@ const ResultCard = ({ props }: { props: ResultCardProps }) => {
                   <td className="border border-black px-2 py-1 text-black">
                     {row.subject.replace("First", "")}
                   </td>
-                  <td className="border border-black px-2 py-1 text-center text-black">
-                    {row.marks1}
-                  </td>
-                  <td className="border border-black px-2 py-1 text-center text-black">
-                    {row.marks2}
-                  </td>
-                  <td className="border border-black px-2 py-1 text-center text-black">
-                    {row.marks3}
-                  </td>
+                  {examCodes?.includes("2401") && (
+                    <td className="border border-gray-800 px-2 py-1 text-center">
+                      {row.marks1 || "Absent"}
+                    </td>
+                  )}
+                  {
+                    // if 2nd exam code is included
+                    examCodes?.includes("2402") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks2 || "Absent"}
+                      </td>
+                    )
+                  }
+
+                  {
+                    // if 3rd exam code is included
+                    examCodes?.includes("2403") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks3 || "Absent"}
+                      </td>
+                    )
+                  }
+                  {
+                    // if 4th exam code is included
+                    examCodes?.includes("2404") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks4 || "Absent"}
+                      </td>
+                    )
+                  }
+                  {
+                    // if 5th exam code is included
+                    examCodes?.includes("2405") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks5 || "Absent"}
+                      </td>
+                    )
+                  }
+                  {
+                    // if 6th exam code is included
+                    examCodes?.includes("2406") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks6 || "Absent"}
+                      </td>
+                    )
+                  }
                   <td className="border border-black px-2 py-1 text-center text-black">
                     {row.average}
                   </td>
@@ -507,7 +544,6 @@ const ResultCard = ({ props }: { props: ResultCardProps }) => {
                 </td>
               </tr>
             </tbody>
-            {/* <tbody></tbody> */}
           </table>
         </div>
 
