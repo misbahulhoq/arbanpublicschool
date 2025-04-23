@@ -2,6 +2,7 @@
 import ResultCard from "@/components/dashboard/ResultCard";
 import { consolidateNumbers } from "@/lib/utils/numberFormatter";
 import { useGetNumberWithParamsQuery } from "@/redux/features/numbers/numberApi";
+import { useGetResultsQuery } from "@/redux/features/results/resultApi";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 interface FormData {
@@ -33,8 +34,15 @@ const ResultsPage = () => {
     { skip: !resultQuery.class || !resultQuery.examYear },
   );
   console.log(numbers);
+  const { data: results, isLoading: isLoadingResults } = useGetResultsQuery(
+    resultQuery,
+    {
+      skip: !resultQuery.class || !resultQuery.examYear,
+    },
+  );
 
   const formattedNums = consolidateNumbers(numbers);
+  console.log(results);
 
   return (
     <section>
@@ -111,7 +119,7 @@ const ResultsPage = () => {
       )}
       {numbers?.length > 0 && (
         <div className="space-y-10">
-          {formattedNums.map((i, index) => (
+          {results?.map((i, index) => (
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             <ResultCard key={index} props={i} />

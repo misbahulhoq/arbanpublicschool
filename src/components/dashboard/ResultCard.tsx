@@ -9,86 +9,102 @@ import { getGradeByGP } from "@/lib/utils/gradeCalculator";
 
 interface Props {
   uid: string;
-  class: string;
+  level: string;
   examYear: string;
+  tableData: any[];
+  firstTutorial: Subject[];
+  secondTutorial: Subject[];
+  thirdTutorial: Subject[];
   firstSemester: Subject[];
   secondSemester: Subject[];
   thirdSemester: Subject[];
+  totalAverageMarks: number;
+  totalGPA: number;
+  averageGPA: number;
+  position: string;
 }
 const ResultCard = ({ props }: { props: Props }) => {
   const {
     uid,
-    class: cls,
+    level,
     examYear,
+    tableData,
+    firstTutorial,
     firstSemester,
+    secondTutorial,
     secondSemester,
+    thirdTutorial,
     thirdSemester,
+    totalAverageMarks,
+    totalGPA,
+    averageGPA,
+    position,
   } = props || {};
   const pdfRef = useRef(null);
   const { data: studentInfo, isLoading: studentInfoLoading } =
     useGetStudentByUidQuery(uid);
-  const isHighSchool = ["6", "7", "8", "9", "10"].includes(cls);
+  const isHighSchool = ["6", "7", "8", "9", "10"].includes(level);
   // Extract unique subjects across all data objects
   // Extract unique subjects
-  const subjects = [
-    ...new Set([
-      ...props.firstSemester.map((item) => item.name),
-      ...props.secondSemester.map((item) => item.name),
-      ...props.thirdSemester.map((item) => item.name),
-    ]),
-  ];
+  // const subjects = [
+  //   ...new Set([
+  //     ...props.firstSemester.map((item) => item.name),
+  //     ...props.secondSemester.map((item) => item.name),
+  //     ...props.thirdSemester.map((item) => item.name),
+  //   ]),
+  // ];
 
   // Prepare table data
-  const tableData = subjects.map((subject) => {
-    const firstSemester = props.firstSemester.find(
-      (item) => item.name === subject,
-    );
-    const secondSemester = props.secondSemester.find(
-      (item) => item.name === subject,
-    );
-    const thirdSemester = props.thirdSemester.find(
-      (item) => item.name === subject,
-    );
+  // const tableData = subjects.map((subject) => {
+  //   const firstSemester = props.firstSemester.find(
+  //     (item) => item.name === subject,
+  //   );
+  //   const secondSemester = props.secondSemester.find(
+  //     (item) => item.name === subject,
+  //   );
+  //   const thirdSemester = props.thirdSemester.find(
+  //     (item) => item.name === subject,
+  //   );
 
-    const marks1 = firstSemester ? firstSemester.obtMarks : 0;
-    const marks2 = secondSemester ? secondSemester.obtMarks : 0;
-    const marks3 = thirdSemester ? thirdSemester.obtMarks : 0;
-    const fullMarks = firstSemester?.fullMarks;
-    const totalMarks = marks1 + marks2 + marks3;
-    let average: string | number = (
-      (marks1 + marks2 + marks3) /
-      ((firstSemester ? 1 : 0) +
-        (secondSemester ? 1 : 0) +
-        (thirdSemester ? 1 : 0))
-    ).toFixed(2);
+  //   const marks1 = firstSemester ? firstSemester.obtMarks : 0;
+  //   const marks2 = secondSemester ? secondSemester.obtMarks : 0;
+  //   const marks3 = thirdSemester ? thirdSemester.obtMarks : 0;
+  //   const fullMarks = firstSemester?.fullMarks;
+  //   const totalMarks = marks1 + marks2 + marks3;
+  //   let average: string | number = (
+  //     (marks1 + marks2 + marks3) /
+  //     ((firstSemester ? 1 : 0) +
+  //       (secondSemester ? 1 : 0) +
+  //       (thirdSemester ? 1 : 0))
+  //   ).toFixed(2);
 
-    average = parseFloat(average);
-    const percentage = (average / (fullMarks as number)) * 100;
-    let GPA: number;
-    if (percentage >= 80 && percentage <= 100) GPA = 5;
-    else if (percentage < 80 && percentage >= 70) GPA = 4;
-    else if (percentage < 70 && percentage >= 60) GPA = 3.5;
-    else if (percentage < 60 && percentage >= 50) GPA = 3;
-    else if (percentage < 50 && percentage >= 40) GPA = 2;
-    else if (percentage < 40 && percentage >= 33) GPA = 1;
-    else GPA = 0;
-    return {
-      subject,
-      marks1,
-      marks2,
-      marks3,
-      totalMarks,
-      average,
-      GPA,
-      fullMarks,
-    };
-  });
+  //   average = parseFloat(average);
+  //   const percentage = (average / (fullMarks as number)) * 100;
+  //   let GPA: number;
+  //   if (percentage >= 80 && percentage <= 100) GPA = 5;
+  //   else if (percentage < 80 && percentage >= 70) GPA = 4;
+  //   else if (percentage < 70 && percentage >= 60) GPA = 3.5;
+  //   else if (percentage < 60 && percentage >= 50) GPA = 3;
+  //   else if (percentage < 50 && percentage >= 40) GPA = 2;
+  //   else if (percentage < 40 && percentage >= 33) GPA = 1;
+  //   else GPA = 0;
+  //   return {
+  //     subject,
+  //     marks1,
+  //     marks2,
+  //     marks3,
+  //     totalMarks,
+  //     average,
+  //     GPA,
+  //     fullMarks,
+  //   };
+  // });
   //   calculate total marks
-  const totalAverageMarks = tableData.reduce((sum, av) => sum + av.average, 0);
-  const totalGPA = tableData.reduce((sum, av) => sum + av.GPA, 0);
-  const averageGPA = tableData.every((d) => d.GPA > 0)
-    ? tableData.reduce((sum, av) => sum + av.GPA, 0) / tableData.length
-    : 0;
+  // const totalAverageMarks = tableData.reduce((sum, av) => sum + av.average, 0);
+  // const totalGPA = tableData.reduce((sum, av) => sum + av.GPA, 0);
+  // const averageGPA = tableData.every((d) => d.GPA > 0)
+  //   ? tableData.reduce((sum, av) => sum + av.GPA, 0) / tableData.length
+  //   : 0;
 
   const handleDownload = async () => {
     const element = pdfRef.current;
@@ -395,6 +411,7 @@ const ResultCard = ({ props }: { props: Props }) => {
                 </td>
               </tr>
             </tbody>
+            {/* <tbody></tbody> */}
           </table>
         </div>
 
@@ -405,7 +422,7 @@ const ResultCard = ({ props }: { props: Props }) => {
           </h3>
           <h3>
             <span className="font-semibold">Position:</span>{" "}
-            <span className="italic">{}</span>
+            <span className="italic">{position}</span>
           </h3>
           <h3>
             <span className="font-semibold">Teacher&apos;s Remarks:</span>{" "}
