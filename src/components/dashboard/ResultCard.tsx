@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useRef } from "react";
 import html2canvas from "html2canvas-pro";
@@ -43,83 +42,15 @@ const ResultCard = ({ props }: { props: ResultCardProps }) => {
     level,
     examYear,
     tableData,
-    firstTutorial,
-    firstSemester,
-    secondTutorial,
-    secondSemester,
-    thirdTutorial,
-    thirdSemester,
     totalAverageMarks,
     totalGPA,
     averageGPA,
     position,
   } = props || {};
   const pdfRef = useRef(null);
-  const { data: studentInfo, isLoading: studentInfoLoading } =
-    useGetStudentByUidQuery(uid);
+  const { data: studentInfo } = useGetStudentByUidQuery(uid);
   const isHighSchool = ["6", "7", "8", "9", "10"].includes(level);
   const { data: examCodes } = useGetExamsQuery({ examYear: examYear });
-  // Extract unique subjects across all data objects
-  // Extract unique subjects
-  // const subjects = [
-  //   ...new Set([
-  //     ...props.firstSemester.map((item) => item.name),
-  //     ...props.secondSemester.map((item) => item.name),
-  //     ...props.thirdSemester.map((item) => item.name),
-  //   ]),
-  // ];
-
-  // Prepare table data
-  // const tableData = subjects.map((subject) => {
-  //   const firstSemester = props.firstSemester.find(
-  //     (item) => item.name === subject,
-  //   );
-  //   const secondSemester = props.secondSemester.find(
-  //     (item) => item.name === subject,
-  //   );
-  //   const thirdSemester = props.thirdSemester.find(
-  //     (item) => item.name === subject,
-  //   );
-
-  //   const marks1 = firstSemester ? firstSemester.obtMarks : 0;
-  //   const marks2 = secondSemester ? secondSemester.obtMarks : 0;
-  //   const marks3 = thirdSemester ? thirdSemester.obtMarks : 0;
-  //   const fullMarks = firstSemester?.fullMarks;
-  //   const totalMarks = marks1 + marks2 + marks3;
-  //   let average: string | number = (
-  //     (marks1 + marks2 + marks3) /
-  //     ((firstSemester ? 1 : 0) +
-  //       (secondSemester ? 1 : 0) +
-  //       (thirdSemester ? 1 : 0))
-  //   ).toFixed(2);
-
-  //   average = parseFloat(average);
-  //   const percentage = (average / (fullMarks as number)) * 100;
-  //   let GPA: number;
-  //   if (percentage >= 80 && percentage <= 100) GPA = 5;
-  //   else if (percentage < 80 && percentage >= 70) GPA = 4;
-  //   else if (percentage < 70 && percentage >= 60) GPA = 3.5;
-  //   else if (percentage < 60 && percentage >= 50) GPA = 3;
-  //   else if (percentage < 50 && percentage >= 40) GPA = 2;
-  //   else if (percentage < 40 && percentage >= 33) GPA = 1;
-  //   else GPA = 0;
-  //   return {
-  //     subject,
-  //     marks1,
-  //     marks2,
-  //     marks3,
-  //     totalMarks,
-  //     average,
-  //     GPA,
-  //     fullMarks,
-  //   };
-  // });
-  //   calculate total marks
-  // const totalAverageMarks = tableData.reduce((sum, av) => sum + av.average, 0);
-  // const totalGPA = tableData.reduce((sum, av) => sum + av.GPA, 0);
-  // const averageGPA = tableData.every((d) => d.GPA > 0)
-  //   ? tableData.reduce((sum, av) => sum + av.GPA, 0) / tableData.length
-  //   : 0;
 
   const handleDownload = async () => {
     const element = pdfRef.current;
@@ -338,53 +269,6 @@ const ResultCard = ({ props }: { props: ResultCardProps }) => {
                   </td>
                 </tr>
               ))}
-              {/* <tr>
-                <td className="border border-gray-800 px-2 py-1">
-                  Mathematics
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  85
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  90
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  88
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  263
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-gray-800 px-2 py-1">Science</td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  78
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  82
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  80
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  240
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-gray-800 px-2 py-1">English</td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  88
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  85
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  87
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  260
-                </td>
-              </tr> */}
 
               <tr>
                 <td className="border border-gray-800 px-2 py-1 font-semibold">
