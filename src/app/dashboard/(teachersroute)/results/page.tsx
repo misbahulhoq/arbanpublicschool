@@ -122,7 +122,10 @@ const ResultsPage = () => {
           {results?.map((i, index) => (
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            <ResultCard key={index} props={i} />
+            <ResultCard
+              key={index}
+              props={{ ...i, examYear: resultQuery.examYear }}
+            />
           ))}
         </div>
       )}
