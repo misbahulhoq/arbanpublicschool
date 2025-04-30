@@ -4,7 +4,7 @@ import {
   useUpdateStudentByUidMutation,
   useDeleteStudentByUidMutation,
 } from "@/redux/features/students/studentsApi";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { useForm } from "react-hook-form";
@@ -12,6 +12,8 @@ import type { StudentType } from "@/types/studentType";
 import Swal from "sweetalert2";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useGetUserInfoQuery } from "@/redux/features/auth/authApi";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+
 const classes = [
   {
     className: "All Classes",
@@ -70,25 +72,43 @@ const classes = [
 type uid = {
   uid: string;
 };
+
 const AllStudentsPage = () => {
-  const [selectedClass, setClass] = useState(classes[0]);
+  // query / params handling.
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page");
+  const size = searchParams.get("size");
+  const classValue = searchParams.get("class");
+  const [params, setParams] = useState({
+    page: Number(page),
+    size: Number(size),
+    class: classValue,
+  });
+
+  useEffect(() => {}, [page, size, classValue]);
+
   const { data: userInfo } = useGetUserInfoQuery();
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const isAdmin = userInfo?.data?.isAdmin;
   const [studentInfo, setStudentInfo] = useState<StudentType | null>(null);
   const [searchedStu, setSearchStu] = useState<StudentType | null>(null);
-  const { data: students, isLoading } = useGetStudentQuery({
-    className: selectedClass.value,
-  });
+  const { data: students, isLoading } = useGetStudentQuery(params);
   const [updateStudentData, { isLoading: isUpdatingStuInfo }] =
     useUpdateStudentByUidMutation();
   const [deleteStudentData] = useDeleteStudentByUidMutation();
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = event.target.value;
-    const selectedOption = classes.find((item) => item.value === selectedValue);
-    setClass(selectedOption as { className: string; value: string });
-  };
+  const pathName = usePathname();
+  const router = useRouter();
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const paramsNew = new URLSearchParams(searchParams.toString());
+      paramsNew.set(name, value);
+      setParams({ ...params, [name]: value });
+      return paramsNew.toString();
+    },
+    [searchParams, params],
+  );
 
   const {
     register,
@@ -101,7 +121,7 @@ const AllStudentsPage = () => {
     useForm<uid>();
 
   const handleSearch = (data: uid) => {
-    const foundStu = students?.filter(
+    const foundStu = students?.students.filter(
       (stu: StudentType) => stu.uid === data.uid,
     )[0];
     if (foundStu) setSearchStu(foundStu);
@@ -123,7 +143,6 @@ const AllStudentsPage = () => {
       if (result.isConfirmed) {
         deleteStudentData({ uid: student.uid })
           .then((res) => {
-            console.log(res);
             if (res.data.deletedCount) {
               Swal.fire({
                 title: "Deleted!",
@@ -165,8 +184,8 @@ const AllStudentsPage = () => {
   return (
     <div className="">
       <div className="top-part-wrapper mb-5 flex items-center justify-between gap-5">
-        <h2 className="text-xl font-bold">
-          {selectedClass.className} ({students?.length} students)
+        <h2 className="text-xl font-bold capitalize">
+          {students?.class === "all" ? "" : "Class"} {students?.class}
         </h2>
 
         <form className="join" onSubmit={handleSearchSubmit(handleSearch)}>
@@ -182,11 +201,25 @@ const AllStudentsPage = () => {
 
         <select
           className="select select-primary select-sm w-full max-w-xs"
-          onChange={handleSelectChange}
+          // onChange={handleSelectChange}
+          onChange={(e) => {
+            // classValue is like -1, 0, 1, 2, etc.
+            const classValue = e.target.value;
+            router.push(
+              pathName + "?" + createQueryString("class", classValue),
+            );
+            // window.location.reload();
+          }}
         >
           {classes.map((item) => {
             return (
-              <option key={item.value} value={item.value}>
+              <option
+                key={item.value}
+                value={item.value}
+                // selected={searchParams.get("class") === ""}
+                // selected={classValue === item.value}
+                // defaultValue={searchParams.get("class") as string}
+              >
                 {item.className}
               </option>
             );
@@ -209,7 +242,7 @@ const AllStudentsPage = () => {
           {/* this part is responsibe for displaying all students */}
           <tbody className={`${searchedStu && "hidden"}`}>
             {/* row 1 */}
-            {students?.map((student: StudentType) => {
+            {students?.students?.map((student: StudentType) => {
               const { _id, name, uid, class: cls, phone } = student;
               return (
                 <tr key={_id}>
@@ -485,6 +518,52 @@ const AllStudentsPage = () => {
             </div>
           </div>
         </dialog>
+
+        {/* pagination */}
+        <div className="join mt-6">
+          <button
+            className="btn join-item"
+            onClick={() => {
+              if (
+                students?.totalStudents !== undefined &&
+                Number(params.page) > 1
+              ) {
+                createQueryString("page", String(Number(params.page) - 1));
+              }
+            }}
+            disabled={
+              students?.totalStudents !== undefined && Number(params.page) <= 1
+              //Math.ceil(students?.totalStudents / Number(params.size))
+            }
+          >
+            «
+          </button>
+          <button className="btn join-item">
+            Page {params.page} of{" "}
+            {typeof students?.totalStudents === "number" &&
+              params.size !== null &&
+              Math.ceil(students?.totalStudents / Number(params.size))}
+          </button>
+          <button
+            className="btn join-item"
+            onClick={() => {
+              if (
+                students?.totalStudents !== undefined &&
+                Number(params.page) <
+                  Math.ceil(students?.totalStudents / Number(params.size))
+              ) {
+                createQueryString("page", String(Number(params.page) + 1));
+              }
+            }}
+            disabled={
+              students?.totalStudents !== undefined &&
+              Number(params.page) >=
+                Math.ceil(students?.totalStudents / Number(params.size))
+            }
+          >
+            »
+          </button>
+        </div>
       </div>
     </div>
   );

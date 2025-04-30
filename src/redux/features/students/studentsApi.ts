@@ -8,16 +8,25 @@ const studentApiSlice = baseApi.injectEndpoints({
       invalidatesTags: ["Student"],
     }),
     getStudent: build.query({
-      query: ({ className }) => {
+      query: (params) => {
+        console.log(params);
         return {
           url: "/students",
-          params: { class: className },
+          params,
         };
       },
-      transformResponse: (response: StudentType[]) =>
-        response
+      transformResponse: (response: {
+        totalStudents: number;
+        students: StudentType[];
+        class: string;
+      }) => {
+        const updatedResonse = { ...response };
+        updatedResonse.students
           .slice()
-          .sort((a, b) => parseInt(a.uid, 10) - parseInt(b.uid, 10)),
+          .sort((a, b) => parseInt(a.uid, 10) - parseInt(b.uid, 10));
+
+        return updatedResonse;
+      },
       providesTags: ["Student"],
     }),
     getStudentByUid: build.query({

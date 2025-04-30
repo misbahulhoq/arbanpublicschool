@@ -5,7 +5,6 @@ import Contact from "@/components/home/Contact";
 import CallToAction from "@/components/home/CTA";
 // import Events from "@/components/home/Events";
 import HeroSection from "@/components/home/Hero";
-import Hero from "@/components/Test";
 // import PrincipalsMessage from "@/components/home/Principal";
 
 export default function Home() {
@@ -21,7 +20,7 @@ export default function Home() {
       {/* <Events /> */}
       <Contact />
       <ALMHighlight />
-      <Hero />
+      {/* <Hero /> */}
     </div>
   );
 }

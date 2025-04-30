@@ -1,7 +1,8 @@
 "use client";
-import ResultCard from "@/components/dashboard/ResultCard";
-import { consolidateNumbers } from "@/lib/utils/numberFormatter";
+import ResultCard, { ResultCardProps } from "@/components/dashboard/ResultCard";
+// import { consolidateNumbers } from "@/lib/utils/numberFormatter";
 import { useGetNumberWithParamsQuery } from "@/redux/features/numbers/numberApi";
+import { useGetResultsQuery } from "@/redux/features/results/resultApi";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 interface FormData {
@@ -28,10 +29,17 @@ const ResultsPage = () => {
     //console.log(data);
     setResultQuery(data);
   };
-  const { data: numbers, isLoading } = useGetNumberWithParamsQuery(resultQuery);
+  const { data: numbers, isLoading } = useGetNumberWithParamsQuery(
+    resultQuery,
+    { skip: !resultQuery.class || !resultQuery.examYear },
+  );
+  console.log(numbers);
+  const { data: results } = useGetResultsQuery(resultQuery, {
+    skip: !resultQuery.class || !resultQuery.examYear,
+  });
 
-  const formattedNums = consolidateNumbers(numbers);
-  //console.log(formattedNums);
+  // const formattedNums = consolidateNumbers(numbers);
+  console.log(results);
 
   return (
     <section>
@@ -106,12 +114,15 @@ const ResultsPage = () => {
           <span className="loading loading-spinner"></span>
         </div>
       )}
-      {numbers?.length > 0 && (
+      {results?.length > 0 && (
         <div className="space-y-10">
-          {formattedNums.map((i, index) => (
+          {results?.map((i: ResultCardProps, index: number) => (
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            <ResultCard key={index} props={i} />
+            <ResultCard
+              key={index}
+              props={{ ...i, examYear: resultQuery.examYear }}
+            />
           ))}
         </div>
       )}

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useRef } from "react";
 import html2canvas from "html2canvas-pro";
@@ -6,89 +5,52 @@ import { jsPDF } from "jspdf";
 import { Subject } from "@/types/numberType";
 import { useGetStudentByUidQuery } from "@/redux/features/students/studentsApi";
 import { getGradeByGP } from "@/lib/utils/gradeCalculator";
+import { useGetExamsQuery } from "@/redux/features/exams/examApiSlice";
 
-interface Props {
+export interface ResultCardProps {
   uid: string;
-  class: string;
+  level: string;
   examYear: string;
+  tableData: {
+    subject: string;
+    marks1?: number;
+    marks2?: number;
+    marks3?: number;
+    marks4?: number;
+    marks5?: number;
+    marks6?: number;
+    totalMarks: number;
+    average: number;
+    GPA: number;
+    fullMarks: number;
+  }[];
+  firstTutorial: Subject[];
+  secondTutorial: Subject[];
+  thirdTutorial: Subject[];
   firstSemester: Subject[];
   secondSemester: Subject[];
   thirdSemester: Subject[];
+  totalAverageMarks: number;
+  totalGPA: number;
+  averageGPA: number;
+  position: string;
 }
-const ResultCard = ({ props }: { props: Props }) => {
+
+const ResultCard = ({ props }: { props: ResultCardProps }) => {
   const {
     uid,
-    class: cls,
+    level,
     examYear,
-    firstSemester,
-    secondSemester,
-    thirdSemester,
+    tableData,
+    totalAverageMarks,
+    totalGPA,
+    averageGPA,
+    position,
   } = props || {};
   const pdfRef = useRef(null);
-  const { data: studentInfo, isLoading: studentInfoLoading } =
-    useGetStudentByUidQuery(uid);
-  const isHighSchool = ["6", "7", "8", "9", "10"].includes(cls);
-  // Extract unique subjects across all data objects
-  // Extract unique subjects
-  const subjects = [
-    ...new Set([
-      ...props.firstSemester.map((item) => item.name),
-      ...props.secondSemester.map((item) => item.name),
-      ...props.thirdSemester.map((item) => item.name),
-    ]),
-  ];
-
-  // Prepare table data
-  const tableData = subjects.map((subject) => {
-    const firstSemester = props.firstSemester.find(
-      (item) => item.name === subject,
-    );
-    const secondSemester = props.secondSemester.find(
-      (item) => item.name === subject,
-    );
-    const thirdSemester = props.thirdSemester.find(
-      (item) => item.name === subject,
-    );
-
-    const marks1 = firstSemester ? firstSemester.obtMarks : 0;
-    const marks2 = secondSemester ? secondSemester.obtMarks : 0;
-    const marks3 = thirdSemester ? thirdSemester.obtMarks : 0;
-    const fullMarks = firstSemester?.fullMarks;
-    const totalMarks = marks1 + marks2 + marks3;
-    let average: string | number = (
-      (marks1 + marks2 + marks3) /
-      ((firstSemester ? 1 : 0) +
-        (secondSemester ? 1 : 0) +
-        (thirdSemester ? 1 : 0))
-    ).toFixed(2);
-
-    average = parseFloat(average);
-    const percentage = (average / (fullMarks as number)) * 100;
-    let GPA: number;
-    if (percentage >= 80 && percentage <= 100) GPA = 5;
-    else if (percentage < 80 && percentage >= 70) GPA = 4;
-    else if (percentage < 70 && percentage >= 60) GPA = 3.5;
-    else if (percentage < 60 && percentage >= 50) GPA = 3;
-    else if (percentage < 50 && percentage >= 40) GPA = 2;
-    else if (percentage < 40 && percentage >= 33) GPA = 1;
-    else GPA = 0;
-    return {
-      subject,
-      marks1,
-      marks2,
-      marks3,
-      totalMarks,
-      average,
-      GPA,
-      fullMarks,
-    };
-  });
-  //   calculate total marks
-  const totalAverageMarks = tableData.reduce((sum, av) => sum + av.average, 0);
-  const totalGPA = tableData.reduce((sum, av) => sum + av.GPA, 0);
-  const averageGPA = tableData.every((d) => d.GPA > 0)
-    ? tableData.reduce((sum, av) => sum + av.GPA, 0) / tableData.length
-    : 0;
+  const { data: studentInfo } = useGetStudentByUidQuery(uid);
+  const isHighSchool = ["6", "7", "8", "9", "10"].includes(level);
+  const { data: examCodes } = useGetExamsQuery({ examYear: examYear });
 
   const handleDownload = async () => {
     const element = pdfRef.current;
@@ -213,15 +175,37 @@ const ResultCard = ({ props }: { props: Props }) => {
                 <th className="border border-gray-800 px-2 py-1 text-left">
                   Subject
                 </th>
-                <th className="border border-gray-800 px-2 py-1 text-center">
-                  1st Semester
-                </th>
-                <th className="border border-gray-800 px-2 py-1 text-center">
-                  2nd Semester
-                </th>
-                <th className="border border-gray-800 px-2 py-1 text-center">
-                  3rd Semester
-                </th>
+                {examCodes?.includes("2401") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    1st Tutorial
+                  </th>
+                )}
+                {examCodes?.includes("2402") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    1st Semester
+                  </th>
+                )}
+                {examCodes?.includes("2403") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    2nd Tutorial
+                  </th>
+                )}
+                {examCodes?.includes("2404") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    2nd Semester
+                  </th>
+                )}
+                {examCodes?.includes("2405") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    3rd Tutorial
+                  </th>
+                )}
+                {examCodes?.includes("2406") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    3rd Semester
+                  </th>
+                )}
+
                 <th className="border border-gray-800 px-2 py-1 text-center">
                   Average
                 </th>
@@ -233,67 +217,58 @@ const ResultCard = ({ props }: { props: Props }) => {
                   <td className="border border-gray-800 px-2 py-1">
                     {row.subject}
                   </td>
-                  <td className="border border-gray-800 px-2 py-1 text-center">
-                    {row.marks1}
-                  </td>
-                  <td className="border border-gray-800 px-2 py-1 text-center">
-                    {row.marks2}
-                  </td>
-                  <td className="border border-gray-800 px-2 py-1 text-center">
-                    {row.marks3}
-                  </td>
+                  {examCodes?.includes("2401") && (
+                    <td className="border border-gray-800 px-2 py-1 text-center">
+                      {row.marks1 || "Absent"}
+                    </td>
+                  )}
+                  {
+                    // if 2nd exam code is included
+                    examCodes?.includes("2402") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks2 || "Absent"}
+                      </td>
+                    )
+                  }
+
+                  {
+                    // if 3rd exam code is included
+                    examCodes?.includes("2403") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks3 || "Absent"}
+                      </td>
+                    )
+                  }
+                  {
+                    // if 4th exam code is included
+                    examCodes?.includes("2404") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks4 || "Absent"}
+                      </td>
+                    )
+                  }
+                  {
+                    // if 5th exam code is included
+                    examCodes?.includes("2405") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks5 || "Absent"}
+                      </td>
+                    )
+                  }
+                  {
+                    // if 6th exam code is included
+                    examCodes?.includes("2406") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks6 || "Absent"}
+                      </td>
+                    )
+                  }
+
                   <td className="border border-gray-800 px-2 py-1 text-center">
                     {row.average}
                   </td>
                 </tr>
               ))}
-              {/* <tr>
-                <td className="border border-gray-800 px-2 py-1">
-                  Mathematics
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  85
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  90
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  88
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  263
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-gray-800 px-2 py-1">Science</td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  78
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  82
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  80
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  240
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-gray-800 px-2 py-1">English</td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  88
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  85
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  87
-                </td>
-                <td className="border border-gray-800 px-2 py-1 text-center">
-                  260
-                </td>
-              </tr> */}
 
               <tr>
                 <td className="border border-gray-800 px-2 py-1 font-semibold">
@@ -318,15 +293,36 @@ const ResultCard = ({ props }: { props: Props }) => {
                 <th className="border border-black px-2 py-1 text-left">
                   Subject
                 </th>
-                <th className="border border-black px-2 py-1 text-center">
-                  1st Semester
-                </th>
-                <th className="border border-black px-2 py-1 text-center">
-                  2nd Semester
-                </th>
-                <th className="border border-black px-2 py-1 text-center">
-                  3rd Semester
-                </th>
+                {examCodes?.includes("2401") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    1st Tutorial
+                  </th>
+                )}
+                {examCodes?.includes("2402") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    1st Semester
+                  </th>
+                )}
+                {examCodes?.includes("2403") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    2nd Tutorial
+                  </th>
+                )}
+                {examCodes?.includes("2404") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    2nd Semester
+                  </th>
+                )}
+                {examCodes?.includes("2405") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    3rd Tutorial
+                  </th>
+                )}
+                {examCodes?.includes("2406") && (
+                  <th className="border border-gray-800 px-2 py-1 text-center">
+                    3rd Semester
+                  </th>
+                )}
                 <th className="border border-black px-2 py-1 text-center">
                   Average
                 </th>
@@ -344,15 +340,52 @@ const ResultCard = ({ props }: { props: Props }) => {
                   <td className="border border-black px-2 py-1 text-black">
                     {row.subject.replace("First", "")}
                   </td>
-                  <td className="border border-black px-2 py-1 text-center text-black">
-                    {row.marks1}
-                  </td>
-                  <td className="border border-black px-2 py-1 text-center text-black">
-                    {row.marks2}
-                  </td>
-                  <td className="border border-black px-2 py-1 text-center text-black">
-                    {row.marks3}
-                  </td>
+                  {examCodes?.includes("2401") && (
+                    <td className="border border-gray-800 px-2 py-1 text-center">
+                      {row.marks1 || "Absent"}
+                    </td>
+                  )}
+                  {
+                    // if 2nd exam code is included
+                    examCodes?.includes("2402") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks2 || "Absent"}
+                      </td>
+                    )
+                  }
+
+                  {
+                    // if 3rd exam code is included
+                    examCodes?.includes("2403") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks3 || "Absent"}
+                      </td>
+                    )
+                  }
+                  {
+                    // if 4th exam code is included
+                    examCodes?.includes("2404") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks4 || "Absent"}
+                      </td>
+                    )
+                  }
+                  {
+                    // if 5th exam code is included
+                    examCodes?.includes("2405") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks5 || "Absent"}
+                      </td>
+                    )
+                  }
+                  {
+                    // if 6th exam code is included
+                    examCodes?.includes("2406") && (
+                      <td className="border border-gray-800 px-2 py-1 text-center">
+                        {row.marks6 || "Absent"}
+                      </td>
+                    )
+                  }
                   <td className="border border-black px-2 py-1 text-center text-black">
                     {row.average}
                   </td>
@@ -405,7 +438,7 @@ const ResultCard = ({ props }: { props: Props }) => {
           </h3>
           <h3>
             <span className="font-semibold">Position:</span>{" "}
-            <span className="italic">{}</span>
+            <span className="italic">{position}</span>
           </h3>
           <h3>
             <span className="font-semibold">Teacher&apos;s Remarks:</span>{" "}

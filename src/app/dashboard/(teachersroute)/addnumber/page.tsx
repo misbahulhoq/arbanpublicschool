@@ -54,6 +54,7 @@ const ClassSubjects = {
     "ICT",
   ],
 };
+
 const currentYear = new Date().getFullYear();
 const exams = [
   {

@@ -14,6 +14,7 @@ import { IoPersonAddOutline } from "react-icons/io5";
 import { TfiStatsUp } from "react-icons/tfi";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { GoIssueReopened } from "react-icons/go";
+import { CiViewTable } from "react-icons/ci";
 
 const SideBar = () => {
   const { data, isLoading } = useGetUserInfoQuery();
@@ -36,7 +37,7 @@ const SideBar = () => {
           <li className={`${isTeacher ? "block" : "hidden"}`}>
             <DashboardLink
               props={{
-                href: "/dashboard/allstudents",
+                href: "/dashboard/students?class=all&page=1&size=20",
                 icon: <PiStudent className="text-xl" />,
                 children: "Students",
               }}
@@ -66,6 +67,15 @@ const SideBar = () => {
                 href: "/dashboard/numbers",
                 children: "Numbers",
                 icon: <TfiStatsUp className="text-lg" />,
+              }}
+            ></DashboardLink>
+          </li>
+          <li className={`${isTeacher ? "block" : "hidden"}`}>
+            <DashboardLink
+              props={{
+                href: "/dashboard/tabularsheet",
+                children: "TabularSheet",
+                icon: <CiViewTable className="text-lg" />,
               }}
             ></DashboardLink>
           </li>
