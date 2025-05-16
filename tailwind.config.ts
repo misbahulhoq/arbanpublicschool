@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
-
+const primaryColor = "#2563EB"; // Tailwind's blue-600 color
 const config: Config = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -37,12 +37,12 @@ const config: Config = {
       {
         light: {
           ...require("daisyui/src/theming/themes")["light"],
-          primary: "#813588",
+          primary: primaryColor,
           "primary-content": "#fff",
         },
         dim: {
           ...require("daisyui/src/theming/themes")["dim"],
-          primary: "#813588",
+          primary: primaryColor,
           "primary-content": "#fff",
         },
       },

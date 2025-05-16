@@ -12,7 +12,7 @@ const HeroSection = () => {
           <div className="left-content space-y-2">
             <h2 className="text-4xl font-extrabold lg:text-5xl">
               Welcome to <br />{" "}
-              <span className="text-accent">Arban Public School!</span>
+              <span className="text-primary">Arban Public School!</span>
             </h2>
             <p className="pb-5 pt-5">
               A place where learning is fun and every child is special.
