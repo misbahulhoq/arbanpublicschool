@@ -1,6 +1,6 @@
 # Overview
 
-This is a Next.js application that serves the purpose of automating result card creation at Arban Public School [https://arbanpublicschool.vercel.app]
+This is a Next.js application that serves the purpose of automating result card creation at [Arban Public School](https://arbanpublicschool.vercel.app)
 
 The application uses the following technologies:
 
