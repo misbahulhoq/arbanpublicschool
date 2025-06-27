@@ -93,7 +93,7 @@ const ContactSection: React.FC = () => {
                   Email Us
                 </h3>
                 <p className="text-base-content/80">
-                  arbanpublicschool@gmail.com
+                  contact.arbanpublicschool@gmail.com
                 </p>
               </div>
             </div>
@@ -103,7 +103,12 @@ const ContactSection: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-base-content">Call Us</h3>
-                <p className="text-base-content/80">+8801674-044993</p>
+                <a
+                  href="tel:+8801674044993"
+                  className="text-base-content/80 transition-colors duration-300 hover:text-primary"
+                >
+                  +880 1674-044993
+                </a>
               </div>
             </div>
           </div>
