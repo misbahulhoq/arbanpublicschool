@@ -1,36 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Overview
 
-## Getting Started
+This is a Next.js application that serves the purpose of automating result card creation at [Arban Public School](https://arbanpublicschool.vercel.app)
 
-First, run the development server:
+The application uses the following technologies:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Next.js for server-side rendering
+- React for the frontend
+- Tailwind CSS and daisyUI for styling
+- Gemini API for the chatbot.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## The application has the following features:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Adding students info of the school.
+- Adding exam numbers of every student of the school.
+- Calculate the position of each student dynamically.
+- A chat interface where users can ask questions and receive responses
+- A dataset of questions and answers about Arban Public School
+- Support for multiple languages (currently English and Bangla)
+- Integration with the school's website and Facebook page
+- Support for various types of questions, including those about the school's history, teachers, facilities, and policies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The chat system is designed to be easy to use and understand, and provides a convenient way for users to get information about Arban Public School.

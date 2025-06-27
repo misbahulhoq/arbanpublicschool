@@ -1,29 +1,45 @@
 import Link from "next/link";
 import React from "react";
-import { FaRobot } from "react-icons/fa";
+import {
+  SparklesIcon,
+  ChatBubbleLeftRightIcon,
+} from "@heroicons/react/24/solid";
 
 const ALMHighlight = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-r from-purple-500 to-indigo-500 text-white">
-      <div className="text-center">
-        <FaRobot
-          size={100}
-          className="mx-auto mb-4 animate-bounce text-center"
-        />
+    <section className="relative overflow-hidden bg-gradient-to-br from-secondary via-primary to-rose-300 py-20">
+      <div className="absolute inset-0 opacity-10">
+        {/* Decorative background shapes */}
+        <div className="absolute -left-16 -top-16 h-64 w-64 rounded-full bg-white mix-blend-overlay blur-xl filter"></div>
+        <div className="absolute -bottom-24 -right-10 h-72 w-72 rounded-full bg-white mix-blend-overlay blur-2xl filter"></div>
+      </div>
 
-        <h1 className="mb-4 text-5xl font-bold">Try Out Our AI Model</h1>
-        <p className="mb-8 text-xl">
-          Experience the power of our cutting-edge AI technology. Ask anything
-          and get instant responses!
+      <div className="container relative mx-auto px-6 text-center">
+        <div className="mb-4 flex justify-center">
+          <div className="rounded-full bg-white/20 p-4 backdrop-blur-sm">
+            <SparklesIcon className="h-8 w-8 text-white" />
+          </div>
+        </div>
+
+        <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+          Have Questions? Get Instant Answers!
+        </h2>
+
+        <p className="mx-auto mb-8 max-w-2xl text-lg text-white/90">
+          Try our new AI Assistant, designed to help you with admissions,
+          curriculum details, school timings, and any other questions you might
+          have, 24/7.
         </p>
+
         <Link
-          href="/apollochat"
-          className="rounded-lg bg-white px-6 py-3 font-semibold text-indigo-500 shadow-lg transition duration-300 hover:bg-gray-200"
+          href={"/apollochat"}
+          className="inline-flex transform items-center gap-3 rounded-full bg-accent px-8 py-4 text-lg font-bold text-accent-content shadow-lg transition-transform duration-300 ease-in-out hover:scale-105"
         >
-          Start Chatting
+          <ChatBubbleLeftRightIcon className="h-6 w-6" />
+          Start Chatting Now
         </Link>
       </div>
-    </div>
+    </section>
   );
 };
 
