@@ -72,7 +72,7 @@ const ContactSection: React.FC = () => {
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-5 lg:gap-16">
           {/* Left Column: Contact Info */}
-          <div className="space-y-8 lg:col-span-2">
+          <div className="space-y-8 overflow-x-auto lg:col-span-2">
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 rounded-full bg-primary p-3 text-primary-content">
                 <MapPinIcon className="h-6 w-6" />
