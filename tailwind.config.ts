@@ -1,7 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
-const primaryColor = "#2563EB"; // Tailwind's blue-600 color
+
+const lightThemePalette = {
+  primary: "#FF8C69", // Soft Coral (Warm, inviting, lively)
+  "primary-content": "#4A4A4A", //Warm Gray. Dark text provides excellent readability on the coral background.
+  secondary: "#F7D046",
+  "secondary-content": "#4A4A4A",
+  accent: "#17A2B8", // Bright Teal (Confident, eye-catching, great for CTAs)
+  "accent-content": "#fff",
+  "base-100": "#FCF8F3",
+  "base-content": "#4A4A4A",
+};
+
 const config: Config = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -37,12 +48,11 @@ const config: Config = {
       {
         light: {
           ...require("daisyui/src/theming/themes")["light"],
-          primary: primaryColor,
-          "primary-content": "#fff",
+          ...lightThemePalette,
         },
         dim: {
           ...require("daisyui/src/theming/themes")["dim"],
-          primary: primaryColor,
+          primary: lightThemePalette.primary,
           "primary-content": "#fff",
         },
       },

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@reduxjs/toolkit": "^2.4.0",
     "framer-motion": "^12.6.3",
     "html2canvas-pro": "^1.5.8",
