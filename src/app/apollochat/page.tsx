@@ -109,7 +109,7 @@ const ChatPromptForm = () => {
   ];
 
   return (
-    <div className="flex h-[calc(100vh-0px)] flex-col overflow-hidden rounded-t-2xl bg-base-100/80 pt-24 shadow-2xl backdrop-blur-sm lg:h-[calc(100vh-0px)]">
+    <div className="flex h-[calc(100vh-0px)] flex-col overflow-hidden rounded-t-2xl bg-base-100/80 pt-32 shadow-2xl backdrop-blur-sm md:pt-24 lg:h-[calc(100vh-0px)]">
       {/* Chat Messages Area */}
       <div className="flex-grow overflow-y-auto p-4 md:p-6">
         <div className="mx-auto max-w-3xl space-y-6">
