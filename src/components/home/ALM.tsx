@@ -4,7 +4,6 @@ import {
   SparklesIcon,
   ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/solid";
-import { LinkIcon } from "@heroicons/react/20/solid";
 
 const ALMHighlight = () => {
   return (
