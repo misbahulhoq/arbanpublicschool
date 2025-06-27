@@ -13,6 +13,18 @@ const lightThemePalette = {
   "base-content": "#4A4A4A",
 };
 
+const dark = {
+  primary: "#FF9A80",
+  "primary-content": "#1A1A1A",
+  secondary: "#F8D86A",
+  "secondary-content": "#2A2A2A",
+  accent: "#20C9E4",
+  "accent-content": "#FFFFFF",
+  "base-100": "#2D2D2D",
+  "base-200": "#3B3B3B",
+  "base-content": "#EAEAEA",
+};
+
 const config: Config = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -20,6 +32,7 @@ const config: Config = {
       animation: {
         "marquee-left": "marquee-left linear infinite",
         "marquee-right": "marquee-right linear infinite",
+        blob: "blob 7s infinite",
       },
       keyframes: {
         "marquee-left": {
@@ -29,6 +42,20 @@ const config: Config = {
         "marquee-right": {
           "0%": { transform: "translateX(-100%)" },
           "100%": { transform: "translateX(100%)" },
+        },
+        blob: {
+          "0%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
+          "33%": {
+            transform: "translate(30px, -50px) scale(1.1)",
+          },
+          "66%": {
+            transform: "translate(-20px, 20px) scale(0.9)",
+          },
+          "100%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
         },
       },
     },
@@ -52,8 +79,7 @@ const config: Config = {
         },
         dim: {
           ...require("daisyui/src/theming/themes")["dim"],
-          primary: lightThemePalette.primary,
-          "primary-content": "#fff",
+          ...dark,
         },
       },
     ],
