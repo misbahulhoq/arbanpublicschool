@@ -26,7 +26,7 @@ const ChatMessage = ({ message, isLoading = false }: ChatMessageProps) => {
   if (isUser) {
     return (
       <div className="flex justify-end">
-        <div className="chat-bubble max-w-lg rounded-xl bg-primary text-primary-content shadow-sm">
+        <div className="chat-bubble max-w-lg rounded-xl bg-base-200 text-base-content shadow-sm">
           {message.content}
         </div>
       </div>
@@ -39,7 +39,7 @@ const ChatMessage = ({ message, isLoading = false }: ChatMessageProps) => {
       <div className="flex-shrink-0 rounded-full bg-secondary p-2 text-secondary-content shadow-sm">
         <SparklesIcon className="h-5 w-5" />
       </div>
-      <div className="chat-bubble max-w-lg rounded-xl border border-gray-200 bg-white text-base-content shadow-sm">
+      <div className="chat-bubble max-w-lg rounded-xl border border-gray-200 bg-base-100 text-base-content shadow-sm">
         {isLoading ? (
           <span className="loading loading-dots loading-md"></span>
         ) : (
@@ -129,7 +129,7 @@ const ChatPromptForm = () => {
                   <button
                     key={p}
                     onClick={() => handleSendMessage(p)}
-                    className="rounded-full border border-gray-200 bg-white px-4 py-2 transition-colors hover:bg-secondary/20"
+                    className="rounded-full border bg-base-200 px-4 py-2 text-base-content transition-colors hover:bg-accent hover:text-accent-content"
                   >
                     {p}
                   </button>
@@ -159,7 +159,7 @@ const ChatPromptForm = () => {
           onSubmit={handleSubmit}
           className="relative mx-auto w-full max-w-3xl"
         >
-          <div className="flex items-center rounded-full border border-gray-200 bg-white p-2 shadow-sm">
+          <div className="flex items-center rounded-full border border-accent bg-base-100 p-2 shadow-sm">
             <input
               value={prompt}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
