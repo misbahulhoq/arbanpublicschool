@@ -1,29 +1,3 @@
-// import React from "react";
-// import Link from "next/link";
-
-// const CallToAction: React.FC = () => {
-//   return (
-//     <section className="select-none bg-neutral py-12 text-neutral-content lg:py-16">
-//       <div className="container-center">
-//         <div className="mx-auto max-w-[800px]">
-//           <h2 className="text-3xl font-bold lg:text-4xl">
-//             Join Arban Public School Today!
-//           </h2>
-//           <p className="mb-6 mt-5">
-//             Discover a world of learning and opportunities at Arban Public
-//             School. <br /> Enroll your child now for a brighter future!
-//           </p>
-//           <Link href="/admissions" className="btn btn-primary">
-//             Apply Now
-//           </Link>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default CallToAction;
-
 import Link from "next/link";
 import {
   PaintBrushIcon,
@@ -37,11 +11,11 @@ const JoinNowSection = () => {
     <section className="relative overflow-hidden bg-base-100 py-20 md:py-28">
       {/* Decorative Background Shapes - Now using theme colors and opacity utilities */}
       <div aria-hidden="true" className="absolute left-0 top-0 h-full w-full">
-        <div className="animate-blob absolute -left-24 -top-32 h-96 w-96 rounded-full bg-primary opacity-20 blur-3xl"></div>
-        <div className="animate-blob animation-delay-4000 absolute -bottom-32 -right-16 h-96 w-96 rounded-full bg-secondary opacity-20 blur-3xl"></div>
+        <div className="absolute -left-24 -top-32 h-96 w-96 animate-blob rounded-full bg-primary opacity-20 blur-3xl"></div>
+        <div className="animation-delay-4000 absolute -bottom-32 -right-16 h-96 w-96 animate-blob rounded-full bg-secondary opacity-20 blur-3xl"></div>
       </div>
 
-      <div className="container-center relative z-10">
+      <div className="container-center relative z-[9]">
         {/* Card now uses bg-base-200 for proper theming */}
         <div className="rounded-2xl bg-base-200 p-8 text-center shadow-xl md:p-12">
           {/* Illustrative Icons - Now using fully opaque theme colors */}

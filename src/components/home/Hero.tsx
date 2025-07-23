@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Notices from "./Notices";
-
+import { PaintBrushIcon, ShieldCheckIcon } from "@heroicons/react/24/solid";
 const HeroSection = () => {
   return (
     <section className="">
@@ -34,33 +34,53 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <div className="right-content img-wrapper relative justify-self-end">
-            <div className="absolute bottom-[80px] z-[1] max-[415px]:bottom-[50px]">
+          {/* --- Right Side (New Design) --- */}
+          <div className="relative h-full min-h-[400px] w-full overflow-hidden lg:overflow-visible">
+            {/* Decorative Background Blobs */}
+            <div
+              aria-hidden="true"
+              className="absolute -right-10 top-10 h-72 w-72 rounded-full bg-secondary opacity-20 blur-3xl"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute -left-10 bottom-10 h-72 w-72 rounded-full bg-accent opacity-20 blur-3xl"
+            />
+
+            {/* Main Image Container */}
+            <div className="relative h-full w-full rounded-3xl shadow-xl">
               <Image
-                src={`/illustrators/hero-vector.svg`}
-                alt=""
-                height={200}
-                width={500}
-                className=""
+                src="/illustrators/Placeholder.svg"
+                alt="A happy child painting at a kindergarten"
+                height={400}
+                width={300}
+                className="mx-auto rounded-3xl object-cover"
+                priority
               />
+
+              {/* Floating Feature Card 1: Creative Learning */}
+              <div className="absolute left-4 top-4 rounded-full bg-base-100/70 p-3 shadow-lg backdrop-blur-sm">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-content">
+                    <PaintBrushIcon className="h-6 w-6" />
+                  </div>
+                  <span className="font-semibold text-base-content">
+                    Creative Learning
+                  </span>
+                </div>
+              </div>
+
+              {/* Floating Feature Card 2: Safe Environment */}
+              <div className="absolute bottom-4 right-4 rounded-full bg-base-100/70 p-3 shadow-lg backdrop-blur-sm">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accent-content">
+                    <ShieldCheckIcon className="h-6 w-6" />
+                  </div>
+                  <span className="font-semibold text-base-content">
+                    Safe Environment
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="relative z-[2]">
-              <Image
-                src={`/illustrators/Placeholder.svg`}
-                alt=""
-                height={200}
-                width={500}
-                className=""
-              />
-            </div>
-            {/* <Image
-            // src={`/illustrators/students.png`}
-            src={`/illustrators/hero.webp`}
-            alt="Arban Public Schools Students Illustration"
-            height={100}
-            width={500}
-            className="h-[500px] w-full rounded-lg object-cover"
-          /> */}
           </div>
         </div>
       </div>
