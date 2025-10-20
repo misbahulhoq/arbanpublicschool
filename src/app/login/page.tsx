@@ -77,27 +77,13 @@ const LoginForm = () => {
             {/* Email */}
             <div className="form-control">
               <label className="label pb-1">
-                <span className="label-text text-black">Email *</span>
+                <span className="label-text text-black">Email or UID *</span>
               </label>
               <input
                 type="email"
                 placeholder="Enter your email"
                 name="email"
                 id="email"
-                className="input input-bordered"
-                required
-              />
-            </div>
-
-            {/* Uid */}
-            <div className="form-control">
-              <label className="label pb-1">
-                <span className="label-text text-black">UID *</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Enter your user id"
-                name="uid"
                 className="input input-bordered"
                 required
               />
